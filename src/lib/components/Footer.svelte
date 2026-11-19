@@ -10,7 +10,7 @@ import Logo from "$lib/images/aninexus.svg";
             <div class="footer__brand">
                 <a href="/" class="logo">
                     <img src={Logo} alt="AniNexus API Logo" class="footerLogo" />
-                    <span class="footerTitle">AniNexus <span>API</span></span>
+                    <span class="footerTitle">AniNexus <span class="apiBadge">API</span></span>
                 </a>
                 <p>The Master Franchise & Legal Anime Intelligence Platform for AnimeNation India</p>
 
@@ -95,11 +95,21 @@ import Logo from "$lib/images/aninexus.svg";
 
         .footerTitle {
           font-size: 1.25rem;
-          font-weight: 700;
+          font-weight: 800;
           color: #FFFFFF;
+          display: flex;
+          align-items: center;
+          gap: 6px;
 
-          span {
-            color: #8B5CF6;
+          .apiBadge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+            color: #FFFFFF;
+            padding: 2px 6px;
+            border-radius: 5px;
           }
         }
       }

@@ -12,8 +12,8 @@
     export let romaji = "";
     export let format = "TV";
     export let score = 0;
-    export let malScore = null;
-    export let anilistScore = null;
+    export let sourceScoreA = null;
+    export let sourceScoreB = null;
     export let season = "";
     export let year = 0;
     export let genres = [];
@@ -38,7 +38,7 @@
         }
     });
 
-    $: primaryScore = score || malScore || (anilistScore ? (anilistScore / 10).toFixed(1) : null);
+    $: primaryScore = score || sourceScoreA || (sourceScoreB ? (sourceScoreB / 10).toFixed(1) : null);
 </script>
 
 {#if skeleton}

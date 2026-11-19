@@ -1,23 +1,60 @@
-[![Jikan](http://i.imgur.com/ctoJ3Jp.png)](#jikan---unofficial-myanimelistnet-php-api)
+# AniNexus API — Official Documentation & Showcase Website
 
-# Jikan - Unofficial MyAnimeList.net PHP API
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4c10e2c0-4860-48f5-9eae-171bce417890/deploy-status)](https://app.netlify.com/sites/hardcore-archimedes-6ebd1f/deploys) [![Discord Server](https://img.shields.io/discord/460491088004907029.svg?style=flat&logo=discord)](http://discord.jikan.moe)
+[![AniNexus](static/aninexus.svg)](#)
 
+The official documentation, showcase, and interactive playground website for **AniNexus API** — the open Master Franchise & Anime Intelligence platform powering **AnimeNation India**.
 
-Jikan is a PHP API for [MyAnimeList.net](https://myanimelist.net). It scrapes the website to satisfy the need for an API - which MyAnimeList lacks.
+---
 
+## 🌟 Key Features
 
-## Jikan's Website
-This repository represents [Jikan.moe](https://jikan.moe). Please feel free to contribute and help improve it!
+- **Master Franchise Vault**: 353+ curated franchises spanning 2010 to 2026 with consolidated multi-season timelines, movies, and specials.
+- **Dual Community Scoring Engine**: Unified weighted score blending verified independent global community consensus.
+- **100% Verified Dub Matrix**: Verified audio dub and subtitle mapping (Hindi, English, Japanese, Bengali, Tamil, Telugu).
+- **5-Year Rolling Anime Awards Engine**: Official Crunchyroll Anime Awards winners & nominees (2021–2026) with automated 6th-year auto-purge.
+- **Seasonal Airing Hub**: Real-time seasonal tracker with current airing titles (`/seasons/now`), upcoming releases, and historical archives.
+- **Interactive API Playground**: Real-time request execution against live Render gateway (`https://ani-nexus.onrender.com`) with latency monitoring and syntax-highlighted responses.
+- **Zero-Token Auth & CORS**: Instant access with standard HTTP clients without API keys.
 
+---
 
-### Design
-- [Preview](https://www.behance.net/gallery/79464619/Jikan-API-website-Re-design)
-- [Adobe XD file](https://github.com/jikan-me/website/blob/master/design/jikan.xd)
+## 🚀 Tech Stack
 
+- **Framework**: [SvelteKit](https://kit.svelte.dev/) with Svelte 4
+- **Styling**: SCSS & Modular CSS
+- **Adapter**: `@sveltejs/adapter-static` for Cloudflare Pages & static web hosting
+- **Icons**: `@tabler/icons-svelte`
+- **Animations**: `svelte-typewriter`, Svelte Transitions, and 3D card tilt
 
-### Tools used
-- [FontAwesome](https://fontawesome.com/)
-- [Normalize.css](https://github.com/necolas/normalize.css/)
-- [Less](http://lesscss.org/)
-- [Open Sans](https://fonts.google.com/specimen/Open+Sans) & [Merriweather Sans](https://fonts.google.com/specimen/Merriweather+Sans)
+---
+
+## 🛠️ Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+---
+
+## ☁️ Deployment (Cloudflare Pages)
+
+1. Connect this repository to **Cloudflare Pages**.
+2. Set Framework Preset: `SvelteKit`.
+3. Set Build Command: `npm run build`.
+4. Set Output Directory: `build`.
+
+---
+
+## 📄 License
+
+MIT License. Designed and maintained for **AnimeNation India**.

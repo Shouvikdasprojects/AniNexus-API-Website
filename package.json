@@ -1,5 +1,5 @@
 {
-	"name": "jikan-website",
+	"name": "aninexus-api-website",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",

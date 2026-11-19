@@ -18,7 +18,7 @@ export default  {
         {
             "name": "Jetbrain's open source license",
             "image_url": JetbrainsLogo,
-            "url": "https://jb.gg/OpenSource?ref=jikan"
+            "url": "https://jb.gg/OpenSource?ref=aninexus"
         },
     ],
 }

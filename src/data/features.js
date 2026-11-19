@@ -31,7 +31,7 @@ export default {
             highlight: true,
             onVersion: 1,
             label: "Dual Community Scores",
-            description: "Unified weighted scoring engine blending MyAnimeList and AniList for unbiased anime rankings."
+            description: "Proprietary dual scoring engine aggregating verified independent global community consensus for unbiased rankings."
         },
         {
             icon: IconMicrophone,

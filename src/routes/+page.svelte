@@ -58,7 +58,7 @@
 <svelte:head>
 	<title>AniNexus API — The Legal Anime Intelligence & Master Franchise Platform</title>
 	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API powering AnimeNation India. 353+ Master Franchises (2010-2026), 100% verified dubs, dual scores, and rolling anime awards.">
-	<meta name="keywords" content="aninexus, anime api, animenation india, anime master franchise, verified hindi dub, dual scores, crunchyroll awards, jikan alternative">
+	<meta name="keywords" content="aninexus, anime api, animenation india, anime master franchise, verified hindi dub, dual scores, anime awards, franchise api">
 </svelte:head>
 
 <Nav />
@@ -88,7 +88,7 @@
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#top-trending"
-					description="Weighted combined scoring blending MyAnimeList and AniList."
+					description="Proprietary weighted score blending independent dual global community consensus."
 				>
 					<IconScale size={20} stroke={1.5} />
 					Dual-Score Engine
@@ -307,7 +307,7 @@
 						<div class="connector__line"></div>
 						<div class="connector__node"></div>
 					</div>
-					<div class="cardDiagramFlow__jikan">
+					<div class="cardDiagramFlow__gateway">
 						<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<rect width="40" height="40" rx="20" fill="#8B5CF6"/>
 							<path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -337,7 +337,7 @@
 						<div class="connector__line"></div>
 						<div class="connector__node"></div>
 					</div>
-					<div class="cardDiagramFlow__mal">
+					<div class="cardDiagramFlow__vault">
 						<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<rect width="40" height="40" rx="20" fill="#00ED64"/>
 							<path d="M20 10V30M14 16L20 10L26 16" stroke="#001E2B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>

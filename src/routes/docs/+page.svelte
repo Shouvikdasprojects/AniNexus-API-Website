@@ -185,7 +185,7 @@
             method: "GET",
             path: "/api/v1/series/:slug",
             title: "Complete Master Franchise Details",
-            description: "Retrieves complete master franchise document with unified multi-season timeline, combined MAL/AniList scores, verified dub tracks, and legal OTT links.",
+            description: "Retrieves complete master franchise document with unified multi-season timeline, dual community consensus scores, verified dub tracks, and legal OTT links.",
             params: [
                 {
                     name: "slug",
@@ -472,7 +472,7 @@
             <h1>AniNexus API <span>Interactive Reference</span></h1>
             <p>
                 Query the unified Master Franchise Vault of <strong>353 curated titles (2010–2026)</strong>, 
-                5-year rolling anime awards, 100% verified audio dubs, and combined MyAnimeList & AniList scores with zero authentication required.
+                5-year rolling anime awards, 100% verified audio dubs, and dual community consensus scores with zero authentication required.
             </p>
 
             <div class="heroPills">

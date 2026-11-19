@@ -47,7 +47,7 @@ onMount(() => {
         <Divider type="circle"/>
 
         {#if supporters.supporter.length > 0}
-            <p>Jikan's development is powered by</p>
+            <p>AniNexus API is powered by</p>
         {/if}
         {#each supporters.powered_by as poweredBy}
             <a href={poweredBy.url} target="_blank">

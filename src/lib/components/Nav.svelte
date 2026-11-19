@@ -21,7 +21,7 @@ function toggleMobileNav() {
         <div class="nav__top">
             <a href="/" class="logo">
                 <img src={Logo} alt="AniNexus API Logo" class="logo-img" />
-                <span class="logo-title">AniNexus <span>API</span></span>
+                <span class="logo-title">AniNexus <span class="apiBadge">API</span></span>
             </a>
             <div id="mobile-nav">
                 <Button type="nav-trigger" size="small"
@@ -119,21 +119,36 @@ function toggleMobileNav() {
       text-decoration: none;
 
       .logo-img {
-        width: 36px;
-        height: 36px;
-        filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+        width: 38px;
+        height: 38px;
+        filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.6));
+        transition: transform 0.3s ease;
+      }
+
+      &:hover .logo-img {
+        transform: scale(1.08) rotate(6deg);
       }
 
       .logo-title {
         font-family: inherit;
-        font-size: 1.25rem;
-        font-weight: 700;
+        font-size: 1.3rem;
+        font-weight: 800;
         color: #FFFFFF;
         letter-spacing: -0.02em;
+        display: flex;
+        align-items: center;
+        gap: 6px;
 
-        span {
-          color: #8B5CF6;
+        .apiBadge {
+          font-size: 0.68rem;
           font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+          color: #FFFFFF;
+          padding: 2px 7px;
+          border-radius: 6px;
+          box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
         }
       }
     }

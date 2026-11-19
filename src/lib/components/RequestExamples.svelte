@@ -56,9 +56,9 @@ async function fetchData() {
                     title: f.titles?.primary || f.titles?.english || f.titles?.romaji || "Anime",
                     romaji: f.titles?.romaji || "",
                     imageUrl: f.images?.poster || "https://placehold.co/300x450/1e293b/white?text=AniNexus",
-                    score: firstPart.scores?.combinedAverage || firstPart.scores?.mal?.score || null,
-                    malScore: firstPart.scores?.mal?.score || null,
-                    anilistScore: firstPart.scores?.anilist?.score || null,
+                    score: firstPart.scores?.combinedAverage || null,
+                    sourceScoreA: firstPart.scores?.mal?.score || null,
+                    sourceScoreB: firstPart.scores?.anilist?.score || null,
                     season: firstPart.season || json.data.season || "",
                     year: firstPart.year || json.data.year || 2024,
                     format: firstPart.format || "TV",
@@ -158,8 +158,8 @@ function updateRequestUrl() {
                 romaji={entry.romaji}
                 imageUrl={entry.imageUrl}
                 score={entry.score}
-                malScore={entry.malScore}
-                anilistScore={entry.anilistScore}
+                sourceScoreA={entry.sourceScoreA}
+                sourceScoreB={entry.sourceScoreB}
                 season={entry.season}
                 year={entry.year}
                 format={entry.format}
