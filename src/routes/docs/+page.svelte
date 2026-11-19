@@ -23,6 +23,9 @@
     import { fade, fly, slide } from "svelte/transition";
     import { onMount } from "svelte";
 
+    const currentYear = new Date().getFullYear();
+    const awardsStartYear = currentYear - 5;
+
     const API_BASE = "https://ani-nexus.onrender.com";
 
     let activeCategory = "top";
@@ -135,7 +138,7 @@
             method: "GET",
             path: "/api/v1/awards/latest",
             title: "Latest Crunchyroll Anime Awards",
-            description: "Fetches official winners & nominees across categories (Anime of the Year, Best Animation, Best Action, etc.) for the current award cycle (2026).",
+            description: `Fetches official winners & nominees across categories (Anime of the Year, Best Animation, Best Action, etc.) for the current award cycle (${currentYear}).`,
             params: [],
             defaultUrl: `${API_BASE}/api/v1/awards/latest`,
             curlExample: `curl -X GET "${API_BASE}/api/v1/awards/latest"`,
@@ -155,20 +158,20 @@
             method: "GET",
             path: "/api/v1/awards/:year",
             title: "Awards by Year (5-Year Rolling Window)",
-            description: "Returns award results for a specific year within the 5-year rolling window (2021–2026). Years older than 5 years return HTTP 410 Gone.",
+            description: `Returns award results for a specific year within the 5-year rolling window (${awardsStartYear}–${currentYear}). Years older than 5 years return HTTP 410 Gone.`,
             params: [
                 {
                     name: "year",
                     type: "path",
-                    default: "2025",
-                    options: ["2026", "2025", "2024", "2023", "2022", "2021", "2020"],
-                    description: "Award year (2021-2026 active; 2020 triggers 410 Gone test)"
+                    default: String(currentYear - 1),
+                    options: [String(currentYear), String(currentYear - 1), String(currentYear - 2), String(currentYear - 3), String(currentYear - 4), String(currentYear - 5), String(currentYear - 6)],
+                    description: `Award year (${awardsStartYear}-${currentYear} active; ${currentYear - 6} triggers 410 Gone test)`
                 }
             ],
-            defaultUrl: `${API_BASE}/api/v1/awards/2025`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/awards/2025"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/awards/2025");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/awards/2025")\nprint(res.json())`,
+            defaultUrl: `${API_BASE}/api/v1/awards/${currentYear - 1}`,
+            curlExample: `curl -X GET "${API_BASE}/api/v1/awards/${currentYear - 1}"`,
+            jsExample: `const res = await fetch("${API_BASE}/api/v1/awards/${currentYear - 1}");\nconst data = await res.json();\nconsole.log(data);`,
+            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/awards/${currentYear - 1}")\nprint(res.json())`,
             loading: false,
             response: null,
             status: null,
@@ -471,7 +474,7 @@
             </div>
             <h1>AniNexus API <span>Interactive Reference</span></h1>
             <p>
-                Query the unified Master Franchise Vault of <strong>353 curated titles (2010–2026)</strong>, 
+                Query the unified Master Franchise Vault of <strong>353 curated titles (2010–{currentYear})</strong>, 
                 5-year rolling anime awards, 100% verified audio dubs, and dual community consensus scores with zero authentication required.
             </p>
 
@@ -487,7 +490,7 @@
                     <span>🔓 Zero Token Auth</span>
                 </div>
                 <div class="heroPill">
-                    <span>🏆 5-Year Rolling Window (2021-2026)</span>
+                    <span>🏆 5-Year Rolling Window ({awardsStartYear}–{currentYear})</span>
                 </div>
             </div>
         </div>

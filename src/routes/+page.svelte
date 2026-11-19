@@ -43,6 +43,9 @@
 	import IntegrationCard from "../lib/components/IntegrationCard.svelte";
 	import {onMount} from "svelte";
 
+	const currentYear = new Date().getFullYear();
+	const awardsStartYear = currentYear - 5;
+
 	let serverHealth = { status: "checking", uptime: 0 };
 
 	onMount(async () => {
@@ -57,7 +60,7 @@
 
 <svelte:head>
 	<title>AniNexus API — The Legal Anime Intelligence & Master Franchise Platform</title>
-	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API powering AnimeNation India. 353+ Master Franchises (2010-2026), 100% verified dubs, dual scores, and rolling anime awards.">
+	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API powering AnimeNation India. 353+ Master Franchises (2010–{currentYear}), verified dubs, dual scores, and rolling anime awards.">
 	<meta name="keywords" content="aninexus, anime api, animenation india, anime master franchise, verified hindi dub, dual scores, anime awards, franchise api">
 </svelte:head>
 
@@ -73,14 +76,14 @@
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine powering <strong>AnimeNation India</strong>. Unified timelines for <strong>353+ curated franchises (2010–2026)</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine powering <strong>AnimeNation India</strong>. Unified timelines for <strong>353+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#series-slug"
-					description="353 curated franchises from 2010 to 2026 with multi-season timelines."
+					description="353 curated franchises from 2010 to {currentYear} with multi-season timelines."
 				>
 					<IconBuildingArch size={20} stroke={1.5} />
 					353+ Master Franchises
@@ -104,7 +107,7 @@
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#awards-latest"
-					description="Crunchyroll Anime Awards (2021-2026) with automated 6th-year auto-purge."
+					description="Crunchyroll Anime Awards ({awardsStartYear}–{currentYear}) with automated 6th-year auto-purge."
 				>
 					<IconTrophy size={20} stroke={1.5} />
 					5-Year Rolling Awards
@@ -120,10 +123,10 @@
 				<BasicInfoDisplay
 					urlTarget="_blank"
 					url="https://ani-nexus.onrender.com/health"
-					description="Monitored 24/7 with active keep-alive pinging on Render cloud."
+					description="Monitored 24/7 with automated high-availability health probes."
 				>
 					<IconChartLine size={20} stroke={1.5} />
-					API Online (Render)
+					API Online (Global Edge)
 				</BasicInfoDisplay>
 			</BasicInfoDisplayGrouped>
 
@@ -168,7 +171,7 @@
 				<div class="overlay">
 					<div class="type--group-heading-and-content">
 						<h2>⚡ Powering AnimeNation India</h2>
-						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for AnimeNation India. Ingesting over 353 Master Franchises across 16 years (2010–2026), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
+						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for AnimeNation India. Ingesting over 353 Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
 					</div>
 
 					<ButtonGroup>
@@ -243,22 +246,22 @@
 
 		<div class="diagram">
 			<div class="diagram__flow">
-				<!-- Layer 1: Express REST Gateway -->
+				<!-- Layer 1: High-Performance REST Gateway -->
 				<div class="cardDiagramInfo">
 					<div class="cardDiagramInfo__meta">
 						<div class="type--group-heading-and-subheading">
 							<h6 class="cardDiagramInfo__title">AniNexus Gateway <Chip type="outline" size="xsmall">v1.0.0</Chip></h6>
-							<p class="cardDiagramInfo__subtitle">— Express + TypeScript on Render</p>
+							<p class="cardDiagramInfo__subtitle">— High-Performance REST Gateway</p>
 						</div>
 
 						<div class="cardDiagramInfo__repoStats">
-							<Button urlTarget="_blank" url="https://github.com/Shouvikdasprojects/ani-nexus" type="link">
+							<Button url="/docs" type="link">
 								<IconServer size={20} stroke={1.5} />
-								Node.js 20 LTS
+								Global Edge CDN
 							</Button>
-							<Button urlTarget="_blank" url="https://ani-nexus.onrender.com/health" type="link">
+							<Button url="https://ani-nexus.onrender.com/health" urlTarget="_blank" type="link">
 								<IconChartLine size={20} stroke={1.5} />
-								UptimeRobot Active
+								99.9% Uptime SLA
 							</Button>
 						</div>
 					</div>
@@ -266,17 +269,17 @@
 					<Divider type="line"></Divider>
 
 					<p class="cardDiagramInfo__about">
-						The REST API Gateway processes incoming client queries, applies in-memory caching, validates path parameters, and enforces the 5-year rolling anime awards window with automatic 6th-year auto-purge.
+						The REST API Gateway processes incoming client queries, applies multi-layer in-memory caching, validates parameters, and enforces the 5-year rolling anime awards window with automatic 6th-year auto-purge.
 					</p>
 
 					<div class="cardDiagramInfo__package">
 						<InputReadOnly
 							id="gitclone"
 							isCopyable
-							value="git clone https://github.com/Shouvikdasprojects/ani-nexus"
+							value="curl -X GET 'https://ani-nexus.onrender.com/health'"
 						/>
 
-						<Button type="tertiary" size="small" url="https://github.com/Shouvikdasprojects/ani-nexus" urlTarget="_blank">
+						<Button type="tertiary" size="small" url="/docs">
 							<IconInfoCircle size={20} stroke={1.5} />
 						</Button>
 					</div>
@@ -351,22 +354,22 @@
 					<div class="connector__node"></div>
 				</div>
 
-				<!-- Layer 2: MongoDB Atlas Vault -->
+				<!-- Layer 2: High-Speed Cloud Database -->
 				<div class="cardDiagramInfo">
 					<div class="cardDiagramInfo__meta">
 						<div class="type--group-heading-and-subheading">
-							<h6 class="cardDiagramInfo__title">AniNexus Vault <Chip type="outline" size="xsmall">Atlas M0</Chip></h6>
-							<p class="cardDiagramInfo__subtitle">— MongoDB Atlas Cloud Database</p>
+							<h6 class="cardDiagramInfo__title">AniNexus Vault <Chip type="outline" size="xsmall">Cloud Vault</Chip></h6>
+							<p class="cardDiagramInfo__subtitle">— High-Speed Cloud Database</p>
 						</div>
 
 						<div class="cardDiagramInfo__repoStats">
-							<Button urlTarget="_blank" url="https://cloud.mongodb.com" type="link">
+							<Button url="/docs#series-slug" type="link">
 								<IconDatabase size={20} stroke={1.5} />
-								353 Franchises
+								353+ Master Franchises
 							</Button>
-							<Button urlTarget="_blank" url="/docs#awards-latest" type="link">
+							<Button url="/docs#awards-latest" type="link">
 								<IconTrophy size={20} stroke={1.5} />
-								2021–2026 Awards
+								{awardsStartYear}–{currentYear} Awards
 							</Button>
 						</div>
 					</div>
@@ -374,17 +377,17 @@
 					<Divider type="line"></Divider>
 
 					<p class="cardDiagramInfo__about">
-						Stores curated master documents with multi-season consolidated timelines, verified Indian and global dub flags, dual community scores, and official OTT streaming licenses.
+						Stores curated master documents with multi-season consolidated timelines, verified Indian and global dub matrix, dual community consensus scores, and official OTT streaming licenses.
 					</p>
 
 					<div class="cardDiagramInfo__package">
 						<InputReadOnly
 							id="env"
 							isCopyable
-							value="npm run seed:curated"
+							value="https://ani-nexus.onrender.com/api/v1/top?type=trending"
 						/>
 
-						<Button type="tertiary" size="small" url="/docs" urlTarget="_blank">
+						<Button type="tertiary" size="small" url="/docs">
 							<IconInfoCircle size={20} stroke={1.5} />
 						</Button>
 					</div>
@@ -392,7 +395,7 @@
 					<ButtonGroup type="stacked">
 						<Button url="/docs" type="primary" size="full-width">
 							<IconArrowDownLeft class="external-link" size={20} stroke={1.5} />
-							Test Live API
+							Explore Live Vault
 						</Button>
 					</ButtonGroup>
 				</div>
@@ -462,26 +465,124 @@
 
 		<div class="right">
 			<div class="type--group-heading-and-content">
-				<h6>Supported Integration Environments</h6>
+				<h6>Community SDKs & Integrations</h6>
 			</div>
 
-			<div class="integrations__listing">
-				<div class="integrations__fadeout integrations__fadeout--top"></div>
-				{#each integrations as integration}
-					<IntegrationCard
-						supportsV3={integration.supportsV3}
-						supportsV4={integration.supportsV4}
-						type={integration.type}
-						author={integration.author}
-						title={integration.title}
-						language={integration.language}
-						url={integration.url}
-					></IntegrationCard>
-				{/each}
-				<div class="integrations__fadeout integrations__fadeout--bottom"></div>
+			<div class="communityCard">
+				<div class="communityCard__header">
+					<div class="communityCard__icon">
+						<IconBrandGithub size={36} stroke={1.5} color="#A78BFA" />
+					</div>
+					<div>
+						<h5>Build the First Community Wrapper!</h5>
+						<p>AniNexus API is open for community-built SDKs and client packages.</p>
+					</div>
+				</div>
+
+				<p class="communityCard__desc">
+					Create a client wrapper for your favorite language — <strong>TypeScript, Python, Flutter/Dart, Go, Swift, Rust, or Java</strong> — and submit a Pull Request on GitHub to get featured on the official website.
+				</p>
+
+				<div class="communityCard__code">
+					<div class="codeHeader">
+						<span>⚡ Universal REST Request (No SDK Required)</span>
+					</div>
+					<pre><code>curl -X GET "https://ani-nexus.onrender.com/api/v1/top?type=trending"</code></pre>
+				</div>
+
+				<ButtonGroup type="stacked">
+					<Button url="https://github.com/Shouvikdasprojects/ani-nexus" urlTarget="_blank" type="primary" size="full-width">
+						<IconBrandGithub size={20} stroke={1.5} />
+						Add your integration via GitHub PR
+					</Button>
+					<Button url="/docs" type="secondary-outline" size="full-width">
+						<IconArrowDownLeft class="external-link" size={20} stroke={1.5} />
+						View Interactive API Playground
+					</Button>
+				</ButtonGroup>
 			</div>
 		</div>
 	</div>
 </section>
 
 <Footer />
+
+<style lang="scss">
+	.communityCard {
+		background: #0F172A;
+		border: 1px solid rgba(139, 92, 246, 0.3);
+		border-radius: 16px;
+		padding: 32px;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+		&__header {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+
+			h5 {
+				font-size: 1.2rem;
+				font-weight: 700;
+				color: #FFFFFF;
+				margin: 0 0 4px;
+			}
+
+			p {
+				color: #94A3B8;
+				font-size: 0.88rem;
+				margin: 0;
+			}
+		}
+
+		&__icon {
+			width: 60px;
+			height: 60px;
+			border-radius: 12px;
+			background: rgba(139, 92, 246, 0.15);
+			border: 1px solid rgba(139, 92, 246, 0.3);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+
+		&__desc {
+			color: #CBD5E1;
+			font-size: 0.95rem;
+			line-height: 1.6;
+			margin: 0;
+
+			strong {
+				color: #A78BFA;
+			}
+		}
+
+		&__code {
+			background: #080D1A;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 10px;
+			overflow: hidden;
+
+			.codeHeader {
+				padding: 8px 14px;
+				background: rgba(30, 41, 59, 0.5);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+				font-size: 0.78rem;
+				font-weight: 600;
+				color: #10B981;
+			}
+
+			pre {
+				padding: 14px;
+				margin: 0;
+				font-family: 'Fira Code', 'Courier New', monospace;
+				font-size: 0.82rem;
+				color: #38BDF8;
+				overflow-x: auto;
+			}
+		}
+	}
+</style>

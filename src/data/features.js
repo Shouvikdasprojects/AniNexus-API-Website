@@ -17,6 +17,9 @@ import {
     IconLayersLinked
 } from "@tabler/icons-svelte";
 
+const currentYear = new Date().getFullYear();
+const awardsStartYear = currentYear - 5;
+
 export default {
     available: [
         {
@@ -24,7 +27,7 @@ export default {
             highlight: true,
             onVersion: 1,
             label: "Master Franchise Vault",
-            description: "353+ curated franchises (2010–2026) with consolidated multi-season timelines, movies, and specials."
+            description: `353+ curated franchises (2010–${currentYear}) with consolidated multi-season timelines, movies, and specials.`
         },
         {
             icon: IconScale,
@@ -45,7 +48,7 @@ export default {
             highlight: true,
             onVersion: 1,
             label: "5-Year Rolling Awards",
-            description: "Crunchyroll Anime Awards (2021–2026) with automated 6th-year auto-purge and HTTP 410 protection."
+            description: `Crunchyroll Anime Awards (${awardsStartYear}–${currentYear}) with automated 6th-year auto-purge and HTTP 410 protection.`
         },
         {
             icon: IconCalendarEvent,
@@ -110,7 +113,7 @@ export default {
             highlight: false,
             onVersion: 2,
             label: "AI Semantic Search",
-            description: "Natural language anime discovery powered by Gemini embedding vectors."
+            description: "Natural language anime discovery powered by vector embeddings."
         },
         {
             icon: IconMovie,

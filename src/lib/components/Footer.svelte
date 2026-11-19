@@ -2,6 +2,9 @@
 import Button from "./Button.svelte";
 import {IconArrowDownLeft, IconBrandGithub, IconExternalLink, IconHeart} from "@tabler/icons-svelte";
 import Logo from "$lib/images/aninexus.svg";
+
+const currentYear = new Date().getFullYear();
+const awardsStartYear = currentYear - 5;
 </script>
 
 <footer class="footer">
@@ -35,7 +38,7 @@ import Logo from "$lib/images/aninexus.svg";
                     <ul>
                         <li><Button url="/docs#top-trending" type="link">Top Collections</Button></li>
                         <li><Button url="/docs#seasons-now" type="link">Seasonal Airing</Button></li>
-                        <li><Button url="/docs#awards-latest" type="link">Anime Awards (2021-2026)</Button></li>
+                        <li><Button url="/docs#awards-latest" type="link">Anime Awards ({awardsStartYear}–{currentYear})</Button></li>
                         <li><Button url="/docs#series-slug" type="link">Master Franchises</Button></li>
                     </ul>
                 </div>
@@ -53,8 +56,8 @@ import Logo from "$lib/images/aninexus.svg";
 
 <div class="copyright">
     <div class="copyright__content">
-        <span>© 2024–2026 AniNexus API. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for AnimeNation India.</span>
-        <span>Open-Source Anime Metadata Engine. Powered by Express, TypeScript & MongoDB Atlas.</span>
+        <span>© 2024–{currentYear} AniNexus API. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for AnimeNation India.</span>
+        <span>Open-Source Anime Intelligence & Master Franchise Platform.</span>
     </div>
 </div>
 
