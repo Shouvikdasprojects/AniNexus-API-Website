@@ -9,13 +9,14 @@
  *    https://github.com/Shouvikdasprojects/AniNexus-API-Website/edit/master/src/data/integrations.js
  *    (GitHub will automatically fork this repository for you).
  * 
- * 2. Append a new object to the end of the array below:
+ * 2. Append a new object to the array below:
  *    {
  *        type: "Client Library",   // "SDK & Client", "Client Library", "Mobile Package", "Crate", etc.
  *        author: "YourName",        // Your GitHub username or author name
  *        title: "aninexus-python",  // Name of your package/wrapper
  *        language: "python",        // All lowercase (e.g., javascript, typescript, python, dart, go, rust, kotlin, csharp, java, php, swift)
  *        supportsV1: true,          // true if your library supports AniNexus API v1
+ *        supportsV3: false,
  *        supportsV4: false,
  *        url: "https://github.com/your-username/your-wrapper-repo" // Direct link to your public repository or package page
  *    }
@@ -28,94 +29,5 @@
  */
 
 export default [
-    {
-        type: "SDK & Client",
-        author: "AniNexus Team",
-        title: "aninexus-js",
-        language: "javascript",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "SDK & Client",
-        author: "AniNexus Team",
-        title: "aninexus-ts",
-        language: "typescript",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "Client Library",
-        author: "Community",
-        title: "aninexus-py",
-        language: "python",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "Mobile Client",
-        author: "Community",
-        title: "aninexus-dart",
-        language: "dart",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "Client Package",
-        author: "AniNexus Team",
-        title: "aninexus-go",
-        language: "go",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "Package",
-        author: "Community",
-        title: "aninexus-php",
-        language: "php",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "Crate",
-        author: "Community",
-        title: "aninexus-rs",
-        language: "rust",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "Mobile Package",
-        author: "AniNexus Team",
-        title: "aninexus-kotlin",
-        language: "kotlin",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        type: "Package",
-        author: "Community",
-        title: "aninexus-dotnet",
-        language: "csharp",
-        supportsV1: true,
-        supportsV3: false,
-        supportsV4: false,
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    }
+    // Real community integrations will be listed here once submitted and merged via GitHub PR
 ];

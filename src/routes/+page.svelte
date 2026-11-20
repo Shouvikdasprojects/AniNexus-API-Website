@@ -475,25 +475,41 @@
 
 		<div class="right">
 			<div class="type--group-heading-and-content">
-				<h6>Available Integrations ({integrations.length})</h6>
+				<h6>Available Integrations {integrations.length > 0 ? `(${integrations.length})` : ''}</h6>
 			</div>
 
-			<div class="integrations__listing">
-				<div class="integrations__fadeout integrations__fadeout--top"></div>
-				{#each integrations as integration}
-					<IntegrationCard
-						supportsV1={integration.supportsV1 ?? true}
-						supportsV3={integration.supportsV3}
-						supportsV4={integration.supportsV4}
-						type={integration.type}
-						author={integration.author}
-						title={integration.title}
-						language={integration.language}
-						url={integration.url}
-					></IntegrationCard>
-				{/each}
-				<div class="integrations__fadeout integrations__fadeout--bottom"></div>
-			</div>
+			{#if integrations.length > 0}
+				<div class="integrations__listing">
+					<div class="integrations__fadeout integrations__fadeout--top"></div>
+					{#each integrations as integration}
+						<IntegrationCard
+							supportsV1={integration.supportsV1 ?? true}
+							supportsV3={integration.supportsV3}
+							supportsV4={integration.supportsV4}
+							type={integration.type}
+							author={integration.author}
+							title={integration.title}
+							language={integration.language}
+							url={integration.url}
+						></IntegrationCard>
+					{/each}
+					<div class="integrations__fadeout integrations__fadeout--bottom"></div>
+				</div>
+			{:else}
+				<div class="integrations__empty">
+					<div class="emptyIcon">
+						<IconCode size={44} stroke={1.5} />
+					</div>
+					<h5>No Community Integrations Yet</h5>
+					<p>We keep the AniNexus ecosystem 100% verified — no placeholder or dummy packages. Build an open-source client or wrapper for AniNexus and be the first to get featured!</p>
+					<div class="emptyAction">
+						<Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website/edit/master/src/data/integrations.js" urlTarget="_blank" type="primary" size="default">
+							<IconCirclePlus size={18} stroke={1.5} />
+							Submit Your Integration
+						</Button>
+					</div>
+				</div>
+			{/if}
 		</div>
 	</div>
 </section>
@@ -530,6 +546,52 @@
 				border-radius: 4px;
 				font-size: 0.82rem;
 			}
+		}
+	}
+
+	.integrations__empty {
+		background: rgba(255, 255, 255, 0.02);
+		border: 1px dashed rgba(139, 92, 246, 0.35);
+		border-radius: 16px;
+		padding: 44px 28px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 14px;
+		min-height: 360px;
+
+		.emptyIcon {
+			width: 68px;
+			height: 68px;
+			border-radius: 50%;
+			background: rgba(139, 92, 246, 0.12);
+			border: 1px solid rgba(139, 92, 246, 0.3);
+			color: #A78BFA;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 4px;
+		}
+
+		h5 {
+			margin: 0;
+			font-size: 1.25rem;
+			color: #FFFFFF;
+			font-weight: 600;
+		}
+
+		p {
+			color: #94A3B8;
+			font-size: 0.92rem;
+			line-height: 1.6;
+			max-width: 440px;
+			margin: 0;
+		}
+
+		.emptyAction {
+			margin-top: 10px;
 		}
 	}
 </style>
