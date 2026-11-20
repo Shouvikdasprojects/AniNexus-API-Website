@@ -57,6 +57,7 @@ function closeMobileNav() {
                     </Button>
                     <Button type="nav-link" url="/#features" callback={closeMobileNav}>Features</Button>
                     <Button type="nav-link" url="/#how-it-works" callback={closeMobileNav}>How it works</Button>
+                    <Button type="nav-link" url="/showcase" callback={closeMobileNav}>Showcase</Button>
                     <Button type="nav-link" url="/docs" callback={closeMobileNav}>API Playground</Button>
                 </div>
 

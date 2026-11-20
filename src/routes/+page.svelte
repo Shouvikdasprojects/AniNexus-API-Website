@@ -24,7 +24,8 @@
 		IconDatabase,
 		IconServer,
 		IconFlame,
-		IconBrandGithub
+		IconBrandGithub,
+		IconDeviceDesktop
 	} from "@tabler/icons-svelte";
 	import BasicInfoDisplay from "../lib/components/DataDisplay/BasicInfoDisplay.svelte";
 	import Chip from "../lib/components/Chip.svelte";
@@ -179,9 +180,9 @@
 							Launch API Playground
 							<IconArrowNarrowRight size={20} stroke={1.5} />
 						</Button>
-						<Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank" type="tertiary" size="full-width">
-							<IconCirclePlus size={20} stroke={1.5} />
-							Contribute on GitHub
+						<Button url="/showcase" type="tertiary" size="full-width">
+							<IconDeviceDesktop size={20} stroke={1.5} />
+							View App Showcase
 						</Button>
 					</ButtonGroup>
 				</div>

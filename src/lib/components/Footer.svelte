@@ -30,6 +30,7 @@ const awardsStartYear = currentYear - 5;
                         <li><Button url="/docs" type="link">Documentation (v1)</Button></li>
                         <li><Button url="/#features" type="link">Features</Button></li>
                         <li><Button url="/#how-it-works" type="link">How It Works</Button></li>
+                        <li><Button url="/showcase" type="link">App Showcase</Button></li>
                         <li><Button url="/docs" type="link">API Playground</Button></li>
                     </ul>
                 </div>
@@ -45,6 +46,8 @@ const awardsStartYear = currentYear - 5;
                 <div class="footer__links">
                     <strong>Ecosystem</strong>
                     <ul>
+                        <li><Button url="/showcase" type="link">Community Showcase</Button></li>
+                        <li><Button url="/#integrations" type="link">Integrations</Button></li>
                         <li><Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank" type="link"><IconBrandGithub size={16} /> GitHub Repo</Button></li>
                         <li><Button url="https://ani-nexus.onrender.com/health" urlTarget="_blank" type="link">Health Monitor</Button></li>
                     </ul>

@@ -9,7 +9,7 @@
  *    https://github.com/Shouvikdasprojects/AniNexus-API-Website/edit/master/src/data/showcase.js
  *    (GitHub will automatically fork this repository for you).
  * 
- * 2. Append a new object to the end of the array below:
+ * 2. Append a new object to the array below:
  *    {
  *        title: "Your App Name",
  *        summary: "A brief 1-2 sentence description of what your app does.",
@@ -25,22 +25,5 @@
  */
 
 export default [
-    {
-        title: "AniNexus Explorer",
-        summary: "Next-generation anime intelligence hub with real-time seasonal schedules and master franchise timelines.",
-        imageUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        title: "OtakuVault",
-        summary: "Modern anime browser application built on top of high-performance REST APIs.",
-        imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80",
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    },
-    {
-        title: "Kagari Anime Hub",
-        summary: "Full-stack anime timeline tracker with unified franchise viewing orders.",
-        imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
-    }
+    // Real community applications and projects will appear here once submitted and merged via GitHub PR
 ];
