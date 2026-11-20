@@ -420,7 +420,7 @@
 	<div class="integrations">
 		<div class="left">
 			<div class="type--group-heading-and-content">
-				<h2>Seamless integration with any frontend or backend stack.</h2>
+				<h2>Seamless integration with the languages you use and love.</h2>
 			</div>
 
 			<div class="integrations__body margin--top-64">
@@ -429,8 +429,8 @@
 						<IconHeartHandshake size={35} stroke={1.5} />
 					</div>
 					<div>
-						<h6>Engineered for Scalable Anime Apps</h6>
-						<p>Built specifically to provide clean, unified franchise schemas for modern anime streaming UIs, mobile apps, and bots.</p>
+						<h6>By the community, for the community</h6>
+						<p>Thanks to avid contributors, community-maintained wrappers and clients allow you to integrate AniNexus into your favorite stack with ease.</p>
 					</div>
 				</div>
 
@@ -439,8 +439,8 @@
 						<IconGitCommit size={35} stroke={1.5} />
 					</div>
 					<div>
-						<h6>Standard REST & JSON</h6>
-						<p>Zero SDK requirements. Works out of the box with standard <code>fetch()</code>, Axios, Python Requests, or cURL.</p>
+						<h6>Zero-Token Auth & CORS</h6>
+						<p>Zero rate-limit walls or API keys required. Works out of the box with standard <code>fetch()</code>, Axios, Python Requests, or cURL.</p>
 					</div>
 				</div>
 
@@ -457,49 +457,42 @@
 
 			<Divider type="line"></Divider>
 
-			<Button url="/docs" type="secondary-outline" size="full-width">
-				<IconCirclePlus size={20} stroke={1.5} />
-				Open API Playground
-			</Button>
+			<ButtonGroup type="stacked">
+				<Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website/edit/master/src/data/integrations.js" urlTarget="_blank" type="primary" size="full-width">
+					<IconCirclePlus size={20} stroke={1.5} />
+					Add your integration via GitHub PR
+				</Button>
+				<Button url="/docs" type="secondary-outline" size="full-width">
+					<IconArrowDownLeft class="external-link" size={20} stroke={1.5} />
+					Open API Playground
+				</Button>
+			</ButtonGroup>
+
+			<div class="integrationNotice">
+				<p>💡 <strong>How to submit:</strong> Clicking <em>Add your integration</em> opens <code>integrations.js</code> in GitHub's web editor. Append your wrapper details and click <strong>Propose changes</strong> to create a Pull Request!</p>
+			</div>
 		</div>
 
 		<div class="right">
 			<div class="type--group-heading-and-content">
-				<h6>Community SDKs & Integrations</h6>
+				<h6>Available Integrations ({integrations.length})</h6>
 			</div>
 
-			<div class="communityCard">
-				<div class="communityCard__header">
-					<div class="communityCard__icon">
-						<IconBrandGithub size={36} stroke={1.5} color="#A78BFA" />
-					</div>
-					<div>
-						<h5>Build the First Community Wrapper!</h5>
-						<p>AniNexus API is open for community-built SDKs and client packages.</p>
-					</div>
-				</div>
-
-				<p class="communityCard__desc">
-					Create a client wrapper for your favorite language — <strong>TypeScript, Python, Flutter/Dart, Go, Swift, Rust, or Java</strong> — and submit a Pull Request on GitHub to get featured on the official website.
-				</p>
-
-				<div class="communityCard__code">
-					<div class="codeHeader">
-						<span>⚡ Universal REST Request (No SDK Required)</span>
-					</div>
-					<pre><code>curl -X GET "https://ani-nexus.onrender.com/api/v1/top?type=trending"</code></pre>
-				</div>
-
-				<ButtonGroup type="stacked">
-					<Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank" type="primary" size="full-width">
-						<IconBrandGithub size={20} stroke={1.5} />
-						Add your integration via GitHub PR
-					</Button>
-					<Button url="/docs" type="secondary-outline" size="full-width">
-						<IconArrowDownLeft class="external-link" size={20} stroke={1.5} />
-						View Interactive API Playground
-					</Button>
-				</ButtonGroup>
+			<div class="integrations__listing">
+				<div class="integrations__fadeout integrations__fadeout--top"></div>
+				{#each integrations as integration}
+					<IntegrationCard
+						supportsV1={integration.supportsV1 ?? true}
+						supportsV3={integration.supportsV3}
+						supportsV4={integration.supportsV4}
+						type={integration.type}
+						author={integration.author}
+						title={integration.title}
+						language={integration.language}
+						url={integration.url}
+					></IntegrationCard>
+				{/each}
+				<div class="integrations__fadeout integrations__fadeout--bottom"></div>
 			</div>
 		</div>
 	</div>
@@ -508,80 +501,34 @@
 <Footer />
 
 <style lang="scss">
-	.communityCard {
-		background: #0F172A;
-		border: 1px solid rgba(139, 92, 246, 0.3);
-		border-radius: 16px;
-		padding: 32px;
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+	.integrationNotice {
+		background: rgba(139, 92, 246, 0.08);
+		border: 1px solid rgba(139, 92, 246, 0.2);
+		border-radius: 12px;
+		padding: 14px 18px;
 
-		&__header {
-			display: flex;
-			align-items: center;
-			gap: 16px;
-
-			h5 {
-				font-size: 1.2rem;
-				font-weight: 700;
-				color: #FFFFFF;
-				margin: 0 0 4px;
-			}
-
-			p {
-				color: #94A3B8;
-				font-size: 0.88rem;
-				margin: 0;
-			}
-		}
-
-		&__icon {
-			width: 60px;
-			height: 60px;
-			border-radius: 12px;
-			background: rgba(139, 92, 246, 0.15);
-			border: 1px solid rgba(139, 92, 246, 0.3);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-shrink: 0;
-		}
-
-		&__desc {
+		p {
 			color: #CBD5E1;
-			font-size: 0.95rem;
-			line-height: 1.6;
+			font-size: 0.85rem;
+			line-height: 1.5;
 			margin: 0;
 
 			strong {
 				color: #A78BFA;
 			}
-		}
 
-		&__code {
-			background: #080D1A;
-			border: 1px solid rgba(255, 255, 255, 0.08);
-			border-radius: 10px;
-			overflow: hidden;
-
-			.codeHeader {
-				padding: 8px 14px;
-				background: rgba(30, 41, 59, 0.5);
-				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-				font-size: 0.78rem;
+			em {
+				color: #FFFFFF;
+				font-style: normal;
 				font-weight: 600;
-				color: #10B981;
 			}
 
-			pre {
-				padding: 14px;
-				margin: 0;
-				font-family: 'Fira Code', 'Courier New', monospace;
+			code {
+				color: #F43F5E;
+				background: rgba(244, 63, 94, 0.1);
+				padding: 2px 6px;
+				border-radius: 4px;
 				font-size: 0.82rem;
-				color: #38BDF8;
-				overflow-x: auto;
 			}
 		}
 	}

@@ -20,6 +20,14 @@ The official documentation, showcase, and interactive playground website for **A
 
 ---
 
+## 🤝 Community Contributions
+
+Want to add your SDK wrapper or showcase project?
+- **Add your wrapper / client library**: Follow our [Contributing Guide](CONTRIBUTING.md#how-to-add-your-integration--api-wrapper) to edit [`src/data/integrations.js`](src/data/integrations.js).
+- **Add your project to the Showcase**: Follow our [Contributing Guide](CONTRIBUTING.md#how-to-add-your-application-to-the-showcase) to edit [`src/data/showcase.js`](src/data/showcase.js).
+
+---
+
 ## 🚀 Tech Stack
 
 - **Framework**: [SvelteKit](https://kit.svelte.dev/) with Svelte 4
