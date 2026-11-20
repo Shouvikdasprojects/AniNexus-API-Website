@@ -1,7 +1,7 @@
 export default [
     {
-        title: "Nexus Stream",
-        summary: "Modern anime discovery and streaming portal, powered by the AniNexus Master Franchise Vault and 100% verified dub timelines.",
+        title: "AniNexus Portal",
+        summary: "High-performance master anime directory, franchise watch-order timelines, and dual community scoring engine.",
         imageUrl: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
         url: "/docs",
     },

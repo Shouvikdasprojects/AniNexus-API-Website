@@ -40,6 +40,7 @@
 	import ShowcaseBackground from "../lib/images/showcase-background.png";
 	import Divider from "../lib/components/Divider.svelte";
 	import InputReadOnly from "../lib/components/InputReadOnly.svelte";
+	import IntegrationCard from "../lib/components/IntegrationCard.svelte";
 	import {onMount} from "svelte";
 
 	const currentYear = new Date().getFullYear();
@@ -169,8 +170,8 @@
 			>
 				<div class="overlay">
 					<div class="type--group-heading-and-content">
-						<h2>⚡ Engineered for Modern Streaming Apps</h2>
-						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for modern applications. Ingesting over 353 Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
+						<h2>⚡ Engineered for Modern Anime Apps</h2>
+						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for modern anime platforms. Ingesting over 353 Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
 					</div>
 
 					<ButtonGroup>
@@ -428,7 +429,7 @@
 						<IconHeartHandshake size={35} stroke={1.5} />
 					</div>
 					<div>
-						<h6>Engineered for Modern Anime Apps</h6>
+						<h6>Engineered for Scalable Anime Apps</h6>
 						<p>Built specifically to provide clean, unified franchise schemas for modern anime streaming UIs, mobile apps, and bots.</p>
 					</div>
 				</div>

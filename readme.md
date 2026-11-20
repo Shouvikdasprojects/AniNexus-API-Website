@@ -2,7 +2,7 @@
 
 [![AniNexus](static/aninexus.svg)](#)
 
-The official documentation, showcase, and interactive playground website for **AniNexus API** — the open Master Franchise & Anime Intelligence platform powering **AnimeNation India**.
+The official documentation, showcase, and interactive playground website for **AniNexus API** — the open Master Franchise & Anime Intelligence platform.
 
 ---
 
@@ -57,4 +57,4 @@ npm run preview
 
 ## 📄 License
 
-MIT License. Designed and maintained for **AnimeNation India**.
+MIT License. Designed and maintained by the AniNexus Open Initiative.

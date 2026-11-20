@@ -15,7 +15,7 @@ const awardsStartYear = currentYear - 5;
                     <img src={Logo} alt="AniNexus API Logo" class="footerLogo" />
                     <span class="footerTitle">AniNexus <span class="apiBadge">API</span></span>
                 </a>
-                <p>The Master Franchise & Legal Anime Intelligence Platform</p>
+                <p>The Enterprise Master Franchise & Legal Anime Intelligence Platform</p>
 
                 <div class="statusPill">
                     <span class="pulseDot"></span>
@@ -56,7 +56,7 @@ const awardsStartYear = currentYear - 5;
 
 <div class="copyright">
     <div class="copyright__content">
-        <span>© 2024–{currentYear} AniNexus API. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for anime developers worldwide.</span>
+        <span>© 2024–{currentYear} AniNexus API. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for the global anime community.</span>
         <span>Open-Source Anime Intelligence & Master Franchise Platform.</span>
     </div>
 </div>
