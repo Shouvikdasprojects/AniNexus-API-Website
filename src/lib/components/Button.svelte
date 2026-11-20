@@ -5,25 +5,40 @@
     export let size = 'default';
     export let url = null;
     export let urlTarget = "_self";
+    export let title = "";
 
     export let callback = null;
 
-    function onClick() {
+    function onClick(e) {
+        if (!url || url === '#' || url === 'null') {
+            e.preventDefault();
+        }
         dispatch('message', {text: 'clicked'});
 
         if (callback instanceof Function) {
-            callback()
+            callback(e);
         }
     }
 </script>
 
+{#if url && url !== 'null'}
 <a href="{url}"
-   target={url ? urlTarget : null}
+   target={urlTarget}
+   title={title || null}
    class="button button--type-{type} button--size-{size}"
    on:click={onClick}
 >
     <slot/>
 </a>
+{:else}
+<button type="button"
+   title={title || null}
+   class="button button--type-{type} button--size-{size}"
+   on:click={onClick}
+>
+    <slot/>
+</button>
+{/if}
 
 <style lang="scss">
     .button {
@@ -37,9 +52,16 @@
       user-select: none;
       max-width: fit-content;
       cursor: pointer;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      text-decoration: none;
+      box-sizing: border-box;
 
       &:active {
-        transform: translateY(5px);
+        transform: translateY(2px);
       }
 
         &--size {
@@ -53,7 +75,7 @@
           }
 
           &-full-width {
-            width: -webkit-fill-available;
+            width: 100%;
             max-width: unset;
             display: flex;
             justify-content: center;
@@ -134,7 +156,7 @@
         &--type {
           &-nav-link, &-nav-icon-link {
             display: flex;
-            padding: 32px 64px;
+            padding: 20px 32px;
             font-size: var(--type-size-heading-3);
             width: 100%;
 
@@ -148,12 +170,12 @@
 
     @media screen and (max-width: 700px) {
       .button {
-        width: -webkit-fill-available;
+        width: 100%;
         max-width: unset;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 16px 24px;
+        padding: 14px 20px;
 
         &--type-link,
         &--type-link-heading,
@@ -161,6 +183,7 @@
           display: inline;
           padding: 0 4px;
           margin: 0;
+          width: auto;
         }
       }
     }

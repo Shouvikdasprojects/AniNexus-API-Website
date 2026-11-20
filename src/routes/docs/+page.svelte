@@ -28,14 +28,14 @@
 
     const API_BASE = "https://ani-nexus.onrender.com";
 
-    let activeCategory = "top";
+    let activeCategory = "all";
     let searchQuery = "";
     let copiedEndpoint = null;
     let copiedCode = null;
 
-    // Endpoints data definition
+    // Endpoints data definition (All 19 verified live endpoints)
     let endpoints = [
-        // Health
+        // 1. System Health
         {
             id: "health",
             category: "system",
@@ -44,12 +44,8 @@
             method: "GET",
             path: "/health",
             title: "Health & Uptime Monitor",
-            description: "Returns the real-time server health, current timestamp, and process uptime in seconds.",
+            description: "Returns the real-time server health, ISO timestamp, and continuous process uptime in seconds.",
             params: [],
-            defaultUrl: `${API_BASE}/health`,
-            curlExample: `curl -X GET "${API_BASE}/health"`,
-            jsExample: `const res = await fetch("${API_BASE}/health");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/health")\nprint(res.json())`,
             loading: false,
             response: null,
             status: null,
@@ -57,7 +53,7 @@
             error: null
         },
 
-        // Top Collections
+        // 2. Top Collections
         {
             id: "top-trending",
             category: "top",
@@ -66,20 +62,16 @@
             method: "GET",
             path: "/api/v1/top",
             title: "Curated Top Collections",
-            description: "Fetches curated leaderboards for trending, popular, highest-rated, and box-office movies.",
+            description: "Fetches curated leaderboards for trending, popular, highest-rated, box-office movies, and currently airing anime.",
             params: [
                 {
                     name: "type",
                     type: "query",
                     default: "trending",
-                    options: ["trending", "popular", "rated", "movies"],
+                    options: ["trending", "popular", "rated", "movies", "airing"],
                     description: "Collection type to retrieve"
                 }
             ],
-            defaultUrl: `${API_BASE}/api/v1/top?type=trending`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/top?type=trending"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/top?type=trending");\nconst { data } = await res.json();\nconsole.log(data.franchises);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/top?type=trending")\nprint(res.json()["data"])`,
             loading: false,
             response: null,
             status: null,
@@ -87,7 +79,7 @@
             error: null
         },
 
-        // Seasonal Hub
+        // 3. Seasonal Hub
         {
             id: "seasons-now",
             category: "seasons",
@@ -96,12 +88,8 @@
             method: "GET",
             path: "/api/v1/seasons/now",
             title: "Current Season Airing Anime",
-            description: "Returns all currently broadcasting anime titles for the current broadcast quarter with verified dubs and dual scores.",
+            description: "Returns all currently broadcasting anime titles for the current broadcast quarter with verified dubs and dual community scores.",
             params: [],
-            defaultUrl: `${API_BASE}/api/v1/seasons/now`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/seasons/now"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/seasons/now");\nconst data = await res.json();\nconsole.log(data.data.franchises);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/seasons/now")\nprint(res.json()["data"])`,
             loading: false,
             response: null,
             status: null,
@@ -115,13 +103,40 @@
             categoryIcon: IconCalendarEvent,
             method: "GET",
             path: "/api/v1/seasons/upcoming",
-            title: "Upcoming Season Anime",
-            description: "Returns upcoming anime releases for the next seasonal broadcast slate.",
+            title: "Upcoming Season Releases",
+            description: "Returns upcoming anime releases scheduled for the next seasonal broadcast cycle.",
             params: [],
-            defaultUrl: `${API_BASE}/api/v1/seasons/upcoming`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/seasons/upcoming"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/seasons/upcoming");\nconst data = await res.json();\nconsole.log(data.data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/seasons/upcoming")\nprint(res.json())`,
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "seasons-archive",
+            category: "seasons",
+            categoryLabel: "Seasonal Hub",
+            categoryIcon: IconCalendarEvent,
+            method: "GET",
+            path: "/api/v1/seasons/:year/:season",
+            title: "Historical Seasonal Archive",
+            description: "Retrieves complete archive of anime broadcast in a specific historical quarter (e.g. Fall 2024).",
+            params: [
+                {
+                    name: "year",
+                    type: "path",
+                    default: "2024",
+                    options: ["2026", "2025", "2024", "2023", "2022", "2021", "2020"],
+                    description: "Archive year"
+                },
+                {
+                    name: "season",
+                    type: "path",
+                    default: "fall",
+                    options: ["winter", "spring", "summer", "fall"],
+                    description: "Seasonal quarter"
+                }
+            ],
             loading: false,
             response: null,
             status: null,
@@ -129,7 +144,7 @@
             error: null
         },
 
-        // Awards Engine
+        // 4. Anime Awards Engine
         {
             id: "awards-latest",
             category: "awards",
@@ -138,12 +153,8 @@
             method: "GET",
             path: "/api/v1/awards/latest",
             title: "Latest Crunchyroll Anime Awards",
-            description: `Fetches official winners & nominees across categories (Anime of the Year, Best Animation, Best Action, etc.) for the current award cycle (${currentYear}).`,
+            description: `Fetches official winners & nominees across all categories (Anime of the Year, Best Animation, Best Action, etc.) for the current award cycle (2026).`,
             params: [],
-            defaultUrl: `${API_BASE}/api/v1/awards/latest`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/awards/latest"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/awards/latest");\nconst { data } = await res.json();\nconsole.log("Year:", data.year, data.categories);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/awards/latest")\nprint(res.json()["data"])`,
             loading: false,
             response: null,
             status: null,
@@ -158,20 +169,40 @@
             method: "GET",
             path: "/api/v1/awards/:year",
             title: "Awards by Year (5-Year Rolling Window)",
-            description: `Returns award results for a specific year within the 5-year rolling window (${awardsStartYear}–${currentYear}). Years older than 5 years return HTTP 410 Gone.`,
+            description: `Returns award results for a specific year within the 5-year rolling window (2021–2026). Years older than 5 years trigger HTTP 410 Gone auto-purge boundary.`,
             params: [
                 {
                     name: "year",
                     type: "path",
-                    default: String(currentYear - 1),
-                    options: [String(currentYear), String(currentYear - 1), String(currentYear - 2), String(currentYear - 3), String(currentYear - 4), String(currentYear - 5), String(currentYear - 6)],
-                    description: `Award year (${awardsStartYear}-${currentYear} active; ${currentYear - 6} triggers 410 Gone test)`
+                    default: "2026",
+                    options: ["2026", "2025", "2024", "2023", "2022", "2021", "2020"],
+                    description: "Award year (2021-2026 active; 2020 triggers 410 Gone auto-purge)"
                 }
             ],
-            defaultUrl: `${API_BASE}/api/v1/awards/${currentYear - 1}`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/awards/${currentYear - 1}"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/awards/${currentYear - 1}");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/awards/${currentYear - 1}")\nprint(res.json())`,
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "awards-category",
+            category: "awards",
+            categoryLabel: "Anime Awards",
+            categoryIcon: IconTrophy,
+            method: "GET",
+            path: "/api/v1/awards/category/:categorySlug",
+            title: "Award Category Historical Timeline",
+            description: "Historical view tracking award winners and nominees for a specific category across the entire 5-year rolling window.",
+            params: [
+                {
+                    name: "categorySlug",
+                    type: "path",
+                    default: "anime-of-the-year",
+                    options: ["anime-of-the-year", "best-animation", "best-action", "best-score", "best-voice-artist-performance-japanese"],
+                    description: "Award category slug"
+                }
+            ],
             loading: false,
             response: null,
             status: null,
@@ -179,7 +210,7 @@
             error: null
         },
 
-        // Master Franchise Vault
+        // 5. Master Franchise Vault
         {
             id: "series-slug",
             category: "franchises",
@@ -187,21 +218,17 @@
             categoryIcon: IconBuildingArch,
             method: "GET",
             path: "/api/v1/series/:slug",
-            title: "Complete Master Franchise Details",
+            title: "Master Franchise Dossier",
             description: "Retrieves complete master franchise document with unified multi-season timeline, dual community consensus scores, verified dub tracks, and legal OTT links.",
             params: [
                 {
                     name: "slug",
                     type: "path",
                     default: "attack-on-titan",
-                    options: ["attack-on-titan", "solo-leveling", "jujutsu-kaisen", "frieren-beyond-journeys-end", "demon-slayer-kimetsu-no-yaiba", "naruto", "one-piece", "death-note"],
-                    description: "Franchise slug identifier"
+                    options: ["attack-on-titan", "solo-leveling", "jujutsu-kaisen", "frieren-beyond-journeys-end", "demon-slayer-kimetsu-no-yaiba", "one-punch-man", "my-hero-academia", "hunter-x-hunter-2011", "steins-gate", "chainsaw-man"],
+                    description: "Curated franchise slug identifier (2010–2026)"
                 }
             ],
-            defaultUrl: `${API_BASE}/api/v1/series/attack-on-titan`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/series/attack-on-titan"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/series/attack-on-titan");\nconst { data } = await res.json();\nconsole.log(data.titles, data.timeline);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/series/attack-on-titan")\nprint(res.json()["data"])`,
             loading: false,
             response: null,
             status: null,
@@ -209,19 +236,95 @@
             error: null
         },
         {
-            id: "franchises-list",
+            id: "series-timeline",
             category: "franchises",
             categoryLabel: "Master Franchises",
             categoryIcon: IconBuildingArch,
             method: "GET",
-            path: "/api/v1/franchises",
-            title: "List All Master Franchises",
-            description: "Returns paginated directory of the 353 curated master franchises in the AniNexus vault.",
-            params: [],
-            defaultUrl: `${API_BASE}/api/v1/franchises`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/franchises"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/franchises");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/franchises")\nprint(res.json())`,
+            path: "/api/v1/series/:slug/timeline",
+            title: "Franchise Chronological Watch Order Timeline",
+            description: "Returns the consolidated chronological viewing order of all seasons, movies, OVAs, and canon specials for a franchise.",
+            params: [
+                {
+                    name: "slug",
+                    type: "path",
+                    default: "attack-on-titan",
+                    options: ["attack-on-titan", "solo-leveling", "jujutsu-kaisen", "frieren-beyond-journeys-end", "demon-slayer-kimetsu-no-yaiba", "one-punch-man"],
+                    description: "Franchise slug identifier"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "series-episodes",
+            category: "franchises",
+            categoryLabel: "Master Franchises",
+            categoryIcon: IconBuildingArch,
+            method: "GET",
+            path: "/api/v1/series/:slug/episodes",
+            title: "Consolidated Episode Directory",
+            description: "Returns complete episode directory with episode titles, broadcast air dates, and canon vs. filler classification.",
+            params: [
+                {
+                    name: "slug",
+                    type: "path",
+                    default: "attack-on-titan",
+                    options: ["attack-on-titan", "solo-leveling", "jujutsu-kaisen", "frieren-beyond-journeys-end"],
+                    description: "Franchise slug identifier"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "anime-part",
+            category: "franchises",
+            categoryLabel: "Master Franchises",
+            categoryIcon: IconBuildingArch,
+            method: "GET",
+            path: "/api/v1/anime/:idOrSlug",
+            title: "Single Season / Anime Part by MAL ID or Slug",
+            description: "Fetches individual anime season or film metadata directly by MyAnimeList ID (e.g. 52991) or title slug.",
+            params: [
+                {
+                    name: "idOrSlug",
+                    type: "path",
+                    default: "52991",
+                    options: ["52991", "16498", "40748", "38000", "attack-on-titan"],
+                    description: "MAL ID or anime slug"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "anime-languages",
+            category: "franchises",
+            categoryLabel: "Master Franchises",
+            categoryIcon: IconBuildingArch,
+            method: "GET",
+            path: "/api/v1/anime/:idOrSlug/languages",
+            title: "Verified Audio Dub & Subtitle Matrix",
+            description: "Returns 100% verified localized audio dubbing and subtitle availability matrix (Hindi, English, Japanese, Bengali, Tamil, Telugu).",
+            params: [
+                {
+                    name: "idOrSlug",
+                    type: "path",
+                    default: "attack-on-titan",
+                    options: ["attack-on-titan", "52991", "solo-leveling", "jujutsu-kaisen"],
+                    description: "MAL ID or anime slug"
+                }
+            ],
             loading: false,
             response: null,
             status: null,
@@ -229,29 +332,56 @@
             error: null
         },
 
-        // Search & Filtering
+        // 6. Search & Filtering
         {
             id: "anime-search",
             category: "search",
             categoryLabel: "Search & Filter",
             categoryIcon: IconSearch,
             method: "GET",
-            path: "/api/v1/anime/search",
-            title: "Fast-Text Fuzzy Search",
-            description: "Search across English titles, Romaji transliterations, and synonyms in the master franchise vault.",
+            path: "/api/v1/search",
+            title: "Typo-Tolerant Omni-Search",
+            description: "Fast-text search across English titles, Romaji transliterations, Kanji, and synonyms in the master franchise vault.",
             params: [
                 {
                     name: "q",
                     type: "query",
-                    default: "bleach",
-                    options: ["bleach", "titan", "leveling", "jujutsu", "frieren", "dandadan"],
-                    description: "Search keywords"
+                    default: "titan",
+                    options: ["titan", "frieren", "leveling", "jujutsu", "demon", "hero", "chainsaw"],
+                    description: "Search keyword"
                 }
             ],
-            defaultUrl: `${API_BASE}/api/v1/anime/search?q=bleach`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/anime/search?q=bleach"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/anime/search?q=bleach");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/anime/search?q=bleach")\nprint(res.json())`,
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "catalog-filter",
+            category: "search",
+            categoryLabel: "Search & Filter",
+            categoryIcon: IconSearch,
+            method: "GET",
+            path: "/api/v1/filter",
+            title: "Multi-Criteria Catalog Filter",
+            description: "Filter franchises across multiple dimensions including genre, broadcast year, and format.",
+            params: [
+                {
+                    name: "genre",
+                    type: "query",
+                    default: "action",
+                    options: ["action", "adventure", "fantasy", "drama", "sci-fi", "supernatural", "mystery"],
+                    description: "Genre tag"
+                },
+                {
+                    name: "year",
+                    type: "query",
+                    default: "2024",
+                    options: ["2026", "2025", "2024", "2023", "2022"],
+                    description: "Broadcast release year"
+                }
+            ],
             loading: false,
             response: null,
             status: null,
@@ -259,21 +389,17 @@
             error: null
         },
 
-        // Genres
+        // 7. Genres
         {
             id: "anime-genres",
             category: "genres",
             categoryLabel: "Genres & Taxonomies",
             categoryIcon: IconTag,
             method: "GET",
-            path: "/api/v1/anime/genres",
-            title: "Anime Genres & Icons Directory",
-            description: "Returns all official genres with display names, slugs, and associated emoji icons.",
+            path: "/api/v1/genres",
+            title: "Master Genres & Taxonomies Catalog",
+            description: "Returns all 34 curated official anime genres with display names, slugs, and associated icons.",
             params: [],
-            defaultUrl: `${API_BASE}/api/v1/anime/genres`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/anime/genres"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/anime/genres");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/anime/genres")\nprint(res.json())`,
             loading: false,
             response: null,
             status: null,
@@ -281,7 +407,7 @@
             error: null
         },
 
-        // Schedule
+        // 8. Airing Schedule
         {
             id: "anime-schedule",
             category: "schedule",
@@ -289,13 +415,9 @@
             categoryIcon: IconClock,
             method: "GET",
             path: "/api/v1/schedule",
-            title: "Daily Airing Broadcast Schedule",
-            description: "Returns the weekly anime broadcast schedule organized by days of the week.",
+            title: "Weekly Airing Broadcast Schedule",
+            description: "Returns the weekly 7-day anime broadcast schedule organized by days of the week with localized dub availability flags.",
             params: [],
-            defaultUrl: `${API_BASE}/api/v1/schedule`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/schedule"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/schedule");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/schedule")\nprint(res.json())`,
             loading: false,
             response: null,
             status: null,
@@ -303,7 +425,7 @@
             error: null
         },
 
-        // News
+        // 9. News Feed
         {
             id: "anime-news",
             category: "news",
@@ -311,13 +433,25 @@
             categoryIcon: IconNews,
             method: "GET",
             path: "/api/v1/news",
-            title: "60-Day Industry News Feed",
-            description: "Returns recent anime licensing and production news articles (retained for 60 days).",
+            title: "Anime Industry News Feed (with Cover Photos)",
+            description: "Returns recent anime licensing and production news articles with high-resolution thumbnail images (60-day rolling retention).",
             params: [],
-            defaultUrl: `${API_BASE}/api/v1/news`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/news"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/news");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/news")\nprint(res.json())`,
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "anime-articles",
+            category: "news",
+            categoryLabel: "News Feed",
+            categoryIcon: IconNews,
+            method: "GET",
+            path: "/api/v1/articles",
+            title: "Curated Anime Articles & Reviews",
+            description: "Returns comprehensive editorial articles, character analyses, and industry breakdowns.",
+            params: [],
             loading: false,
             response: null,
             status: null,
@@ -325,7 +459,7 @@
             error: null
         },
 
-        // Trailers
+        // 10. Official Trailers
         {
             id: "anime-trailers",
             category: "trailers",
@@ -334,12 +468,8 @@
             method: "GET",
             path: "/api/v1/trailers",
             title: "Official Anime Trailers & Teasers",
-            description: "Returns latest verified official anime trailers and PV teaser links.",
+            description: "Returns latest verified official anime promotional videos with YouTube video IDs, embed URLs, and thumbnail stills.",
             params: [],
-            defaultUrl: `${API_BASE}/api/v1/trailers`,
-            curlExample: `curl -X GET "${API_BASE}/api/v1/trailers"`,
-            jsExample: `const res = await fetch("${API_BASE}/api/v1/trailers");\nconst data = await res.json();\nconsole.log(data);`,
-            pythonExample: `import requests\nres = requests.get("${API_BASE}/api/v1/trailers")\nprint(res.json())`,
             loading: false,
             response: null,
             status: null,
@@ -369,7 +499,7 @@
         { id: "search", label: "Search & Filter", icon: IconSearch },
         { id: "genres", label: "Genres", icon: IconTag },
         { id: "schedule", label: "Schedule", icon: IconClock },
-        { id: "news", label: "News Feed", icon: IconNews },
+        { id: "news", label: "News & Articles", icon: IconNews },
         { id: "trailers", label: "Trailers", icon: IconMovie },
         { id: "system", label: "System Health", icon: IconHeartbeat }
     ];
@@ -407,6 +537,18 @@
             }
         }
         return url;
+    }
+
+    function getCurlSnippet(ep, _trigger) {
+        return `curl -X GET "${buildUrl(ep)}"`;
+    }
+
+    function getJsSnippet(ep, _trigger) {
+        return `const res = await fetch("${buildUrl(ep)}");\nconst data = await res.json();\nconsole.log(data);`;
+    }
+
+    function getPythonSnippet(ep, _trigger) {
+        return `import requests\n\nres = requests.get("${buildUrl(ep)}")\nprint(res.json())`;
     }
 
     async function executeRequest(ep) {
@@ -453,6 +595,32 @@
             if (copiedCode === id) copiedCode = null;
         }, 2000);
     }
+
+    function selectAndScrollToHash() {
+        if (typeof window !== "undefined" && window.location.hash) {
+            const targetId = window.location.hash.replace("#", "");
+            const found = endpoints.find(e => e.id === targetId);
+            if (found) {
+                activeCategory = found.category;
+                setTimeout(() => {
+                    const el = document.getElementById(targetId);
+                    if (el) {
+                        el.scrollIntoView({ behavior: "smooth", block: "start" });
+                        el.classList.add("highlighted");
+                        setTimeout(() => el.classList.remove("highlighted"), 2500);
+                    }
+                }, 150);
+            }
+        }
+    }
+
+    onMount(() => {
+        selectAndScrollToHash();
+        window.addEventListener("hashchange", selectAndScrollToHash);
+        return () => {
+            window.removeEventListener("hashchange", selectAndScrollToHash);
+        };
+    });
 </script>
 
 <svelte:head>
@@ -696,8 +864,8 @@
                                     <button
                                         class="copySnippetBtn"
                                         on:click={() => {
-                                            const code = activeSnippetTabs[ep.id] === 'curl' ? ep.curlExample :
-                                                        activeSnippetTabs[ep.id] === 'js' ? ep.jsExample : ep.pythonExample;
+                                            const code = activeSnippetTabs[ep.id] === 'curl' ? getCurlSnippet(ep, paramValues[ep.id]) :
+                                                        activeSnippetTabs[ep.id] === 'js' ? getJsSnippet(ep, paramValues[ep.id]) : getPythonSnippet(ep, paramValues[ep.id]);
                                             copyCodeSnippet(code, ep.id);
                                         }}
                                     >
@@ -712,11 +880,11 @@
                                 </div>
                                 <div class="snippetBody">
                                     {#if activeSnippetTabs[ep.id] === 'curl'}
-                                        <pre><code>{ep.curlExample}</code></pre>
+                                        <pre><code>{getCurlSnippet(ep, paramValues[ep.id])}</code></pre>
                                     {:else if activeSnippetTabs[ep.id] === 'js'}
-                                        <pre><code>{ep.jsExample}</code></pre>
+                                        <pre><code>{getJsSnippet(ep, paramValues[ep.id])}</code></pre>
                                     {:else}
-                                        <pre><code>{ep.pythonExample}</code></pre>
+                                        <pre><code>{getPythonSnippet(ep, paramValues[ep.id])}</code></pre>
                                     {/if}
                                 </div>
                             </div>
@@ -761,7 +929,16 @@
             a {
                 color: #A78BFA;
                 text-decoration: none;
-                &:hover { text-decoration: underline; }
+                &:hover {
+            border-color: rgba(139, 92, 246, 0.35);
+            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        &.highlighted {
+            border-color: #8B5CF6;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            transition: all 0.5s ease;
+        }
             }
 
             .active {

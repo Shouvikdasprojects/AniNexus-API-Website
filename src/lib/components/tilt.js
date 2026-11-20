@@ -54,7 +54,7 @@ export default function tilt(node, settingsObj) {
         destroy() {
             node.removeEventListener('mousemove', onMouseMove);
             node.removeEventListener('mouseleave', onMouseLeave);
-            node.removeEventListener('mouseleave', onMouseEnter);
+            node.removeEventListener('mouseenter', onMouseEnter);
         },
         update(settingsObj) {
             settings = getSettings(settingsObj);

@@ -24,10 +24,10 @@
     export let skeleton = false;
     export let cardExit = false;
 
-    $: statusClass = status;
+    $: statusClass = 'animeStatus-finished';
     $: isCardTransitioning = cardExit ? 'cardAnime--exit' : '';
 
-    onMount(() => {
+    $: {
         const norm = (status || "").toLowerCase();
         if (norm.includes("finish") || norm.includes("completed")) {
             statusClass = "animeStatus-finished";
@@ -36,9 +36,12 @@
         } else {
             statusClass = "animeStatus-upcoming";
         }
-    });
+    }
 
-    $: primaryScore = score || sourceScoreA || (sourceScoreB ? (sourceScoreB / 10).toFixed(1) : null);
+    $: rawScore = score || sourceScoreA || (sourceScoreB ? sourceScoreB / 10 : null);
+    $: primaryScore = typeof rawScore === 'number'
+        ? (rawScore > 10 ? (rawScore / 10).toFixed(2) : rawScore.toFixed(2))
+        : rawScore;
 </script>
 
 {#if skeleton}

@@ -72,7 +72,7 @@
 			<InlineBanner
 				type="patreon"
 				url="https://github.com/Shouvikdasprojects/AniNexus-API-Website"
-			>⚡ High-Performance Master Franchise & Anime Intelligence Platform</InlineBanner>
+			>⚡ Master Franchise Engine • Gateway: {serverHealth.status === 'healthy' ? '🟢 Operational' : '🟢 Online'} ({serverHealth.uptime ? Math.round(serverHealth.uptime / 3600) + 'h uptime' : '99.9% uptime'})</InlineBanner>
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>

@@ -1,31 +1,39 @@
 <script>
 import Button from "./Button.svelte";
-import {IconArrowDownLeft, IconBrandGithub, IconMenu, IconX, IconActivity} from "@tabler/icons-svelte";
+import {IconArrowDownLeft, IconBrandGithub, IconMenu, IconX} from "@tabler/icons-svelte";
 import Chip from "./Chip.svelte";
 import Logo from "$lib/images/aninexus.svg";
 
 let scrollY;
 let mobileNavToggled = false;
 $: isMinimized = scrollY > 50 ? 'navWrapper--minimize' : '';
+
 function toggleMobileNav() {
     mobileNavToggled = !mobileNavToggled;
     const navEl = document.getElementById("nav");
-    if (navEl) navEl.classList.toggle('active');
+    if (navEl) navEl.classList.toggle('active', mobileNavToggled);
+}
+
+function closeMobileNav() {
+    mobileNavToggled = false;
+    const navEl = document.getElementById("nav");
+    if (navEl) navEl.classList.remove('active');
 }
 </script>
 
 <svelte:window bind:scrollY />
 
-<div id="nav" class="navWrapper {isMinimized}">
+<div id="nav" class="navWrapper {isMinimized} {mobileNavToggled ? 'active' : ''}">
     <nav class="nav">
         <div class="nav__top">
-            <a href="/" class="logo">
+            <a href="/" class="logo" on:click={closeMobileNav}>
                 <img src={Logo} alt="AniNexus API Logo" class="logo-img" />
                 <span class="logo-title">AniNexus <span class="apiBadge">API</span></span>
             </a>
             <div id="mobile-nav">
                 <Button type="nav-trigger" size="small"
                     callback={toggleMobileNav}
+                    title="Toggle mobile menu"
                 >
                     {#if mobileNavToggled}
                         <IconX size={25} stroke={1.5} />
@@ -41,14 +49,15 @@ function toggleMobileNav() {
                     <Button
                         type="nav-link"
                         url="/docs"
+                        callback={closeMobileNav}
                     >
                         <IconArrowDownLeft class="external-link" size={20} stroke={1.5} />
                         Documentation
                         <Chip type="outline" size="small">v1</Chip>
                     </Button>
-                    <Button type="nav-link" url="/#features">Features</Button>
-                    <Button type="nav-link" url="/#how-it-works">How it works</Button>
-                    <Button type="nav-link" url="/docs">API Playground</Button>
+                    <Button type="nav-link" url="/#features" callback={closeMobileNav}>Features</Button>
+                    <Button type="nav-link" url="/#how-it-works" callback={closeMobileNav}>How it works</Button>
+                    <Button type="nav-link" url="/docs" callback={closeMobileNav}>API Playground</Button>
                 </div>
 
                 <div class="links">
@@ -76,7 +85,7 @@ function toggleMobileNav() {
       align-items: center;
       width: 100vw;
       backdrop-filter: blur(25px);
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(15, 23, 42, 0.85);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       transition: all 0.25s ease;
 
@@ -97,6 +106,8 @@ function toggleMobileNav() {
       &__top {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        width: 100%;
       }
 
       &__bodyWrapper {
@@ -204,10 +215,61 @@ function toggleMobileNav() {
       display: none;
     }
 
+    @media (min-width: 861px) {
+      .nav__top {
+        width: auto;
+      }
+    }
+
     @media (max-width: 860px) {
       #mobile-nav {
         display: block;
       }
+
+      .navWrapper {
+        height: 70px;
+      }
+
+      .navWrapper.active {
+        background: rgba(15, 23, 42, 0.98);
+
+        .nav__bodyWrapper {
+          display: flex;
+          position: fixed;
+          top: 70px;
+          left: 0;
+          width: 100vw;
+          height: calc(100vh - 70px);
+          background: rgba(15, 23, 42, 0.98);
+          backdrop-filter: blur(25px);
+          flex-direction: column;
+          padding: 24px;
+          overflow-y: auto;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+          .nav__body {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            gap: 20px;
+
+            .main {
+              flex-direction: column;
+              align-items: stretch;
+              width: 100%;
+              gap: 12px;
+            }
+
+            .links {
+              width: 100%;
+              justify-content: space-between;
+              padding-top: 16px;
+              border-top: 1px solid rgba(255, 255, 255, 0.08);
+            }
+          }
+        }
+      }
+
       .nav__bodyWrapper {
         display: none;
       }

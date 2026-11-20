@@ -1,12 +1,14 @@
 <script>
 import JetbrainsLogo from "../images/jetbrains.svg";
 import Divider from "./Divider.svelte";
-import {onMount} from "svelte";
+import {onMount, onDestroy} from "svelte";
 import supporters from "../../data/supporters.js";
 
 let marquee;
+let animId;
 
 onMount(() => {
+    if (!marquee || !marquee.children[0]) return;
     const clone = marquee.innerHTML;
     const firstElement = marquee.children[0];
 
@@ -14,18 +16,21 @@ onMount(() => {
     marquee.insertAdjacentHTML('beforeend', clone);
     marquee.insertAdjacentHTML('beforeend', clone);
 
-    setInterval(() => {
-        firstElement.style.marginLeft = `-${i}px`;
-
+    function step() {
+        if (!firstElement) return;
+        i += 0.5;
         if (i > firstElement.clientWidth) {
             i = 0;
         }
-
-        i += 0.2;
-    }, 0);
+        firstElement.style.marginLeft = `-${i}px`;
+        animId = requestAnimationFrame(step);
+    }
+    animId = requestAnimationFrame(step);
 });
 
-
+onDestroy(() => {
+    if (animId) cancelAnimationFrame(animId);
+});
 </script>
 
 <footer class="shoutouts" bind:this={marquee}>
