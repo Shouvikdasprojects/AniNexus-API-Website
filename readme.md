@@ -1,8 +1,10 @@
 # AniNexus API — Official Documentation & Showcase Website
 
-[![AniNexus](static/aninexus.svg)](#)
+[![AniNexus](static/aninexus.svg)](https://aninexus-api-website.pages.dev/)
 
 The official documentation, showcase, and interactive playground website for **AniNexus API** — the open Master Franchise & Anime Intelligence platform.
+
+> **Engineered & Maintained by [Shouvik Das](https://github.com/Shouvikdasprojects)**
 
 ---
 
@@ -13,7 +15,7 @@ The official documentation, showcase, and interactive playground website for **A
 - **100% Verified Dub Matrix**: Verified audio dub and subtitle mapping (Hindi, English, Japanese, Bengali, Tamil, Telugu).
 - **5-Year Rolling Anime Awards Engine**: Official Crunchyroll Anime Awards winners & nominees (2021–2026) with automated 6th-year auto-purge.
 - **Seasonal Airing Hub**: Real-time seasonal tracker with current airing titles (`/seasons/now`), upcoming releases, and historical archives.
-- **Interactive API Playground**: Real-time request execution against live Render gateway (`https://ani-nexus.onrender.com`) with latency monitoring and syntax-highlighted responses.
+- **Interactive API Playground**: Real-time request execution against live gateway (`https://ani-nexus.onrender.com`) with latency monitoring and syntax-highlighted responses.
 - **Zero-Token Auth & CORS**: Instant access with standard HTTP clients without API keys.
 
 ---
@@ -31,6 +33,10 @@ The official documentation, showcase, and interactive playground website for **A
 ## 🛠️ Local Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/Shouvikdasprojects/AniNexus-API-Website.git
+cd AniNexus-API-Website
+
 # Install dependencies
 npm install
 
@@ -48,13 +54,14 @@ npm run preview
 
 ## ☁️ Deployment (Cloudflare Pages)
 
-1. Connect this repository to **Cloudflare Pages**.
-2. Set Framework Preset: `SvelteKit`.
-3. Set Build Command: `npm run build`.
-4. Set Output Directory: `build`.
+1. Connect this repository (`Shouvikdasprojects/AniNexus-API-Website`) to **Cloudflare Pages**.
+2. **Framework Preset**: `SvelteKit` (or `None`).
+3. **Build Command**: `npm run build`.
+4. **Build Output Directory**: `build` *(Important: set to `build`, not `.svelte-kit/cloudflare`, because this site uses `@sveltejs/adapter-static`)*.
+5. **Environment Variable**: `NODE_VERSION` = `20`.
 
 ---
 
-## 📄 License
+## 📄 License & Attribution
 
-MIT License. Designed and maintained by the AniNexus Open Initiative.
+MIT License. Engineered and Powered by **Shouvik Das**.

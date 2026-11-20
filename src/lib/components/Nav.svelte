@@ -56,7 +56,7 @@ function toggleMobileNav() {
                         <span class="pulseDot"></span>
                         API Online
                     </a>
-                    <Button type="nav-icon-link" size="small" urlTarget="_blank" url="https://github.com/Shouvikdasprojects/ani-nexus">
+                    <Button type="nav-icon-link" size="small" urlTarget="_blank" url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" title="View Source on GitHub">
                         <IconBrandGithub size={20} stroke={1.5} />
                     </Button>
                 </div>

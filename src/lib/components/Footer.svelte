@@ -15,7 +15,7 @@ const awardsStartYear = currentYear - 5;
                     <img src={Logo} alt="AniNexus API Logo" class="footerLogo" />
                     <span class="footerTitle">AniNexus <span class="apiBadge">API</span></span>
                 </a>
-                <p>The Enterprise Master Franchise & Legal Anime Intelligence Platform</p>
+                <p>The Enterprise Master Franchise & Legal Anime Intelligence Platform — Powered by <strong>Shouvik Das</strong></p>
 
                 <div class="statusPill">
                     <span class="pulseDot"></span>
@@ -45,7 +45,7 @@ const awardsStartYear = currentYear - 5;
                 <div class="footer__links">
                     <strong>Ecosystem</strong>
                     <ul>
-                        <li><Button url="https://github.com/Shouvikdasprojects/ani-nexus" urlTarget="_blank" type="link"><IconBrandGithub size={16} /> GitHub Repo</Button></li>
+                        <li><Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank" type="link"><IconBrandGithub size={16} /> GitHub Repo</Button></li>
                         <li><Button url="https://ani-nexus.onrender.com/health" urlTarget="_blank" type="link">Health Monitor</Button></li>
                     </ul>
                 </div>
@@ -56,7 +56,7 @@ const awardsStartYear = currentYear - 5;
 
 <div class="copyright">
     <div class="copyright__content">
-        <span>© 2024–{currentYear} AniNexus API. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for the global anime community.</span>
+        <span>© 2024–{currentYear} AniNexus API. Powered by <strong>Shouvik Das</strong>. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for the global anime community.</span>
         <span>Open-Source Anime Intelligence & Master Franchise Platform.</span>
     </div>
 </div>

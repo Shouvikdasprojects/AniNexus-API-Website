@@ -6,7 +6,7 @@ export default [
         language: "javascript",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "SDK & Client",
@@ -15,7 +15,7 @@ export default [
         language: "typescript",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "Client Library",
@@ -24,7 +24,7 @@ export default [
         language: "python",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "Mobile Client",
@@ -33,7 +33,7 @@ export default [
         language: "dart",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "Client Package",
@@ -42,7 +42,7 @@ export default [
         language: "go",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "Package",
@@ -51,7 +51,7 @@ export default [
         language: "php",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "Crate",
@@ -60,7 +60,7 @@ export default [
         language: "rust",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "Mobile Package",
@@ -69,7 +69,7 @@ export default [
         language: "kotlin",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         type: "Package",
@@ -78,6 +78,6 @@ export default [
         language: "csharp",
         supportsV3: false,
         supportsV4: true,
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     }
 ];

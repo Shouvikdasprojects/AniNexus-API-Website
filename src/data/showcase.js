@@ -39,12 +39,12 @@ export default [
         title: "OtakuVault",
         summary: "Modern anime browser application built on top of high-performance REST APIs.",
         imageUrl: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80",
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     },
     {
         title: "Kagari Anime Hub",
         summary: "Full-stack anime timeline tracker with unified franchise viewing orders.",
         imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-        url: "https://github.com/Shouvikdasprojects/ani-nexus",
+        url: "https://github.com/Shouvikdasprojects/AniNexus-API-Website",
     }
 ];

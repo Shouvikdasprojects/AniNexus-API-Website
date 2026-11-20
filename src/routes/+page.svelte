@@ -71,12 +71,12 @@
 		<div class="left">
 			<InlineBanner
 				type="patreon"
-				url="https://github.com/Shouvikdasprojects/ani-nexus"
+				url="https://github.com/Shouvikdasprojects/AniNexus-API-Website"
 			>⚡ High-Performance Master Franchise & Anime Intelligence Platform</InlineBanner>
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine. Unified timelines for <strong>353+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>353+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
@@ -158,7 +158,7 @@
 					<p>Focus on building great anime applications while AniNexus handles data ingestion, franchise relationships, multi-language dub verification, and synchronized scoring. Zero rate-limit walls, zero scraping fragility, and instant JSON responses.</p>
 				</div>
 
-				<Button type="primary" url="https://github.com/Shouvikdasprojects/ani-nexus" urlTarget="_blank">
+				<Button type="primary" url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank">
 					<IconBrandGithub size={20} stroke={1.5} />
 					Visit GitHub Repository
 				</Button>
@@ -179,7 +179,7 @@
 							Launch API Playground
 							<IconArrowNarrowRight size={20} stroke={1.5} />
 						</Button>
-						<Button url="https://github.com/Shouvikdasprojects/ani-nexus" urlTarget="_blank" type="tertiary" size="full-width">
+						<Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank" type="tertiary" size="full-width">
 							<IconCirclePlus size={20} stroke={1.5} />
 							Contribute on GitHub
 						</Button>
@@ -491,7 +491,7 @@
 				</div>
 
 				<ButtonGroup type="stacked">
-					<Button url="https://github.com/Shouvikdasprojects/ani-nexus" urlTarget="_blank" type="primary" size="full-width">
+					<Button url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank" type="primary" size="full-width">
 						<IconBrandGithub size={20} stroke={1.5} />
 						Add your integration via GitHub PR
 					</Button>
