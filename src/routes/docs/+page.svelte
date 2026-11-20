@@ -28,6 +28,7 @@
 
     const API_BASE = "https://ani-nexus.onrender.com";
 
+    let totalFranchises = 371;
     let activeCategory = "all";
     let searchQuery = "";
     let copiedEndpoint = null;
@@ -617,6 +618,14 @@
     onMount(() => {
         selectAndScrollToHash();
         window.addEventListener("hashchange", selectAndScrollToHash);
+
+        fetch(`${API_BASE}/api/v1/top?type=popular&limit=1`)
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.total) totalFranchises = data.total;
+            })
+            .catch(() => {});
+
         return () => {
             window.removeEventListener("hashchange", selectAndScrollToHash);
         };
@@ -624,8 +633,8 @@
 </script>
 
 <svelte:head>
-    <title>AniNexus API Documentation — v1 REST Reference & Live Playground</title>
-    <meta name="description" content="Explore and test all AniNexus REST endpoints live: Top Anime, Seasonal Hub, Crunchyroll Anime Awards (2021-2026), 353 Master Franchises, Verified Dubs, and Multi-Score Engine.">
+    <title>AniNexus REST API Documentation — v1 Reference & Interactive Playground</title>
+    <meta name="description" content="Explore and test all 19 AniNexus REST endpoints live: Top Anime, Seasonal Hub, Crunchyroll Anime Awards (2021-2026), Master Franchises, Verified Dubs, and Multi-Score Engine.">
 </svelte:head>
 
 <Nav />
@@ -637,29 +646,43 @@
             <div class="breadcrumb">
                 <a href="/">Home</a>
                 <span>/</span>
-                <span class="active">API Documentation</span>
-                <Chip size="small" type="outline">v1.0.0</Chip>
+                <span class="active">REST API Documentation</span>
+                <Chip size="small" type="outline">REST v1.0.0</Chip>
             </div>
-            <h1>AniNexus API <span>Interactive Reference</span></h1>
+            <h1>AniNexus <span>REST API Reference</span></h1>
             <p>
-                Query the unified Master Franchise Vault of <strong>353 curated titles (2010–{currentYear})</strong>, 
-                5-year rolling anime awards, 100% verified audio dubs, and dual community consensus scores with zero authentication required.
+                A high-performance <strong>REST API (v1)</strong> serving <strong>{totalFranchises}+ curated Master Franchises (2010–{currentYear})</strong>, 
+                5-year rolling anime awards, 100% verified audio dub tracks (Hindi & English), and dual community consensus scores with zero token authorization required.
             </p>
+
+            <div class="roadmapNotice">
+                <span class="noticeBadge">Architecture Notice</span>
+                <span>Active protocol: <strong>REST API v1 (JSON over HTTPS)</strong>. GraphQL queries and WebSocket real-time broadcast streams are scheduled on the future roadmap.</span>
+            </div>
 
             <div class="heroPills">
                 <div class="heroPill">
                     <span class="pillDot"></span>
-                    <span>Live Gateway: <code>https://ani-nexus.onrender.com</code></span>
+                    <span>Base URL: <code>https://ani-nexus.onrender.com/api/v1</code></span>
                 </div>
                 <div class="heroPill">
-                    <span>⚡ CORS Enabled</span>
+                    <span>⚡ RESTful JSON</span>
                 </div>
                 <div class="heroPill">
-                    <span>🔓 Zero Token Auth</span>
+                    <span>🔓 No API Key Required</span>
                 </div>
                 <div class="heroPill">
-                    <span>🏆 5-Year Rolling Window ({awardsStartYear}–{currentYear})</span>
+                    <span>🌐 CORS Enabled</span>
                 </div>
+                <div class="heroPill">
+                    <span>⏱️ Rate Limit: 60 req/min</span>
+                </div>
+                <a href="/openapi.json" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
+                    <span>📜 OpenAPI 3.1 Spec (JSON)</span>
+                </a>
+                <a href="/llms.txt" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
+                    <span>🤖 AI Agent Guide (llms.txt)</span>
+                </a>
             </div>
         </div>
     </header>
@@ -965,10 +988,39 @@
             line-height: 1.6;
             color: #94A3B8;
             max-width: 820px;
-            margin: 0 0 24px;
+            margin: 0 0 16px;
 
             strong {
                 color: #F1F5F9;
+            }
+        }
+
+        .roadmapNotice {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin-bottom: 22px;
+            font-size: 0.85rem;
+            color: #C4B5FD;
+
+            .noticeBadge {
+                background: #8B5CF6;
+                color: #FFFFFF;
+                font-size: 0.72rem;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 4px;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                white-space: nowrap;
+            }
+
+            strong {
+                color: #FFFFFF;
             }
         }
 
@@ -989,6 +1041,21 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 9999px;
             padding: 6px 14px;
+
+            &.heroLink {
+                background: rgba(139, 92, 246, 0.15);
+                border-color: rgba(139, 92, 246, 0.35);
+                color: #DDD6FE;
+                text-decoration: none;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background: #8B5CF6;
+                    color: #FFFFFF;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+                }
+            }
 
             code {
                 color: #A78BFA;

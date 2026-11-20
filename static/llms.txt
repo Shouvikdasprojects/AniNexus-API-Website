@@ -1,0 +1,154 @@
+# AniNexus REST API (v1)
+
+> AniNexus is a high-performance, 100% free and open-source Anime Metadata, Media & Ecosystem REST API. It aggregates verified multi-season anime franchise timelines, dual community ratings (MyAnimeList + AniList), localized audio dubbing matrices (Hindi, English, Japanese, etc.), live broadcast schedules, real-time industry news feeds, and a curated 5-year rolling Anime Awards vault.
+
+- **API Architecture:** RESTful Web API (v1)
+- **Base URL:** `https://ani-nexus.onrender.com/api/v1`
+- **Root Documentation:** `https://ani-nexus.onrender.com/`
+- **Health Check:** `https://ani-nexus.onrender.com/health`
+- **Frontend Portal:** `https://aninexus-api-website.pages.dev`
+- **Authentication:** None required! 100% Free, Public & Open.
+- **CORS:** Enabled (`Access-Control-Allow-Origin: *`) for all browser and web applications.
+- **Format:** JSON (`application/json; charset=utf-8`)
+- **Default Rate Limit:** 60 requests / minute per IP with standard HTTP 429 backoff headers.
+- **Future Roadmap:** GraphQL interface and WebSocket real-time broadcast streams are planned for future major releases.
+
+---
+
+## Core Distinguishing Features
+
+1. **Franchise-First Unified Timelines:** Unlike standard APIs that fragment every season into disjointed entries, AniNexus links all parts (seasons, movies, OVAs, specials) of 370+ master franchises into chronological watch-order timelines.
+2. **Dual-Score Consensus Engine:** Blends MyAnimeList (1-10 scale) and AniList (1-100 scale) into a single balanced combined score.
+3. **Multilingual Dub Matrix:** Directly provides verification flags for localized dubs including Hindi (`hasHindiDub`), English (`hasEnglishDub`), Bengali, Tamil, Telugu, and Japanese.
+4. **5-Year Rolling Awards Retention:** Curates Crunchyroll Anime Awards from 2021 to 2026. Queries for years older than 5 years (e.g. 2020) strictly return HTTP 410 Gone per automated data retention policy.
+5. **Intelligent News & Editorial Routing:** Automatically syncs RSS feeds (ANN, Crunchyroll, Anime Corner); items with images are routed to `/api/v1/news`, while text-only editorials route to `/api/v1/articles` with a 60-day TTL auto-purge.
+
+---
+
+## Complete REST API Endpoints Reference
+
+### 1. System Health
+- **`GET /health`**
+  - Description: Real-time service uptime, process status, and ISO timestamp.
+  - Query Params: None
+  - Example: `curl -s https://ani-nexus.onrender.com/health`
+
+### 2. Top Curated Collections
+- **`GET /api/v1/top`**
+  - Description: Leaderboards across trending, popular, rated, movies, and currently airing titles.
+  - Query Params:
+    - `type` (string, optional, default: `"trending"`): One of `trending`, `popular`, `rated`, `movies`, `airing`.
+    - `page` (number, optional, default: `1`): Pagination page number.
+    - `limit` (number, optional, default: `20`): Items per page (max `50`).
+  - Example: `curl -s "https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=5"`
+
+### 3. Seasonal Broadcast Hub
+- **`GET /api/v1/seasons/now`**
+  - Description: Anime airing in the current broadcast season with dual scores and dub info.
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/seasons/now`
+- **`GET /api/v1/seasons/upcoming`**
+  - Description: Upcoming anime queued for next broadcast cycles.
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/seasons/upcoming`
+- **`GET /api/v1/seasons/:year/:season`**
+  - Description: Historical seasonal archive.
+  - Path Params:
+    - `year` (number, e.g. `2024`)
+    - `season` (string: `winter`, `spring`, `summer`, `fall`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/seasons/2024/fall`
+
+### 4. Anime Awards Engine (5-Year Rolling Window: 2021–2026)
+- **`GET /api/v1/awards`**
+  - Description: Award window metadata and available ceremony years.
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/awards`
+- **`GET /api/v1/awards/latest`**
+  - Description: Latest ceremony winners and nominees (2026 edition).
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/awards/latest`
+- **`GET /api/v1/awards/:year`**
+  - Description: Award winners & nominees by year. Note: Requesting years < 2021 triggers `410 Gone`.
+  - Path Params:
+    - `year` (number, e.g. `2026`, `2025`, `2024`, `2023`, `2022`, `2021`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/awards/2026`
+- **`GET /api/v1/awards/category/:categorySlug`**
+  - Description: Historical timeline of nominees and winners for a specific award category.
+  - Path Params:
+    - `categorySlug` (string, e.g. `anime-of-the-year`, `best-animation`, `best-action`, `best-score`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/awards/category/anime-of-the-year`
+
+### 5. Master Franchise Vault
+- **`GET /api/v1/series/:slug`**
+  - Description: Full master franchise dossier with consolidated metadata, dub flags, ratings, and parts.
+  - Path Params:
+    - `slug` (string, e.g. `attack-on-titan`, `solo-leveling`, `jujutsu-kaisen`, `frieren-beyond-journeys-end`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/series/attack-on-titan`
+- **`GET /api/v1/series/:slug/timeline`**
+  - Description: Chronological watch-order timeline parts for the franchise.
+  - Path Params:
+    - `slug` (string)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/series/attack-on-titan/timeline`
+- **`GET /api/v1/series/:slug/episodes`**
+  - Description: Consolidated episode directory with filler/canon classifications.
+  - Path Params:
+    - `slug` (string)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/series/attack-on-titan/episodes`
+- **`GET /api/v1/anime/:idOrSlug`**
+  - Description: Single season or film metadata by MyAnimeList ID or slug.
+  - Path Params:
+    - `idOrSlug` (string or number, e.g. `52991` or `attack-on-titan`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/anime/52991`
+- **`GET /api/v1/anime/:idOrSlug/languages`**
+  - Description: Dedicated audio dub and subtitle language availability matrix.
+  - Path Params:
+    - `idOrSlug` (string or number)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/anime/attack-on-titan/languages`
+
+### 6. Search & Taxonomy Filters
+- **`GET /api/v1/search`**
+  - Description: Typo-tolerant omni-search across Romaji, English, Kanji, and aliases.
+  - Query Params:
+    - `q` (string, required): Search query (e.g. `titan`, `solo`, `frieren`)
+    - `limit` (number, optional, default: `10`)
+  - Example: `curl -s "https://ani-nexus.onrender.com/api/v1/search?q=titan"`
+- **`GET /api/v1/filter`**
+  - Description: Multi-criteria filter across genres, format, and broadcast year.
+  - Query Params:
+    - `genre` (string, e.g. `action`, `fantasy`, `sci-fi`)
+    - `year` (number, e.g. `2024`)
+    - `format` (string, e.g. `TV`, `Movie`, `OVA`)
+  - Example: `curl -s "https://ani-nexus.onrender.com/api/v1/filter?genre=action&year=2024"`
+- **`GET /api/v1/genres`**
+  - Description: Master list of 34 curated anime genres with slugs and icons.
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/genres`
+
+### 7. Broadcast Schedule & Media Feeds
+- **`GET /api/v1/schedule`**
+  - Description: Weekly 7-day airing calendar categorized by day with localized dub availability.
+  - Query Params:
+    - `day` (string, optional): `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`.
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/schedule`
+- **`GET /api/v1/news`**
+  - Description: Latest anime news items guaranteed to have cover images (60-day auto-purge TTL).
+  - Query Params:
+    - `limit` (number, optional, default: `20`)
+    - `page` (number, optional, default: `1`)
+  - Example: `curl -s "https://ani-nexus.onrender.com/api/v1/news?limit=10"`
+- **`GET /api/v1/articles`**
+  - Description: Editorial analyses, reviews, and text digests without images.
+  - Query Params:
+    - `limit` (number, optional, default: `20`)
+  - Example: `curl -s "https://ani-nexus.onrender.com/api/v1/articles?limit=10"`
+- **`GET /api/v1/trailers`**
+  - Description: Official YouTube trailers with embed URLs and video thumbnails.
+  - Query Params:
+    - `limit` (number, optional, default: `20`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/trailers`
+
+---
+
+## Instructions for AI Agents & LLMs
+
+When writing code (Flutter, React, Svelte, Vue, Python, Node.js, Swift, Kotlin, Go) that integrates AniNexus:
+1. Always use `https://ani-nexus.onrender.com/api/v1` as the base URL.
+2. No authorization header or API key is required. Do not invent an `Authorization: Bearer <key>` header.
+3. Handle HTTP `410 Gone` gracefully when querying awards older than 5 years.
+4. To check for Hindi or English dubs, inspect `item.dubAvailability.hasHindiDub` and `item.dubAvailability.hasEnglishDub`.
+5. For ratings, use `item.combinedScore` (0-100 scale) or divide by 10 for a standard 10-star rating.

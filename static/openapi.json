@@ -1,0 +1,290 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AniNexus REST API",
+    "version": "1.0.0",
+    "description": "AniNexus is a free, high-performance anime metadata and media REST API. Features unified franchise timelines, dual community ratings (MAL + AniList), audio dub matrix (Hindi, English, etc.), live broadcast schedules, and real-time news aggregation. (GraphQL variant planned for future releases).",
+    "contact": {
+      "name": "Shouvik Das",
+      "url": "https://aninexus-api-website.pages.dev"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://ani-nexus.onrender.com",
+      "description": "Production Gateway (REST API v1)"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "System Health & Uptime Monitor",
+        "description": "Returns current server health status, ISO timestamp, and uptime in seconds.",
+        "responses": {
+          "200": {
+            "description": "Server is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string", "example": "healthy" },
+                    "timestamp": { "type": "string", "format": "date-time" },
+                    "uptime": { "type": "number", "example": 31101.35 }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/top": {
+      "get": {
+        "summary": "Curated Top Collections",
+        "description": "Fetches curated leaderboards for trending, popular, highest-rated, box-office movies, and currently airing anime.",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["trending", "popular", "rated", "movies", "airing"],
+              "default": "trending"
+            },
+            "description": "Collection leaderboard type"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 1 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 20, "maximum": 50 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successful retrieval of top anime franchises" }
+        }
+      }
+    },
+    "/api/v1/seasons/now": {
+      "get": {
+        "summary": "Current Season Airing Anime",
+        "description": "Returns broadcasting anime titles for the current season with dub and score indicators.",
+        "responses": {
+          "200": { "description": "List of currently airing anime titles" }
+        }
+      }
+    },
+    "/api/v1/seasons/upcoming": {
+      "get": {
+        "summary": "Upcoming Season Releases",
+        "description": "Returns upcoming anime releases for next broadcast cycle.",
+        "responses": {
+          "200": { "description": "List of upcoming anime titles" }
+        }
+      }
+    },
+    "/api/v1/seasons/{year}/{season}": {
+      "get": {
+        "summary": "Historical Seasonal Archive",
+        "parameters": [
+          { "name": "year", "in": "path", "required": true, "schema": { "type": "integer", "example": 2024 } },
+          { "name": "season", "in": "path", "required": true, "schema": { "type": "string", "enum": ["winter", "spring", "summer", "fall"], "example": "fall" } }
+        ],
+        "responses": {
+          "200": { "description": "Historical seasonal anime list" }
+        }
+      }
+    },
+    "/api/v1/awards": {
+      "get": {
+        "summary": "Anime Awards Window Metadata",
+        "description": "Returns 5-year rolling window boundaries and available ceremony years.",
+        "responses": {
+          "200": { "description": "Awards metadata" }
+        }
+      }
+    },
+    "/api/v1/awards/latest": {
+      "get": {
+        "summary": "Latest Anime Awards Winners",
+        "description": "Returns official Crunchyroll Anime Awards winners & nominees for the latest edition (2026).",
+        "responses": {
+          "200": { "description": "Latest awards ceremony data" }
+        }
+      }
+    },
+    "/api/v1/awards/{year}": {
+      "get": {
+        "summary": "Awards by Year",
+        "description": "Returns award results for a specific year. Older than 5 years triggers 410 Gone.",
+        "parameters": [
+          { "name": "year", "in": "path", "required": true, "schema": { "type": "integer", "example": 2026 } }
+        ],
+        "responses": {
+          "200": { "description": "Award edition data" },
+          "410": { "description": "Year auto-purged per 5-year retention policy" }
+        }
+      }
+    },
+    "/api/v1/awards/category/{categorySlug}": {
+      "get": {
+        "summary": "Award Category Historical Timeline",
+        "parameters": [
+          { "name": "categorySlug", "in": "path", "required": true, "schema": { "type": "string", "example": "anime-of-the-year" } }
+        ],
+        "responses": {
+          "200": { "description": "Category history across active years" }
+        }
+      }
+    },
+    "/api/v1/series/{slug}": {
+      "get": {
+        "summary": "Master Franchise Dossier",
+        "description": "Full consolidated document with timeline, episodes, dubs, and scores.",
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string", "example": "attack-on-titan" } }
+        ],
+        "responses": {
+          "200": { "description": "Consolidated franchise dossier" },
+          "404": { "description": "Franchise not found" }
+        }
+      }
+    },
+    "/api/v1/series/{slug}/timeline": {
+      "get": {
+        "summary": "Franchise Chronological Watch Order",
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string", "example": "attack-on-titan" } }
+        ],
+        "responses": {
+          "200": { "description": "Chronological timeline parts" }
+        }
+      }
+    },
+    "/api/v1/series/{slug}/episodes": {
+      "get": {
+        "summary": "Consolidated Episode Directory",
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string", "example": "attack-on-titan" } }
+        ],
+        "responses": {
+          "200": { "description": "Episode list with canon/filler tags" }
+        }
+      }
+    },
+    "/api/v1/anime/{idOrSlug}": {
+      "get": {
+        "summary": "Single Anime Season or Film",
+        "parameters": [
+          { "name": "idOrSlug", "in": "path", "required": true, "schema": { "type": "string", "example": "52991" } }
+        ],
+        "responses": {
+          "200": { "description": "Anime part details" }
+        }
+      }
+    },
+    "/api/v1/anime/{idOrSlug}/languages": {
+      "get": {
+        "summary": "Audio Dub & Subtitle Matrix",
+        "parameters": [
+          { "name": "idOrSlug", "in": "path", "required": true, "schema": { "type": "string", "example": "attack-on-titan" } }
+        ],
+        "responses": {
+          "200": { "description": "Audio dub languages list" }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "summary": "Omni-Search",
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string", "example": "titan" } },
+          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": {
+          "200": { "description": "Search results" }
+        }
+      }
+    },
+    "/api/v1/filter": {
+      "get": {
+        "summary": "Catalog Multi-Filter",
+        "parameters": [
+          { "name": "genre", "in": "query", "required": false, "schema": { "type": "string", "example": "action" } },
+          { "name": "year", "in": "query", "required": false, "schema": { "type": "integer", "example": 2024 } }
+        ],
+        "responses": {
+          "200": { "description": "Filtered franchise entries" }
+        }
+      }
+    },
+    "/api/v1/genres": {
+      "get": {
+        "summary": "Genres & Taxonomies Catalog",
+        "responses": {
+          "200": { "description": "List of 34 anime genres" }
+        }
+      }
+    },
+    "/api/v1/schedule": {
+      "get": {
+        "summary": "Weekly Airing Broadcast Schedule",
+        "parameters": [
+          { "name": "day", "in": "query", "required": false, "schema": { "type": "string", "example": "monday" } }
+        ],
+        "responses": {
+          "200": { "description": "Weekly airing schedule grouped by weekday" }
+        }
+      }
+    },
+    "/api/v1/news": {
+      "get": {
+        "summary": "Anime Industry News (with Images)",
+        "description": "Feed items with verified cover images (60-day auto-purge TTL).",
+        "parameters": [
+          { "name": "page", "in": "query", "required": false, "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": { "description": "News articles list with imageUrl" }
+        }
+      }
+    },
+    "/api/v1/articles": {
+      "get": {
+        "summary": "Editorial Articles & Text Digests",
+        "description": "Feed items without cover images (text-only, 60-day auto-purge TTL).",
+        "parameters": [
+          { "name": "page", "in": "query", "required": false, "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": { "description": "Text articles list" }
+        }
+      }
+    },
+    "/api/v1/trailers": {
+      "get": {
+        "summary": "Official Anime Trailers & Embeds",
+        "parameters": [
+          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": { "description": "Official YouTube trailers" }
+        }
+      }
+    }
+  }
+}
