@@ -48,6 +48,7 @@
 	const awardsStartYear = currentYear - 5;
 
 	let serverHealth = { status: "checking", uptime: 0 };
+	let totalFranchises = 371;
 
 	onMount(async () => {
 		try {
@@ -56,6 +57,14 @@
 		} catch (e) {
 			serverHealth = { status: "online", uptime: 1800 };
 		}
+
+		try {
+			const topRes = await fetch("https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=1");
+			const topJson = await topRes.json();
+			if (topJson?.data?.total) {
+				totalFranchises = topJson.data.total;
+			}
+		} catch (e) {}
 	});
 </script>
 
@@ -78,17 +87,17 @@
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>353+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#series-slug"
-					description="353 curated franchises from 2010 to {currentYear} with multi-season timelines."
+					description="{totalFranchises} curated franchises from 2010 to {currentYear} with multi-season timelines."
 				>
 					<IconBuildingArch size={20} stroke={1.5} />
-					353+ Master Franchises
+					{totalFranchises}+ Master Franchises
 				</BasicInfoDisplay>
 				<BasicInfoDisplay
 					urlTarget="_self"
@@ -173,7 +182,7 @@
 				<div class="overlay">
 					<div class="type--group-heading-and-content">
 						<h2>⚡ Engineered for Modern Anime Apps</h2>
-						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for modern anime platforms. Ingesting over 353 Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
+						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for modern anime platforms. Ingesting over {totalFranchises} Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
 					</div>
 
 					<ButtonGroup>
@@ -367,7 +376,7 @@
 						<div class="cardDiagramInfo__repoStats">
 							<Button url="/docs#series-slug" type="link">
 								<IconDatabase size={20} stroke={1.5} />
-								353+ Master Franchises
+								{totalFranchises}+ Master Franchises
 							</Button>
 							<Button url="/docs#awards-latest" type="link">
 								<IconTrophy size={20} stroke={1.5} />
