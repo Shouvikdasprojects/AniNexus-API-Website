@@ -10,7 +10,7 @@ import {IconCirclePlus} from "@tabler/icons-svelte";
 
 <svelte:head>
     <title>Showcase — Apps Powered by AniNexus API</title>
-    <meta name="description" content="Discover modern applications, community streaming portals, and platforms powered by AniNexus API, including AnimeNation India.">
+    <meta name="description" content="Discover modern applications, community streaming portals, and platforms powered by AniNexus API.">
 </svelte:head>
 
 <Nav />

@@ -1,9 +1,9 @@
 export default [
     {
-        title: "AnimeNation India",
-        summary: "India's premier legal anime streaming & intelligence platform, powered by the AniNexus Master Franchise Vault and 100% verified Indian dubs.",
+        title: "Nexus Stream",
+        summary: "Modern anime discovery and streaming portal, powered by the AniNexus Master Franchise Vault and 100% verified dub timelines.",
         imageUrl: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
-        url: "https://animenationindia.com",
+        url: "/docs",
     },
     {
         title: "AniNexus API Playground",

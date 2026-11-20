@@ -40,7 +40,6 @@
 	import ShowcaseBackground from "../lib/images/showcase-background.png";
 	import Divider from "../lib/components/Divider.svelte";
 	import InputReadOnly from "../lib/components/InputReadOnly.svelte";
-	import IntegrationCard from "../lib/components/IntegrationCard.svelte";
 	import {onMount} from "svelte";
 
 	const currentYear = new Date().getFullYear();
@@ -60,8 +59,8 @@
 
 <svelte:head>
 	<title>AniNexus API — The Legal Anime Intelligence & Master Franchise Platform</title>
-	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API powering AnimeNation India. 353+ Master Franchises (2010–{currentYear}), verified dubs, dual scores, and rolling anime awards.">
-	<meta name="keywords" content="aninexus, anime api, animenation india, anime master franchise, verified hindi dub, dual scores, anime awards, franchise api">
+	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API. 353+ Master Franchises (2010–{currentYear}), verified dubs, dual scores, and rolling anime awards.">
+	<meta name="keywords" content="aninexus, anime api, anime master franchise, verified hindi dub, dual scores, anime awards, franchise api">
 </svelte:head>
 
 <Nav />
@@ -76,7 +75,7 @@
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine powering <strong>AnimeNation India</strong>. Unified timelines for <strong>353+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine. Unified timelines for <strong>353+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
@@ -170,8 +169,8 @@
 			>
 				<div class="overlay">
 					<div class="type--group-heading-and-content">
-						<h2>⚡ Powering AnimeNation India</h2>
-						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for AnimeNation India. Ingesting over 353 Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
+						<h2>⚡ Engineered for Modern Streaming Apps</h2>
+						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for modern applications. Ingesting over 353 Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
 					</div>
 
 					<ButtonGroup>
@@ -429,7 +428,7 @@
 						<IconHeartHandshake size={35} stroke={1.5} />
 					</div>
 					<div>
-						<h6>Engineered for AnimeNation India</h6>
+						<h6>Engineered for Modern Anime Apps</h6>
 						<p>Built specifically to provide clean, unified franchise schemas for modern anime streaming UIs, mobile apps, and bots.</p>
 					</div>
 				</div>
