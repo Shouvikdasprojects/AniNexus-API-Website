@@ -61,6 +61,7 @@
 
 <svelte:head>
 	<title>AniNexus API — The Legal Anime Intelligence & Master Franchise Platform</title>
+	<meta name="google-site-verification" content="eV-a5nS42eCtPVcFxOdU3Ko6DNbOLSbCPH-pEQvrtYI" />
 	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API. 353+ Master Franchises (2010–{currentYear}), verified dubs, dual scores, and rolling anime awards.">
 	<meta name="keywords" content="aninexus, anime api, anime master franchise, verified hindi dub, dual scores, anime awards, franchise api">
 </svelte:head>
