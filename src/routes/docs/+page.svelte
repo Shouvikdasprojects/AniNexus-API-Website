@@ -531,6 +531,104 @@
             status: null,
             duration: null,
             error: null
+        },
+
+        // 11. Characters & Staff Encyclopedia
+        {
+            id: "character-details",
+            category: "characters-staff",
+            categoryLabel: "Characters & Staff",
+            categoryIcon: IconMicrophone,
+            method: "GET",
+            path: "/api/v1/characters/:idOrSlug",
+            title: "Character Encyclopedia Dossier",
+            description: "Comprehensive character dossier including Romaji/Native names, titles, aliases, HD portrait, height, age, birthday, blood type, full biography, multi-lingual voice actors (Japanese, English, etc.), and anime appearances.",
+            params: [
+                {
+                    name: "idOrSlug",
+                    type: "path",
+                    default: "89362",
+                    options: ["89362", "aqua", "julius-euclius-89362", "40", "eren-yeager", "gojo-satoru"],
+                    description: "Character ID or slug"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "character-search",
+            category: "characters-staff",
+            categoryLabel: "Characters & Staff",
+            categoryIcon: IconMicrophone,
+            method: "GET",
+            path: "/api/v1/characters/search",
+            title: "Global Character Search",
+            description: "Fast multi-lingual text search across English, Romaji, Native Kanji, and aliases in the universal Character archive.",
+            params: [
+                {
+                    name: "q",
+                    type: "query",
+                    default: "Julius",
+                    options: ["Julius", "Aqua", "Eren", "Gojo", "Megumi", "Levi", "Naruto"],
+                    description: "Character search query"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "staff-details",
+            category: "characters-staff",
+            categoryLabel: "Characters & Staff",
+            categoryIcon: IconMicrophone,
+            method: "GET",
+            path: "/api/v1/staff/:idOrSlug",
+            title: "Production Staff & Voice Actor Profile",
+            description: "Complete individual profile for voice actors, directors, creators, and animators with birth date, age, hometown, blood type, primary occupations, verified social media links (Twitter, Instagram, Blog, Bluesky, Wiki), and credited works.",
+            params: [
+                {
+                    name: "idOrSlug",
+                    type: "path",
+                    default: "111575",
+                    options: ["111575", "megumi-han", "118", "hayao-miyazaki", "95096", "kenjiro-tsuda"],
+                    description: "Staff ID or slug"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "staff-search",
+            category: "characters-staff",
+            categoryLabel: "Characters & Staff",
+            categoryIcon: IconMicrophone,
+            method: "GET",
+            path: "/api/v1/staff/search",
+            title: "Staff & Voice Actor Search",
+            description: "Omni-search for anime directors, mangaka, character designers, composers, and seiyuu across the global industry database.",
+            params: [
+                {
+                    name: "q",
+                    type: "query",
+                    default: "Megumi Han",
+                    options: ["Megumi Han", "Hayao Miyazaki", "Kenjiro Tsuda", "Hiroyuki Sawano", "Yuki Kaji", "Mamoru Miyano"],
+                    description: "Staff search query"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
         }
     ];
 
@@ -552,6 +650,7 @@
         { id: "seasons", label: "Seasonal Hub", icon: IconCalendarEvent },
         { id: "awards", label: "Anime Awards", icon: IconTrophy },
         { id: "franchises", label: "Master Franchises", icon: IconBuildingArch },
+        { id: "characters-staff", label: "Characters & Staff", icon: IconMicrophone },
         { id: "search", label: "Search & Filter", icon: IconSearch },
         { id: "genres", label: "Genres", icon: IconTag },
         { id: "schedule", label: "Schedule", icon: IconClock },
