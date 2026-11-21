@@ -47,7 +47,7 @@
 	const awardsStartYear = currentYear - 5;
 
 	let serverHealth = { status: "checking", uptime: 0 };
-	let totalFranchises = 371;
+	let totalFranchises = 634;
 
 	onMount(async () => {
 		try {
@@ -60,7 +60,7 @@
 		try {
 			const topRes = await fetch("https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=1");
 			const topJson = await topRes.json();
-			if (topJson?.data?.total) {
+			if (topJson?.data?.total && topJson.data.total > totalFranchises) {
 				totalFranchises = topJson.data.total;
 			}
 		} catch (e) {}

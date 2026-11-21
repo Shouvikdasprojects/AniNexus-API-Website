@@ -71,23 +71,32 @@ async function fetchData() {
                 };
             });
         } else if (json.data && json.data.timeline) {
-            entries = json.data.timeline.slice(0, 6).map((part, idx) => ({
-                slug: json.data.slug || "attack-on-titan",
-                title: part.partName || "Part " + (part.order || idx + 1),
-                romaji: `Step 0${idx + 1} • ${part.isCanon ? '⭐ Canon' : 'Side Story'} • ${part.watchPriority || 'Essential'}`,
-                imageUrl: part.images?.poster || "https://placehold.co/300x450/1e293b/white?text=Part+" + (idx + 1),
-                score: part.scores?.combinedAverage || 8.6,
-                sourceScoreA: null,
-                sourceScoreB: null,
-                season: part.watchPriority || "Watch Order",
-                year: part.year || 2013,
-                format: part.format || "TV",
-                status: part.status || "FINISHED",
-                episodes: part.episodeCount || 1,
-                parts: json.data.timeline.length,
-                dubs: part.languages?.audioDubs || ["Hindi", "English", "Japanese"],
-                genres: [{ name: `Order #${part.order || idx + 1}` }, { name: part.isCanon ? 'Canon' : 'OVA' }]
-            }));
+            entries = json.data.timeline.slice(0, 6).map((part, idx) => {
+                const dubsRaw = part.languages?.audioDubs;
+                let dubsList = ["Japanese", "English"];
+                if (Array.isArray(dubsRaw)) {
+                    dubsList = dubsRaw;
+                } else if (typeof dubsRaw === 'string' && dubsRaw.trim()) {
+                    dubsList = dubsRaw.trim().split(/\s+/).filter(Boolean);
+                }
+                return {
+                    slug: json.data.slug || "attack-on-titan",
+                    title: part.partName || "Part " + (part.order || idx + 1),
+                    romaji: `Step 0${idx + 1} • ${part.isCanon ? '⭐ Canon' : 'Side Story'} • ${part.watchPriority || 'Essential'}`,
+                    imageUrl: part.images?.poster || json.data.images?.poster || "https://placehold.co/300x450/1e293b/white?text=Part+" + (idx + 1),
+                    score: part.scores?.combinedAverage || 8.6,
+                    sourceScoreA: null,
+                    sourceScoreB: null,
+                    season: part.watchPriority || "Watch Order",
+                    year: part.year || 2013,
+                    format: part.format || "TV",
+                    status: part.status || "FINISHED",
+                    episodes: part.episodeCount || 1,
+                    parts: json.data.timeline.length,
+                    dubs: dubsList,
+                    genres: [{ name: `Order #${part.order || idx + 1}` }, { name: part.isCanon ? 'Canon' : 'OVA' }]
+                };
+            });
         } else if (json.data && json.data.categories) {
             entries = json.data.categories.slice(0, 6).map(cat => ({
                 slug: cat.winner?.franchiseSlug || "anime-awards",
