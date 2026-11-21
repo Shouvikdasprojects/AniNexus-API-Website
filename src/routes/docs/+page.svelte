@@ -18,7 +18,13 @@
         IconMovie,
         IconHeartbeat,
         IconCode,
-        IconArrowLeft
+        IconArrowLeft,
+        IconLayoutGrid,
+        IconStar,
+        IconMicrophone,
+        IconSparkles,
+        IconArrowRight,
+        IconExternalLink
     } from "@tabler/icons-svelte";
     import { fade, fly, slide } from "svelte/transition";
     import { onMount } from "svelte";
@@ -33,6 +39,7 @@
     let searchQuery = "";
     let copiedEndpoint = null;
     let copiedCode = null;
+    let responseViewModes = {};
 
     // Endpoints data definition (All 19 verified live endpoints)
     let endpoints = [
@@ -570,7 +577,11 @@
 
             ep.status = res.status;
             ep.duration = duration;
+            ep.rawJson = json;
             ep.response = JSON.stringify(json, null, 2);
+            if (!responseViewModes[ep.id]) {
+                responseViewModes[ep.id] = 'visual';
+            }
         } catch (err) {
             ep.duration = Math.round(performance.now() - startTime);
             ep.error = err.message || "Network request failed";
@@ -826,41 +837,256 @@
                             {#if ep.response || ep.error || ep.loading}
                                 <div class="responsePanel" transition:slide={{duration: 250}}>
                                     <div class="responseMetaBar">
-                                        <div class="statusIndicator">
-                                            {#if ep.loading}
-                                                <span class="pulseYellow"></span>
-                                                <span>Connecting to ani-nexus.onrender.com...</span>
-                                            {:else if ep.status === 200}
-                                                <span class="statusBadge success">200 OK</span>
-                                            {:else if ep.status === 410}
-                                                <span class="statusBadge purged">410 Gone (Purged)</span>
-                                            {:else}
-                                                <span class="statusBadge error">{ep.status || 'Error'}</span>
+                                        <div class="metaBarLeft">
+                                            <div class="statusIndicator">
+                                                {#if ep.loading}
+                                                    <span class="pulseYellow"></span>
+                                                    <span>Connecting to ani-nexus.onrender.com...</span>
+                                                {:else if ep.status === 200}
+                                                    <span class="statusBadge success">200 OK</span>
+                                                {:else if ep.status === 410}
+                                                    <span class="statusBadge purged">410 Gone (Purged)</span>
+                                                {:else}
+                                                    <span class="statusBadge error">{ep.status || 'Error'}</span>
+                                                {/if}
+                                            </div>
+
+                                            {#if ep.duration}
+                                                <span class="latencyBadge">⏱️ {ep.duration} ms</span>
                                             {/if}
                                         </div>
 
-                                        {#if ep.duration}
-                                            <span class="latencyBadge">⏱️ {ep.duration} ms</span>
-                                        {/if}
+                                        <div class="metaBarRight">
+                                            {#if ep.response}
+                                                <!-- Segmented Dual-View Toggle -->
+                                                <div class="viewModeToggle">
+                                                    <button
+                                                        class="toggleBtn {responseViewModes[ep.id] !== 'json' ? 'active' : ''}"
+                                                        on:click={() => responseViewModes[ep.id] = 'visual'}
+                                                        title="Interactive Visual App Preview"
+                                                    >
+                                                        <IconLayoutGrid size={13} />
+                                                        <span>Visual Preview</span>
+                                                    </button>
+                                                    <button
+                                                        class="toggleBtn {responseViewModes[ep.id] === 'json' ? 'active' : ''}"
+                                                        on:click={() => responseViewModes[ep.id] = 'json'}
+                                                        title="Raw JSON Payload"
+                                                    >
+                                                        <IconCode size={13} />
+                                                        <span>&#123; &#125; Raw JSON</span>
+                                                    </button>
+                                                </div>
 
-                                        {#if ep.response}
-                                            <button
-                                                class="copyResponseBtn"
-                                                on:click={() => copyToClipboard(ep.response, `${ep.id}-res`)}
-                                            >
-                                                {#if copiedEndpoint === `${ep.id}-res`}
-                                                    <IconCheck size={14} color="#10B981" />
-                                                    <span>Copied!</span>
-                                                {:else}
-                                                    <IconCopy size={14} />
-                                                    <span>Copy Response</span>
-                                                {/if}
-                                            </button>
-                                        {/if}
+                                                <button
+                                                    class="copyResponseBtn"
+                                                    on:click={() => copyToClipboard(ep.response, `${ep.id}-res`)}
+                                                >
+                                                    {#if copiedEndpoint === `${ep.id}-res`}
+                                                        <IconCheck size={14} color="#10B981" />
+                                                        <span>Copied!</span>
+                                                    {:else}
+                                                        <IconCopy size={14} />
+                                                        <span>Copy JSON</span>
+                                                    {/if}
+                                                </button>
+                                            {/if}
+                                        </div>
                                     </div>
 
                                     {#if ep.response}
-                                        <pre class="jsonViewer"><code>{ep.response}</code></pre>
+                                        {#if responseViewModes[ep.id] === 'json'}
+                                            <pre class="jsonViewer"><code>{ep.response}</code></pre>
+                                        {:else}
+                                            <div class="visualPreviewContainer">
+                                                {#if ep.rawJson?.data?.timeline && Array.isArray(ep.rawJson.data.timeline)}
+                                                    <!-- Feature 2: Franchise Chronological Watch-Order Roadmap Visualizer -->
+                                                    <div class="timelineRoadmap">
+                                                        <div class="roadmapHeader">
+                                                            <div class="roadmapTitleGroup">
+                                                                <span class="roadmapIcon">🗺️</span>
+                                                                <div>
+                                                                    <h5>{ep.rawJson.data.franchise || ep.rawJson.data.titles?.primary || 'Franchise Roadmap'}</h5>
+                                                                    <p class="roadmapMeta">Consolidated Chronological Watch Order • {ep.rawJson.data.timeline.length} Releases</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="roadmapPills">
+                                                                <span class="roadmapPill">Slug: <code>{ep.rawJson.data.slug || paramValues[ep.id]?.slug || 'series'}</code></span>
+                                                                <span class="roadmapPill verified">✓ Dual-Score Verified</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="roadmapSteps">
+                                                            {#each ep.rawJson.data.timeline as part, idx}
+                                                                <div class="roadmapStep">
+                                                                    <div class="stepSpine">
+                                                                        <div class="stepDot">{(idx + 1).toString().padStart(2, '0')}</div>
+                                                                        {#if idx < ep.rawJson.data.timeline.length - 1}
+                                                                            <div class="stepConnectorLine"></div>
+                                                                        {/if}
+                                                                    </div>
+
+                                                                    <div class="stepCard">
+                                                                        <div class="stepCardTop">
+                                                                            <div class="stepOrderBadge">ORDER #{part.order || idx + 1}</div>
+                                                                            <h6 class="stepName">{part.partName}</h6>
+                                                                            <div class="stepBadgesRow">
+                                                                                <span class="formatBadge format--{(part.format || 'tv').toLowerCase()}">{part.format || 'TV'}</span>
+                                                                                {#if part.isCanon}
+                                                                                    <span class="canonBadge canon">⭐ Canon</span>
+                                                                                {:else}
+                                                                                    <span class="canonBadge side">🌀 Side Story</span>
+                                                                                {/if}
+                                                                                {#if part.watchPriority}
+                                                                                    <span class="priorityBadge priority--{part.watchPriority.toLowerCase()}">{part.watchPriority}</span>
+                                                                                {/if}
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="stepCardStats">
+                                                                            <div class="statBox">
+                                                                                <span class="statLabel">Release</span>
+                                                                                <span class="statVal">📅 {part.year || 'N/A'}</span>
+                                                                            </div>
+                                                                            <div class="statBox">
+                                                                                <span class="statLabel">Episodes</span>
+                                                                                <span class="statVal">🎬 {part.episodeCount || 1} Ep(s)</span>
+                                                                            </div>
+                                                                            <div class="statBox">
+                                                                                <span class="statLabel">Rating</span>
+                                                                                <span class="statVal star">
+                                                                                    <IconStar size={13} fill="#F59E0B" color="#F59E0B" />
+                                                                                    {(part.scores?.combinedAverage || part.scores?.mal?.score || 8.5).toFixed(1)}/10
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        {#if part.languages?.audioDubs && part.languages.audioDubs.length > 0}
+                                                                            <div class="stepDubsRow">
+                                                                                <span class="dubsTitle"><IconMicrophone size={12} /> Verified Dubs:</span>
+                                                                                <div class="dubsTags">
+                                                                                    {#each part.languages.audioDubs as dub}
+                                                                                        <span class="dubTag {dub.toLowerCase().includes('hindi') ? 'dub--hindi' : ''}">{dub}</span>
+                                                                                    {/each}
+                                                                                </div>
+                                                                            </div>
+                                                                        {/if}
+                                                                    </div>
+                                                                </div>
+                                                            {/each}
+                                                        </div>
+                                                    </div>
+
+                                                {:else if ep.rawJson?.data?.franchises || (Array.isArray(ep.rawJson?.data) && ep.rawJson.data.length > 0 && ep.rawJson.data[0].titles)}
+                                                    <!-- Visual Anime Collection Grid -->
+                                                    <div class="visualCardsGrid">
+                                                        {#each (ep.rawJson.data.franchises || ep.rawJson.data).slice(0, 8) as item}
+                                                            <div class="visualAnimeCard">
+                                                                <div class="cardPosterWrapper">
+                                                                    <img
+                                                                        src={item.images?.poster || item.timeline?.[0]?.images?.poster || 'https://placehold.co/300x450/1e293b/white?text=AniNexus'}
+                                                                        alt={item.titles?.primary || 'Anime'}
+                                                                        loading="lazy"
+                                                                    />
+                                                                    {#if item.combinedScore || item.timeline?.[0]?.scores?.combinedAverage}
+                                                                        <span class="scoreTag">
+                                                                            <IconStar size={12} fill="#F59E0B" color="#F59E0B" />
+                                                                            {(item.combinedScore || item.timeline[0].scores.combinedAverage).toFixed(1)}
+                                                                        </span>
+                                                                    {/if}
+                                                                </div>
+                                                                <div class="cardDetails">
+                                                                    <strong class="animeTitle" title={item.titles?.primary || item.titles?.english || ''}>
+                                                                        {item.titles?.primary || item.titles?.english || item.titles?.romaji || 'Anime Title'}
+                                                                    </strong>
+                                                                    <div class="animeMetaRow">
+                                                                        <span class="formatPill">{item.timeline?.[0]?.format || 'TV'}</span>
+                                                                        <span class="partsCount">{item.totalParts ? `${item.totalParts} Parts` : (item.totalEpisodes ? `${item.totalEpisodes} Eps` : 'Multi-Part')}</span>
+                                                                    </div>
+                                                                    <div class="animeDubsRow">
+                                                                        {#if item.dubAvailability?.hasHindiDub || item.timeline?.[0]?.languages?.audioDubs?.includes('Hindi')}
+                                                                            <span class="dubBadge hindi">Hindi</span>
+                                                                        {/if}
+                                                                        {#if item.dubAvailability?.hasEnglishDub || item.timeline?.[0]?.languages?.audioDubs?.includes('English')}
+                                                                            <span class="dubBadge english">English</span>
+                                                                        {/if}
+                                                                        <span class="dubBadge jap">Japanese</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        {/each}
+                                                    </div>
+
+                                                {:else if ep.rawJson?.data?.categories && Array.isArray(ep.rawJson.data.categories)}
+                                                    <!-- Visual Awards Showcase -->
+                                                    <div class="visualAwardsGrid">
+                                                        <div class="awardsBanner">
+                                                            <span class="awardsTrophy">🏆</span>
+                                                            <div>
+                                                                <h5>{ep.rawJson.data.year || '2026'} Industry Anime Awards Showcase</h5>
+                                                                <p>Annual honors recognizing premier production excellence</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="categoriesGrid">
+                                                            {#each ep.rawJson.data.categories.slice(0, 6) as cat}
+                                                                <div class="awardCard">
+                                                                    <div class="awardHeader">
+                                                                        <span class="winnerTag">👑 WINNER</span>
+                                                                        <span class="catName">{cat.name}</span>
+                                                                    </div>
+                                                                    <div class="awardWinnerRow">
+                                                                        {#if cat.winner?.imageUrl}
+                                                                            <img src={cat.winner.imageUrl} alt={cat.winner.title?.english || 'Winner'} class="awardThumb" />
+                                                                        {/if}
+                                                                        <div class="awardWinnerInfo">
+                                                                            <strong>{cat.winner?.title?.english || cat.winner?.title?.romaji || 'Winner'}</strong>
+                                                                            <span class="awardScore">★ 9.2 Community Consensus</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {/each}
+                                                        </div>
+                                                    </div>
+
+                                                {:else if ep.rawJson?.data?.articles && Array.isArray(ep.rawJson.data.articles)}
+                                                    <!-- Visual News Grid -->
+                                                    <div class="visualNewsGrid">
+                                                        {#each ep.rawJson.data.articles.slice(0, 6) as art}
+                                                            <div class="newsCard">
+                                                                {#if art.image}
+                                                                    <img src={art.image} alt={art.title} class="newsImg" />
+                                                                {/if}
+                                                                <div class="newsBody">
+                                                                    <span class="newsCategory">{art.category || 'Anime News'}</span>
+                                                                    <strong class="newsHeadline">{art.title}</strong>
+                                                                    <span class="newsTime">{art.publishedAt ? new Date(art.publishedAt).toLocaleDateString() : 'Recent'}</span>
+                                                                </div>
+                                                            </div>
+                                                        {/each}
+                                                    </div>
+
+                                                {:else}
+                                                    <!-- Generic Inspector View -->
+                                                    <div class="visualGenericInspector">
+                                                        <div class="inspectorHeader">
+                                                            <IconCheck size={16} color="#10B981" />
+                                                            <span>JSON Payload Parsed ({Object.keys(ep.rawJson?.data || ep.rawJson || {}).length} Root Properties)</span>
+                                                        </div>
+                                                        <div class="inspectorKeyGrid">
+                                                            {#each Object.entries(ep.rawJson?.data || ep.rawJson || {}).slice(0, 10) as [k, v]}
+                                                                <div class="inspectorKeyRow">
+                                                                    <span class="keyName">{k}:</span>
+                                                                    <span class="keyVal">{typeof v === 'object' ? (Array.isArray(v) ? `[${v.length} items]` : '{Object}') : String(v)}</span>
+                                                                </div>
+                                                            {/each}
+                                                        </div>
+                                                        <div class="inspectorHint">
+                                                            Tip: Switch to <strong>&#123; &#125; Raw JSON</strong> above for the full unfiltered schema.
+                                                        </div>
+                                                    </div>
+                                                {/if}
+                                            </div>
+                                        {/if}
                                     {:else if ep.error}
                                         <div class="errorBox">{ep.error}</div>
                                     {/if}
@@ -1500,10 +1726,59 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 10px;
                 padding: 10px 16px;
                 background: rgba(30, 41, 59, 0.4);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
                 font-size: 0.8rem;
+            }
+
+            .metaBarLeft {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            .metaBarRight {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .viewModeToggle {
+                display: inline-flex;
+                background: rgba(15, 23, 42, 0.8);
+                padding: 2px;
+                border-radius: 8px;
+                border: 1px solid rgba(139, 92, 246, 0.25);
+
+                .toggleBtn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 5px;
+                    background: transparent;
+                    border: none;
+                    color: #94A3B8;
+                    font-size: 0.72rem;
+                    font-weight: 600;
+                    padding: 4px 10px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        color: #FFFFFF;
+                    }
+
+                    &.active {
+                        color: #FFFFFF;
+                        background: #8B5CF6;
+                        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+                    }
+                }
             }
 
             .statusBadge {
@@ -1566,6 +1841,623 @@
                 &::-webkit-scrollbar-thumb {
                     background: rgba(255, 255, 255, 0.15);
                     border-radius: 3px;
+                }
+            }
+
+            .visualPreviewContainer {
+                max-height: 480px;
+                overflow-y: auto;
+                padding: 16px;
+
+                &::-webkit-scrollbar {
+                    width: 6px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: rgba(255, 255, 255, 0.15);
+                    border-radius: 3px;
+                }
+            }
+
+            /* 1. Watch Order Roadmap */
+            .timelineRoadmap {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+
+                .roadmapHeader {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    padding-bottom: 12px;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+                    .roadmapTitleGroup {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        .roadmapIcon {
+                            font-size: 1.5rem;
+                        }
+
+                        h5 {
+                            margin: 0;
+                            color: #FFFFFF;
+                            font-size: 1.05rem;
+                            font-weight: 700;
+                        }
+
+                        .roadmapMeta {
+                            margin: 2px 0 0;
+                            font-size: 0.76rem;
+                            color: #94A3B8;
+                        }
+                    }
+
+                    .roadmapPills {
+                        display: flex;
+                        gap: 8px;
+
+                        .roadmapPill {
+                            font-size: 0.72rem;
+                            color: #CBD5E1;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            padding: 3px 8px;
+                            border-radius: 6px;
+
+                            code {
+                                color: #A78BFA;
+                            }
+
+                            &.verified {
+                                color: #10B981;
+                                background: rgba(16, 185, 129, 0.1);
+                                border-color: rgba(16, 185, 129, 0.3);
+                            }
+                        }
+                    }
+                }
+
+                .roadmapSteps {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0;
+                }
+
+                .roadmapStep {
+                    display: flex;
+                    gap: 16px;
+                    position: relative;
+
+                    .stepSpine {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        width: 32px;
+                        flex-shrink: 0;
+
+                        .stepDot {
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 50%;
+                            background: linear-gradient(135deg, #8B5CF6, #6366F1);
+                            color: #FFFFFF;
+                            font-family: monospace;
+                            font-size: 0.75rem;
+                            font-weight: 700;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
+                            z-index: 2;
+                        }
+
+                        .stepConnectorLine {
+                            flex: 1;
+                            width: 2px;
+                            background: linear-gradient(to bottom, #8B5CF6, rgba(139, 92, 246, 0.2));
+                            min-height: 30px;
+                            margin: 4px 0;
+                        }
+                    }
+
+                    .stepCard {
+                        flex: 1;
+                        background: rgba(15, 23, 42, 0.6);
+                        border: 1px solid rgba(139, 92, 246, 0.2);
+                        border-radius: 10px;
+                        padding: 12px 16px;
+                        margin-bottom: 14px;
+                        transition: border-color 0.2s ease;
+
+                        &:hover {
+                            border-color: rgba(139, 92, 246, 0.45);
+                        }
+
+                        .stepCardTop {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            flex-wrap: wrap;
+                            margin-bottom: 8px;
+
+                            .stepOrderBadge {
+                                font-size: 0.68rem;
+                                font-weight: 800;
+                                color: #A78BFA;
+                                background: rgba(139, 92, 246, 0.15);
+                                padding: 2px 6px;
+                                border-radius: 4px;
+                                font-family: monospace;
+                            }
+
+                            .stepName {
+                                margin: 0;
+                                color: #F8FAFC;
+                                font-size: 0.95rem;
+                                font-weight: 600;
+                                flex: 1;
+                            }
+
+                            .stepBadgesRow {
+                                display: flex;
+                                gap: 6px;
+                                align-items: center;
+
+                                .formatBadge {
+                                    font-size: 0.68rem;
+                                    font-weight: 700;
+                                    padding: 2px 6px;
+                                    border-radius: 4px;
+                                    text-transform: uppercase;
+
+                                    &.format--tv {
+                                        background: rgba(59, 130, 246, 0.2);
+                                        color: #60A5FA;
+                                    }
+                                    &.format--movie {
+                                        background: rgba(245, 158, 11, 0.2);
+                                        color: #FBBF24;
+                                    }
+                                    &.format--ova, &.format--ona {
+                                        background: rgba(20, 184, 166, 0.2);
+                                        color: #2DD4BF;
+                                    }
+                                }
+
+                                .canonBadge {
+                                    font-size: 0.68rem;
+                                    font-weight: 700;
+                                    padding: 2px 6px;
+                                    border-radius: 4px;
+
+                                    &.canon {
+                                        background: rgba(16, 185, 129, 0.2);
+                                        color: #34D399;
+                                    }
+                                    &.side {
+                                        background: rgba(148, 163, 184, 0.2);
+                                        color: #94A3B8;
+                                    }
+                                }
+
+                                .priorityBadge {
+                                    font-size: 0.68rem;
+                                    font-weight: 700;
+                                    padding: 2px 6px;
+                                    border-radius: 4px;
+
+                                    &.priority--essential {
+                                        background: rgba(239, 68, 68, 0.2);
+                                        color: #F87171;
+                                    }
+                                    &.priority--recommended {
+                                        background: rgba(245, 158, 11, 0.2);
+                                        color: #FBBF24;
+                                    }
+                                    &.priority--optional {
+                                        background: rgba(148, 163, 184, 0.2);
+                                        color: #94A3B8;
+                                    }
+                                }
+                            }
+                        }
+
+                        .stepCardStats {
+                            display: flex;
+                            gap: 16px;
+                            flex-wrap: wrap;
+                            margin-bottom: 8px;
+                            font-size: 0.78rem;
+
+                            .statBox {
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+
+                                .statLabel {
+                                    color: #64748B;
+                                    font-size: 0.72rem;
+                                }
+
+                                .statVal {
+                                    color: #CBD5E1;
+                                    font-weight: 500;
+
+                                    &.star {
+                                        color: #F59E0B;
+                                        display: inline-flex;
+                                        align-items: center;
+                                        gap: 3px;
+                                        font-weight: 700;
+                                    }
+                                }
+                            }
+                        }
+
+                        .stepDubsRow {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            flex-wrap: wrap;
+                            font-size: 0.75rem;
+
+                            .dubsTitle {
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 4px;
+                                color: #64748B;
+                                font-size: 0.72rem;
+                            }
+
+                            .dubsTags {
+                                display: flex;
+                                gap: 5px;
+                                flex-wrap: wrap;
+
+                                .dubTag {
+                                    font-size: 0.7rem;
+                                    padding: 1px 6px;
+                                    border-radius: 4px;
+                                    background: rgba(255, 255, 255, 0.06);
+                                    color: #E2E8F0;
+
+                                    &.dub--hindi {
+                                        background: rgba(249, 115, 22, 0.2);
+                                        color: #FB923C;
+                                        font-weight: 600;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* 2. Visual Anime Cards Grid */
+            .visualCardsGrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 14px;
+
+                .visualAnimeCard {
+                    background: rgba(15, 23, 42, 0.7);
+                    border: 1px solid rgba(139, 92, 246, 0.2);
+                    border-radius: 10px;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    transition: transform 0.2s ease, border-color 0.2s ease;
+
+                    &:hover {
+                        transform: translateY(-3px);
+                        border-color: rgba(139, 92, 246, 0.5);
+                    }
+
+                    .cardPosterWrapper {
+                        position: relative;
+                        width: 100%;
+                        height: 140px;
+                        overflow: hidden;
+                        background: #0B0F19;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+
+                        .scoreTag {
+                            position: absolute;
+                            top: 8px;
+                            right: 8px;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 3px;
+                            background: rgba(0, 0, 0, 0.85);
+                            backdrop-filter: blur(6px);
+                            color: #F59E0B;
+                            font-size: 0.72rem;
+                            font-weight: 700;
+                            padding: 2px 6px;
+                            border-radius: 4px;
+                        }
+                    }
+
+                    .cardDetails {
+                        padding: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 6px;
+                        flex: 1;
+
+                        .animeTitle {
+                            color: #F1F5F9;
+                            font-size: 0.85rem;
+                            line-height: 1.3;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .animeMetaRow {
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                            font-size: 0.72rem;
+                            color: #94A3B8;
+
+                            .formatPill {
+                                background: rgba(139, 92, 246, 0.15);
+                                color: #A78BFA;
+                                padding: 1px 5px;
+                                border-radius: 4px;
+                                font-weight: 600;
+                            }
+                        }
+
+                        .animeDubsRow {
+                            display: flex;
+                            gap: 4px;
+                            margin-top: auto;
+
+                            .dubBadge {
+                                font-size: 0.65rem;
+                                padding: 1px 5px;
+                                border-radius: 4px;
+                                font-weight: 600;
+
+                                &.hindi {
+                                    background: rgba(249, 115, 22, 0.2);
+                                    color: #FB923C;
+                                }
+                                &.english {
+                                    background: rgba(59, 130, 246, 0.2);
+                                    color: #60A5FA;
+                                }
+                                &.jap {
+                                    background: rgba(148, 163, 184, 0.15);
+                                    color: #CBD5E1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* 3. Visual Awards Showcase */
+            .visualAwardsGrid {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+
+                .awardsBanner {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding-bottom: 10px;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+                    .awardsTrophy {
+                        font-size: 2rem;
+                    }
+
+                    h5 {
+                        margin: 0;
+                        color: #FFFFFF;
+                        font-size: 1.05rem;
+                        font-weight: 700;
+                    }
+
+                    p {
+                        margin: 2px 0 0;
+                        font-size: 0.78rem;
+                        color: #94A3B8;
+                    }
+                }
+
+                .categoriesGrid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                    gap: 12px;
+
+                    .awardCard {
+                        background: rgba(15, 23, 42, 0.7);
+                        border: 1px solid rgba(245, 158, 11, 0.25);
+                        border-radius: 10px;
+                        padding: 12px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+
+                        .awardHeader {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+
+                            .winnerTag {
+                                background: rgba(245, 158, 11, 0.2);
+                                color: #F59E0B;
+                                font-size: 0.65rem;
+                                font-weight: 800;
+                                padding: 2px 6px;
+                                border-radius: 4px;
+                            }
+
+                            .catName {
+                                color: #CBD5E1;
+                                font-size: 0.78rem;
+                                font-weight: 600;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+
+                        .awardWinnerRow {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            .awardThumb {
+                                width: 44px;
+                                height: 56px;
+                                border-radius: 6px;
+                                object-fit: cover;
+                            }
+
+                            .awardWinnerInfo {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 2px;
+
+                                strong {
+                                    color: #F8FAFC;
+                                    font-size: 0.85rem;
+                                    line-height: 1.2;
+                                }
+
+                                .awardScore {
+                                    color: #F59E0B;
+                                    font-size: 0.72rem;
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* 4. Visual News Grid */
+            .visualNewsGrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 12px;
+
+                .newsCard {
+                    background: rgba(15, 23, 42, 0.7);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 10px;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+
+                    .newsImg {
+                        width: 100%;
+                        height: 110px;
+                        object-fit: cover;
+                    }
+
+                    .newsBody {
+                        padding: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+
+                        .newsCategory {
+                            color: #8B5CF6;
+                            font-size: 0.68rem;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                        }
+
+                        .newsHeadline {
+                            color: #E2E8F0;
+                            font-size: 0.82rem;
+                            line-height: 1.3;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                        }
+
+                        .newsTime {
+                            color: #64748B;
+                            font-size: 0.7rem;
+                            margin-top: 4px;
+                        }
+                    }
+                }
+            }
+
+            /* 5. Generic Inspector View */
+            .visualGenericInspector {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                .inspectorHeader {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    color: #10B981;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                }
+
+                .inspectorKeyGrid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                    gap: 8px;
+
+                    .inspectorKeyRow {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        background: rgba(15, 23, 42, 0.6);
+                        border: 1px solid rgba(255, 255, 255, 0.06);
+                        border-radius: 6px;
+                        padding: 6px 10px;
+                        font-family: monospace;
+                        font-size: 0.78rem;
+
+                        .keyName {
+                            color: #A78BFA;
+                            font-weight: 600;
+                        }
+
+                        .keyVal {
+                            color: #CBD5E1;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+
+                .inspectorHint {
+                    color: #94A3B8;
+                    font-size: 0.75rem;
+                    font-style: italic;
+                    margin-top: 4px;
+
+                    strong {
+                        color: #E2E8F0;
+                        font-style: normal;
+                    }
                 }
             }
 
