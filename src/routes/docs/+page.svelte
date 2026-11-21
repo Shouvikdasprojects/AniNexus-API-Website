@@ -153,7 +153,7 @@
             categoryIcon: IconTrophy,
             method: "GET",
             path: "/api/v1/awards/latest",
-            title: "Latest Crunchyroll Anime Awards",
+            title: "Latest Industry Anime Awards",
             description: `Fetches official winners & nominees across all categories (Anime of the Year, Best Animation, Best Action, etc.) for the current award cycle (2026).`,
             params: [],
             loading: false,
@@ -291,15 +291,15 @@
             categoryIcon: IconBuildingArch,
             method: "GET",
             path: "/api/v1/anime/:idOrSlug",
-            title: "Single Season / Anime Part by MAL ID or Slug",
-            description: "Fetches individual anime season or film metadata directly by MyAnimeList ID (e.g. 52991) or title slug.",
+            title: "Single Season / Anime Part by Anime ID or Slug",
+            description: "Fetches individual anime season or film metadata directly by Anime ID (e.g. 52991) or title slug.",
             params: [
                 {
                     name: "idOrSlug",
                     type: "path",
                     default: "52991",
                     options: ["52991", "16498", "40748", "38000", "attack-on-titan"],
-                    description: "MAL ID or anime slug"
+                    description: "Anime ID or anime slug"
                 }
             ],
             loading: false,
@@ -323,7 +323,7 @@
                     type: "path",
                     default: "attack-on-titan",
                     options: ["attack-on-titan", "52991", "solo-leveling", "jujutsu-kaisen"],
-                    description: "MAL ID or anime slug"
+                    description: "Anime ID or anime slug"
                 }
             ],
             loading: false,
@@ -634,7 +634,7 @@
 
 <svelte:head>
     <title>AniNexus REST API Documentation — v1 Reference & Interactive Playground</title>
-    <meta name="description" content="Explore and test all 19 AniNexus REST endpoints live: Top Anime, Seasonal Hub, Crunchyroll Anime Awards (2021-2026), Master Franchises, Verified Dubs, and Multi-Score Engine.">
+    <meta name="description" content="Explore and test all 19 AniNexus REST endpoints live: Top Anime, Seasonal Hub, Industry Anime Awards (2021-2026), Master Franchises, Verified Dubs, and Multi-Score Engine.">
 </svelte:head>
 
 <Nav />

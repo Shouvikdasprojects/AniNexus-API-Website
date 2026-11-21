@@ -87,7 +87,7 @@
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Crunchyroll Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Industry Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
@@ -118,7 +118,7 @@
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#awards-latest"
-					description="Crunchyroll Anime Awards ({awardsStartYear}–{currentYear}) with automated 6th-year auto-purge."
+					description="Industry Anime Awards ({awardsStartYear}–{currentYear}) with automated 6th-year auto-purge."
 				>
 					<IconTrophy size={20} stroke={1.5} />
 					5-Year Rolling Awards

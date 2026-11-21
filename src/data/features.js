@@ -48,7 +48,7 @@ export default {
             highlight: true,
             onVersion: 1,
             label: "5-Year Rolling Awards",
-            description: `Crunchyroll Anime Awards (${awardsStartYear}–${currentYear}) with automated 6th-year auto-purge and HTTP 410 protection.`
+            description: `Annual Industry Anime Awards (${awardsStartYear}–${currentYear}) with automated 6th-year auto-purge and HTTP 410 protection.`
         },
         {
             icon: IconCalendarEvent,
@@ -76,7 +76,7 @@ export default {
             highlight: false,
             onVersion: 1,
             label: "Legal OTT Licensing",
-            description: "Verified streaming availability for Crunchyroll, Netflix, Muse Asia, Ani-One, and JioCinema."
+            description: "Verified streaming availability for Netflix, Muse Asia, Ani-One, and JioCinema."
         },
         {
             icon: IconNews,

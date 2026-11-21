@@ -5,7 +5,7 @@
 
 [![Architecture: REST API v1](https://img.shields.io/badge/Architecture-REST%20API%20v1-8B5CF6?style=for-the-badge&logo=fastapi&logoColor=white)](https://aninexus-api-website.pages.dev/docs)
 [![Gateway Status](https://img.shields.io/badge/Gateway-99.9%25%20Healthy-10B981?style=for-the-badge&logo=render&logoColor=white)](https://ani-nexus.onrender.com/health)
-[![Master Franchises](https://img.shields.io/badge/Franchises-371%2B%20Curated-EC4899?style=for-the-badge&logo=myanimelist&logoColor=white)](https://aninexus-api-website.pages.dev/docs#series-slug)
+[![Master Franchises](https://img.shields.io/badge/Franchises-371%2B%20Curated-EC4899?style=for-the-badge&logo=statuspage&logoColor=white)](https://aninexus-api-website.pages.dev/docs#series-slug)
 [![Auth: Zero-Token](https://img.shields.io/badge/Auth-100%25%20Free%20%2F%20Open-3B82F6?style=for-the-badge&logo=open-source-initiative&logoColor=white)](https://aninexus-api-website.pages.dev/docs)
 [![CORS: Enabled](https://img.shields.io/badge/CORS-Enabled%20(*)-F59E0B?style=for-the-badge)](https://aninexus-api-website.pages.dev/docs)
 [![OpenAPI Spec](https://img.shields.io/badge/OpenAPI-3.1.0%20Standard-0284C7?style=for-the-badge&logo=openapiinitiative&logoColor=white)](https://aninexus-api-website.pages.dev/openapi.json)
@@ -32,7 +32,7 @@
 
 **AniNexus** is a next-generation, high-performance **Anime Metadata & Media REST API (v1)** engineered to solve the fragmentation problem in existing anime databases. 
 
-Instead of treating every season, movie, OVA, and special as disconnected individual records (as Jikan, MyAnimeList, or AniList do), **AniNexus links all parts into unified Master Franchise Watch-Order Timelines** across 371+ curated franchises (2010–2026). It also features a dual-score consensus engine, verified multi-language dubbing tracks (including Hindi and English), a 5-year rolling Anime Awards vault, and real-time auto-purging news feeds.
+Instead of treating every season, movie, OVA, and special as disconnected individual records (as traditional single-source anime databases do), **AniNexus links all parts into unified Master Franchise Watch-Order Timelines** across 371+ curated franchises (2010–2026). It also features a dual-score consensus engine, verified multi-language dubbing tracks (including Hindi and English), a 5-year rolling Anime Awards vault, and real-time auto-purging news feeds.
 
 > **100% Free & Legal:** AniNexus hosts zero pirated video files and requires no API keys or subscription tokens. Safe for deployment in Google Play Store apps, Apple App Store apps, educational projects, Discord bots, and production websites.
 
@@ -52,12 +52,12 @@ Instead of treating every season, movie, OVA, and special as disconnected indivi
 
 ## 🌟 Why AniNexus vs Traditional Anime APIs?
 
-| Feature | Standard APIs (Jikan / MAL / Kitsu) | **AniNexus REST API** |
+| Feature | Standard Fragmented APIs | **AniNexus REST API** |
 | :--- | :---: | :---: |
 | **Franchise Organization** | ❌ Fragmented seasons & disconnected movies | ✅ **Unified Master Timelines** (e.g. Attack on Titan's 11 parts in chronological order) |
-| **Community Rating** | ❌ Single-platform bias | ✅ **Dual-Score Consensus Engine** (blends MAL 1-10 & AniList 1-100) |
+| **Community Rating** | ❌ Single-platform bias | ✅ **Dual-Score Consensus Engine** (blends verified dual global community rating scales) |
 | **Audio Dubbing Matrix** | ❌ Incomplete or missing | ✅ **100% Verified Dub Flags** (Hindi, English, Japanese, Bengali, Tamil, Telugu) |
-| **Anime Awards Vault** | ❌ None | ✅ **5-Year Rolling Window** (Crunchyroll Awards 2021–2026 with 410 auto-purge) |
+| **Anime Awards Vault** | ❌ None | ✅ **5-Year Rolling Window** (Industry Anime Awards 2021–2026 with 410 auto-purge) |
 | **Weekly Airing Calendar** | ⚠️ Raw broadcasts without dub info | ✅ **7-Day Live Airing Schedule** with localized dub availability |
 | **Industry News Engine** | ❌ Rare or unstructured text | ✅ **Image-Categorized Feeds** (`/news` with cover images, `/articles` text-only, 60-day TTL) |
 | **Authentication Barrier** | ⚠️ Complex OAuth / strict rate-limits | ✅ **Zero-Token Auth & CORS `*` Enabled** |
@@ -125,7 +125,7 @@ All endpoints accept standard `GET` requests and return UTF-8 JSON.
 
 ### 4. Anime Awards Engine (5-Year Rolling Window: 2021–2026)
 * `GET /api/v1/awards` — Award window metadata and active years.
-* `GET /api/v1/awards/latest` — Official 2026 Crunchyroll Anime Awards winners & nominees.
+* `GET /api/v1/awards/latest` — Official 2026 Annual Industry Anime Awards winners & nominees.
 * `GET /api/v1/awards/:year` — Award edition by year (2021–2026 active; `< 2021` returns `410 Gone`).
 * `GET /api/v1/awards/category/:categorySlug` — Category history (e.g. `anime-of-the-year`, `best-animation`).
 
@@ -133,7 +133,7 @@ All endpoints accept standard `GET` requests and return UTF-8 JSON.
 * `GET /api/v1/series/:slug` — Consolidated franchise dossier (e.g. `attack-on-titan`, `solo-leveling`, `jujutsu-kaisen`).
 * `GET /api/v1/series/:slug/timeline` — Chronological watch order of all seasons, movies, and specials.
 * `GET /api/v1/series/:slug/episodes` — Complete episode directory with canon/filler classifications.
-* `GET /api/v1/anime/:idOrSlug` — Single season or movie part by MAL ID or slug.
+* `GET /api/v1/anime/:idOrSlug` — Single season or movie part by Anime ID or slug.
 * `GET /api/v1/anime/:idOrSlug/languages` — Verified audio dub and subtitle availability matrix.
 
 ### 6. Search, Filter & Taxonomy
@@ -207,5 +207,5 @@ Feel free to reach out for collaboration, API integrations, or feature requests:
 - 𝕏 **X (Twitter):** [@shouvikdas155](https://x.com/shouvikdas155)
 - 📸 **Instagram:** [@shouvik_das_official](https://instagram.com/shouvik_das_official)
 - 🐙 **GitHub:** [@Shouvikdasprojects](https://github.com/Shouvikdasprojects)
-- 📊 **Consensus Data Sources:** MyAnimeList, AniList, TMDB, Anime News Network, Crunchyroll, Anime Corner.
+- 📊 **Consensus Data Sources:** Verified global anime community consensus, official industry publications, and licensed media partners.
 - 📄 **License:** Open-source licensed under the [MIT License](LICENSE).
