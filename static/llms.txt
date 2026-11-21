@@ -17,7 +17,7 @@
 
 ## Core Distinguishing Features
 
-1. **Franchise-First Unified Timelines:** Unlike standard APIs that fragment every season into disjointed entries, AniNexus links all parts (seasons, movies, OVAs, specials) of 370+ master franchises into chronological watch-order timelines.
+1. **Franchise-First Unified Timelines:** Unlike standard APIs that fragment every season into disjointed entries, AniNexus links all parts (seasons, movies, OVAs, specials) of 634+ master franchises into chronological watch-order timelines.
 2. **Dual-Score Consensus Engine:** Blends dual global community rating scales into a balanced, verified consensus score.
 3. **Multilingual Dub Matrix:** Directly provides verification flags for localized dubs including Hindi (`hasHindiDub`), English (`hasEnglishDub`), Bengali, Tamil, Telugu, and Japanese.
 4. **5-Year Rolling Awards Retention:** Curates official Industry Anime Awards from 2021 to 2026. Queries for years older than 5 years (e.g. 2020) strictly return HTTP 410 Gone per automated data retention policy.
@@ -141,6 +141,30 @@
   - Query Params:
     - `limit` (number, optional, default: `20`)
   - Example: `curl -s https://ani-nexus.onrender.com/api/v1/trailers`
+
+### 8. Universal Characters & Production Staff Encyclopedia
+- **`GET /api/v1/characters/:idOrSlug`**
+  - Description: Full character dossier with physical traits (height, age, birthday, blood type), rich Markdown bio, and voice actors across languages.
+  - Path Params: `idOrSlug` (string or number, e.g. `40882` or `eren-yeager`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/characters/eren-yeager`
+- **`GET /api/v1/characters/search`**
+  - Description: Typo-tolerant search across 3,553+ characters.
+  - Query Params: `q` (string, required)
+  - Example: `curl -s "https://ani-nexus.onrender.com/api/v1/characters/search?q=eren"`
+- **`GET /api/v1/staff/:idOrSlug`**
+  - Description: Production staff and voice actor dossier with social links, bio, and anime credits.
+  - Path Params: `idOrSlug` (string or number, e.g. `95732`)
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/staff/95732`
+- **`GET /api/v1/staff/search`**
+  - Description: Search across 2,172+ industry creators and seiyuu.
+  - Query Params: `q` (string, required)
+  - Example: `curl -s "https://ani-nexus.onrender.com/api/v1/staff/search?q=sawano"`
+- **`GET /api/v1/series/:slug/characters`**
+  - Description: Cast and character dossier for a master franchise.
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/series/attack-on-titan/characters`
+- **`GET /api/v1/series/:slug/staff`**
+  - Description: Animation studios and key production staff for a master franchise.
+  - Example: `curl -s https://ani-nexus.onrender.com/api/v1/series/attack-on-titan/staff`
 
 ---
 

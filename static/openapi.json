@@ -285,6 +285,88 @@
           "200": { "description": "Official YouTube trailers" }
         }
       }
+    },
+    "/api/v1/characters/{idOrSlug}": {
+      "get": {
+        "summary": "Character Encyclopedia Dossier",
+        "description": "Comprehensive character dossier including Romaji/Native names, physical traits (height, age, birthday, blood type), rich Markdown biography, and multi-lingual voice actor credits.",
+        "parameters": [
+          { "name": "idOrSlug", "in": "path", "required": true, "schema": { "type": "string" }, "example": "40882" }
+        ],
+        "responses": {
+          "200": { "description": "Character dossier" }
+        }
+      }
+    },
+    "/api/v1/characters/search": {
+      "get": {
+        "summary": "Search Characters by Name or Alias",
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" }, "example": "Eren" },
+          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": { "description": "Matching characters list" }
+        }
+      }
+    },
+    "/api/v1/staff/{idOrSlug}": {
+      "get": {
+        "summary": "Staff & Voice Actor Dossier",
+        "description": "Creator profile including native Japanese name, verified social links, hometown, birth date, bio, and anime roles.",
+        "parameters": [
+          { "name": "idOrSlug", "in": "path", "required": true, "schema": { "type": "string" }, "example": "95732" }
+        ],
+        "responses": {
+          "200": { "description": "Staff profile dossier" }
+        }
+      }
+    },
+    "/api/v1/staff/search": {
+      "get": {
+        "summary": "Search Staff & Seiyuu by Name",
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" }, "example": "Sawano" },
+          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": { "description": "Matching staff list" }
+        }
+      }
+    },
+    "/api/v1/series/{slug}/characters": {
+      "get": {
+        "summary": "Franchise Cast & Voice Actors Dossier",
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string" }, "example": "attack-on-titan" }
+        ],
+        "responses": {
+          "200": { "description": "Cast and voice actor dossier" }
+        }
+      }
+    },
+    "/api/v1/series/{slug}/staff": {
+      "get": {
+        "summary": "Franchise Animation Studios & Key Production Staff",
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string" }, "example": "attack-on-titan" }
+        ],
+        "responses": {
+          "200": { "description": "Studios and key creators" }
+        }
+      }
+    },
+    "/api/v1/seasons/{year}/{season}": {
+      "get": {
+        "summary": "Seasonal Archive with AniChart Parity",
+        "parameters": [
+          { "name": "year", "in": "path", "required": true, "schema": { "type": "integer" }, "example": 2026 },
+          { "name": "season", "in": "path", "required": true, "schema": { "type": "string", "enum": ["winter", "spring", "summer", "fall"] }, "example": "fall" }
+        ],
+        "responses": {
+          "200": { "description": "Seasonal anime list" }
+        }
+      }
     }
   }
 }

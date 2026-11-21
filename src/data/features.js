@@ -27,7 +27,14 @@ export default {
             highlight: true,
             onVersion: 1,
             label: "Master Franchise Vault",
-            description: `353+ curated franchises (2010–${currentYear}) with consolidated multi-season timelines, movies, and specials.`
+            description: `634+ curated franchises (2010–${currentYear}) with consolidated multi-season timelines, movies, and specials.`
+        },
+        {
+            icon: IconLanguage,
+            highlight: true,
+            onVersion: 1,
+            label: "Characters & Seiyuu Archive",
+            description: "3,553+ character dossiers with physical traits, Markdown bios, and 2,172+ multilingual voice actor profiles."
         },
         {
             icon: IconScale,
@@ -123,11 +130,11 @@ export default {
             description: "Global & Indian theatrical anime box office collections tracking."
         },
         {
-            icon: IconLanguage,
+            icon: IconDeviceTv,
             highlight: false,
             onVersion: 2,
-            label: "Voice Actor DB",
-            description: "Complete Seiyuu & Indian dubbing artist credits and role mappings."
+            label: "Webhook Event Streaming",
+            description: "Real-time webhook notifications for newly broadcast episodes and award announcements."
         }
     ]
 };
