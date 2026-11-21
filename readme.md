@@ -103,7 +103,7 @@ for title in response.get('data', [])[:5]:
 
 ---
 
-## 📋 Complete REST API Endpoints (25 Live Endpoints)
+## 📋 Complete REST API Endpoints (28 Live Endpoints)
 
 All endpoints accept standard `GET` requests and return UTF-8 JSON.
 
