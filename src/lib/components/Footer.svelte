@@ -52,6 +52,15 @@ const awardsStartYear = currentYear - 5;
                         <li><Button url="https://ani-nexus.onrender.com/health" urlTarget="_blank" type="link">Health Monitor</Button></li>
                     </ul>
                 </div>
+                <div class="footer__links">
+                    <strong>Connect</strong>
+                    <ul>
+                        <li><Button url="https://heylink.me/ShouvikDas/" urlTarget="_blank" type="link">All Socials</Button></li>
+                        <li><Button url="https://x.com/shouvikdas155" urlTarget="_blank" type="link">X (Twitter)</Button></li>
+                        <li><Button url="https://instagram.com/shouvik_das_official" urlTarget="_blank" type="link">Instagram</Button></li>
+                        <li><Button url="mailto:shouvikdaswork@gmail.com" type="link">Contact Email</Button></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -59,7 +68,7 @@ const awardsStartYear = currentYear - 5;
 
 <div class="copyright">
     <div class="copyright__content">
-        <span>© 2024–{currentYear} AniNexus API. Powered by <strong>Shouvik Das</strong>. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for the global anime community.</span>
+        <span>© 2024–{currentYear} AniNexus API. Powered by <a href="https://heylink.me/ShouvikDas/" target="_blank" rel="noopener noreferrer" style="color: #A78BFA; font-weight: 600; text-decoration: none;">Shouvik Das</a>. Built with <IconHeart size={14} color="#EF4444" style="margin: 0 4px; display: inline;" /> for the global anime community.</span>
         <span>Open-Source Anime Intelligence & Master Franchise Platform.</span>
     </div>
 </div>
