@@ -292,6 +292,54 @@
             error: null
         },
         {
+            id: "series-staff",
+            category: "franchises",
+            categoryLabel: "Master Franchises",
+            categoryIcon: IconBuildingArch,
+            method: "GET",
+            path: "/api/v1/series/:slug/staff",
+            title: "Animation Studios & Key Production Staff",
+            description: "Retrieves animation production houses and key directors, creators, character designers, and composers with verified creator social media profiles.",
+            params: [
+                {
+                    name: "slug",
+                    type: "path",
+                    default: "attack-on-titan",
+                    options: ["attack-on-titan", "solo-leveling", "jujutsu-kaisen", "frieren-beyond-journeys-end", "demon-slayer-kimetsu-no-yaiba"],
+                    description: "Franchise slug identifier"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "series-characters",
+            category: "franchises",
+            categoryLabel: "Master Franchises",
+            categoryIcon: IconBuildingArch,
+            method: "GET",
+            path: "/api/v1/series/:slug/characters",
+            title: "Characters & Voice Actors Dossier",
+            description: "Returns comprehensive character dossiers with roles, native Japanese names, biographical details, and multi-lingual voice actor credits.",
+            params: [
+                {
+                    name: "slug",
+                    type: "path",
+                    default: "attack-on-titan",
+                    options: ["attack-on-titan", "solo-leveling", "jujutsu-kaisen", "frieren-beyond-journeys-end", "demon-slayer-kimetsu-no-yaiba"],
+                    description: "Franchise slug identifier"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
             id: "anime-part",
             category: "franchises",
             categoryLabel: "Master Franchises",
@@ -1060,6 +1108,75 @@
                                                                     <span class="newsCategory">{art.category || 'Anime News'}</span>
                                                                     <strong class="newsHeadline">{art.title}</strong>
                                                                     <span class="newsTime">{art.publishedAt ? new Date(art.publishedAt).toLocaleDateString() : 'Recent'}</span>
+                                                                </div>
+                                                            </div>
+                                                        {/each}
+                                                    </div>
+
+                                                {:else if ep.rawJson?.data?.staff && Array.isArray(ep.rawJson.data.staff)}
+                                                    <!-- Visual Animation Studios & Production Staff Showcase -->
+                                                    <div class="visualStaffGrid">
+                                                        {#if ep.rawJson.data.studios && ep.rawJson.data.studios.length > 0}
+                                                            <div class="studiosRow">
+                                                                {#each ep.rawJson.data.studios as std}
+                                                                    <div class="studioBadgeCard {std.isMain ? 'mainStudio' : ''}">
+                                                                        <span class="studioIcon">{std.isAnimationStudio ? '🎬' : '🏢'}</span>
+                                                                        <div>
+                                                                            <strong>{std.name}</strong>
+                                                                            <span class="studioRole">{std.isMain ? 'Main Animation Studio' : (std.isAnimationStudio ? 'Animation Production' : 'Producer')}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                {/each}
+                                                            </div>
+                                                        {/if}
+
+                                                        <div class="staffCardsGrid">
+                                                            {#each ep.rawJson.data.staff.slice(0, 8) as stf}
+                                                                <div class="staffCard">
+                                                                    <div class="staffCardHeader">
+                                                                        <img src={stf.image || 'https://placehold.co/100x120/1e293b/white?text=Staff'} alt={stf.name?.full} class="staffAvatar" />
+                                                                        <div class="staffInfo">
+                                                                            <span class="staffRole">{stf.role}</span>
+                                                                            <strong class="staffName">{stf.name?.full}</strong>
+                                                                            {#if stf.name?.native}
+                                                                                <span class="staffNative">{stf.name.native}</span>
+                                                                            {/if}
+                                                                            {#if stf.primaryOccupations && stf.primaryOccupations.length > 0}
+                                                                                <span class="staffOccupation">{stf.primaryOccupations.join(', ')}</span>
+                                                                            {/if}
+                                                                        </div>
+                                                                    </div>
+                                                                    {#if stf.socials && stf.socials.length > 0}
+                                                                        <div class="staffSocialsRow">
+                                                                            {#each stf.socials as soc}
+                                                                                <a href={soc.url} target="_blank" rel="noopener noreferrer" class="socialPill">
+                                                                                    <span>🔗 {soc.platform}</span>
+                                                                                </a>
+                                                                            {/each}
+                                                                        </div>
+                                                                    {/if}
+                                                                </div>
+                                                            {/each}
+                                                        </div>
+                                                    </div>
+
+                                                {:else if ep.rawJson?.data?.characters && Array.isArray(ep.rawJson.data.characters)}
+                                                    <!-- Visual Characters & Multi-Lingual Voice Actors Showcase -->
+                                                    <div class="visualCharactersGrid">
+                                                        {#each ep.rawJson.data.characters.slice(0, 8) as ch}
+                                                            <div class="characterCard">
+                                                                <img src={ch.image || 'https://placehold.co/120x150/1e293b/white?text=Char'} alt={ch.name?.full} class="charImg" />
+                                                                <div class="charInfo">
+                                                                    <span class="charRole role--{ch.role?.toLowerCase()}">{ch.role || 'Main'}</span>
+                                                                    <strong class="charName">{ch.name?.full}</strong>
+                                                                    {#if ch.name?.native}
+                                                                        <span class="charNative">{ch.name.native}</span>
+                                                                    {/if}
+                                                                    {#if ch.voiceActors && ch.voiceActors.length > 0}
+                                                                        <div class="charVAs">
+                                                                            <span class="vaTitle">🎙️ VA: {ch.voiceActors[0].name?.full} ({ch.voiceActors[0].language})</span>
+                                                                        </div>
+                                                                    {/if}
                                                                 </div>
                                                             </div>
                                                         {/each}
@@ -2457,6 +2574,203 @@
                     strong {
                         color: #E2E8F0;
                         font-style: normal;
+                    }
+                }
+            }
+
+            /* 6. Visual Staff & Studios Grid */
+            .visualStaffGrid {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+
+                .studiosRow {
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+
+                    .studioBadgeCard {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        background: rgba(15, 23, 42, 0.7);
+                        border: 1px solid rgba(139, 92, 246, 0.25);
+                        padding: 8px 12px;
+                        border-radius: 8px;
+
+                        &.mainStudio {
+                            border-color: #8B5CF6;
+                            background: rgba(139, 92, 246, 0.12);
+                        }
+
+                        .studioIcon {
+                            font-size: 1.2rem;
+                        }
+
+                        strong {
+                            color: #FFFFFF;
+                            font-size: 0.85rem;
+                            display: block;
+                        }
+
+                        .studioRole {
+                            color: #A78BFA;
+                            font-size: 0.7rem;
+                        }
+                    }
+                }
+
+                .staffCardsGrid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                    gap: 12px;
+
+                    .staffCard {
+                        background: rgba(15, 23, 42, 0.7);
+                        border: 1px solid rgba(255, 255, 255, 0.08);
+                        border-radius: 10px;
+                        padding: 12px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+
+                        .staffCardHeader {
+                            display: flex;
+                            gap: 12px;
+
+                            .staffAvatar {
+                                width: 56px;
+                                height: 68px;
+                                border-radius: 6px;
+                                object-fit: cover;
+                                background: #0B0F19;
+                            }
+
+                            .staffInfo {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 2px;
+                                flex: 1;
+
+                                .staffRole {
+                                    color: #F59E0B;
+                                    font-size: 0.7rem;
+                                    font-weight: 700;
+                                    text-transform: uppercase;
+                                }
+
+                                .staffName {
+                                    color: #F8FAFC;
+                                    font-size: 0.9rem;
+                                    line-height: 1.2;
+                                }
+
+                                .staffNative {
+                                    color: #64748B;
+                                    font-size: 0.75rem;
+                                }
+
+                                .staffOccupation {
+                                    color: #94A3B8;
+                                    font-size: 0.72rem;
+                                }
+                            }
+                        }
+
+                        .staffSocialsRow {
+                            display: flex;
+                            gap: 6px;
+                            flex-wrap: wrap;
+                            margin-top: auto;
+                            padding-top: 6px;
+                            border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+                            .socialPill {
+                                font-size: 0.68rem;
+                                color: #A78BFA;
+                                background: rgba(139, 92, 246, 0.12);
+                                border: 1px solid rgba(139, 92, 246, 0.25);
+                                padding: 2px 7px;
+                                border-radius: 4px;
+                                text-decoration: none;
+                                transition: all 0.2s ease;
+
+                                &:hover {
+                                    background: rgba(139, 92, 246, 0.25);
+                                    color: #FFFFFF;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* 7. Visual Characters Grid */
+            .visualCharactersGrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 12px;
+
+                .characterCard {
+                    background: rgba(15, 23, 42, 0.7);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 10px;
+                    padding: 10px;
+                    display: flex;
+                    gap: 12px;
+                    align-items: center;
+
+                    .charImg {
+                        width: 54px;
+                        height: 68px;
+                        border-radius: 6px;
+                        object-fit: cover;
+                        background: #0B0F19;
+                    }
+
+                    .charInfo {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2px;
+                        flex: 1;
+
+                        .charRole {
+                            font-size: 0.65rem;
+                            font-weight: 700;
+                            padding: 1px 5px;
+                            border-radius: 4px;
+                            width: fit-content;
+                            text-transform: uppercase;
+
+                            &.role--main {
+                                background: rgba(16, 185, 129, 0.2);
+                                color: #34D399;
+                            }
+                            &.role--supporting {
+                                background: rgba(59, 130, 246, 0.2);
+                                color: #60A5FA;
+                            }
+                        }
+
+                        .charName {
+                            color: #F8FAFC;
+                            font-size: 0.88rem;
+                            line-height: 1.2;
+                        }
+
+                        .charNative {
+                            color: #64748B;
+                            font-size: 0.72rem;
+                        }
+
+                        .charVAs {
+                            margin-top: 4px;
+
+                            .vaTitle {
+                                color: #CBD5E1;
+                                font-size: 0.72rem;
+                            }
+                        }
                     }
                 }
             }
