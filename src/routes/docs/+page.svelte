@@ -1025,44 +1025,94 @@
                                                         </div>
                                                     </div>
 
-                                                {:else if ep.rawJson?.data?.franchises || (Array.isArray(ep.rawJson?.data) && ep.rawJson.data.length > 0 && ep.rawJson.data[0].titles)}
+                                                {:else if ep.rawJson?.data?.franchises || ep.rawJson?.data?.anime || (Array.isArray(ep.rawJson?.data) && ep.rawJson.data.length > 0 && (ep.rawJson.data[0].titles || ep.rawJson.data[0].title))}
                                                     <!-- Visual Anime Collection Grid -->
                                                     <div class="visualCardsGrid">
-                                                        {#each (ep.rawJson.data.franchises || ep.rawJson.data).slice(0, 8) as item}
+                                                        {#each (ep.rawJson.data.anime || ep.rawJson.data.franchises || ep.rawJson.data).slice(0, 8) as item}
                                                             <div class="visualAnimeCard">
                                                                 <div class="cardPosterWrapper">
                                                                     <img
-                                                                        src={item.images?.poster || item.timeline?.[0]?.images?.poster || 'https://placehold.co/300x450/1e293b/white?text=AniNexus'}
-                                                                        alt={item.titles?.primary || 'Anime'}
+                                                                        src={item.coverImage || item.images?.poster || item.timeline?.[0]?.images?.poster || 'https://placehold.co/300x450/1e293b/white?text=AniNexus'}
+                                                                        alt={item.title?.primary || item.titles?.primary || 'Anime'}
                                                                         loading="lazy"
                                                                     />
-                                                                    {#if item.combinedScore || item.timeline?.[0]?.scores?.combinedAverage}
+                                                                    {#if item.score || item.combinedScore || item.timeline?.[0]?.scores?.combinedAverage}
                                                                         <span class="scoreTag">
                                                                             <IconStar size={12} fill="#F59E0B" color="#F59E0B" />
-                                                                            {(item.combinedScore || item.timeline[0].scores.combinedAverage).toFixed(1)}
+                                                                            {(item.score || item.combinedScore || item.timeline[0].scores.combinedAverage).toFixed(1)}
                                                                         </span>
+                                                                    {/if}
+                                                                    {#if item.nextAiringEpisode?.countdown}
+                                                                        <span class="countdownTag">⏳ {item.nextAiringEpisode.countdown}</span>
                                                                     {/if}
                                                                 </div>
                                                                 <div class="cardDetails">
-                                                                    <strong class="animeTitle" title={item.titles?.primary || item.titles?.english || ''}>
-                                                                        {item.titles?.primary || item.titles?.english || item.titles?.romaji || 'Anime Title'}
+                                                                    <strong class="animeTitle" title={item.title?.primary || item.titles?.primary || ''}>
+                                                                        {item.title?.primary || item.titles?.primary || item.titles?.english || item.titles?.romaji || 'Anime Title'}
                                                                     </strong>
                                                                     <div class="animeMetaRow">
-                                                                        <span class="formatPill">{item.timeline?.[0]?.format || 'TV'}</span>
-                                                                        <span class="partsCount">{item.totalParts ? `${item.totalParts} Parts` : (item.totalEpisodes ? `${item.totalEpisodes} Eps` : 'Multi-Part')}</span>
-                                                                    </div>
-                                                                    <div class="animeDubsRow">
-                                                                        {#if item.dubAvailability?.hasHindiDub || item.timeline?.[0]?.languages?.audioDubs?.includes('Hindi')}
-                                                                            <span class="dubBadge hindi">Hindi</span>
+                                                                        <span class="formatPill">{item.format || item.timeline?.[0]?.format || 'TV'}</span>
+                                                                        {#if item.studio}
+                                                                            <span class="studioPill">🎬 {item.studio}</span>
                                                                         {/if}
-                                                                        {#if item.dubAvailability?.hasEnglishDub || item.timeline?.[0]?.languages?.audioDubs?.includes('English')}
-                                                                            <span class="dubBadge english">English</span>
-                                                                        {/if}
-                                                                        <span class="dubBadge jap">Japanese</span>
+                                                                        <span class="partsCount">{item.episodes ? `${item.episodes} Eps` : (item.totalParts ? `${item.totalParts} Parts` : (item.totalEpisodes ? `${item.totalEpisodes} Eps` : ''))}</span>
                                                                     </div>
+                                                                    {#if item.genres && item.genres.length > 0}
+                                                                        <div class="animeDubsRow">
+                                                                            {#each item.genres.slice(0, 2) as g}
+                                                                                <span class="dubBadge jap">{g}</span>
+                                                                            {/each}
+                                                                        </div>
+                                                                    {:else}
+                                                                        <div class="animeDubsRow">
+                                                                            {#if item.dubAvailability?.hasHindiDub || item.timeline?.[0]?.languages?.audioDubs?.includes('Hindi')}
+                                                                                <span class="dubBadge hindi">Hindi</span>
+                                                                            {/if}
+                                                                            {#if item.dubAvailability?.hasEnglishDub || item.timeline?.[0]?.languages?.audioDubs?.includes('English')}
+                                                                                <span class="dubBadge english">English</span>
+                                                                            {/if}
+                                                                            <span class="dubBadge jap">Japanese</span>
+                                                                        </div>
+                                                                    {/if}
                                                                 </div>
                                                             </div>
                                                         {/each}
+                                                    </div>
+
+                                                {:else if ep.rawJson?.data?.calendar}
+                                                    <!-- Visual Weekly Airing Schedule (AniChart Parity) -->
+                                                    <div class="visualScheduleCalendar">
+                                                        <div class="calendarBanner">
+                                                            <span class="calendarEmoji">📅</span>
+                                                            <div>
+                                                                <h5>Weekly Broadcast Calendar</h5>
+                                                                <p>Live countdowns & episode schedule across all 7 days ({ep.rawJson.data.totalAiringThisWeek || 0} shows weekly)</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="calendarDaysGrid">
+                                                            {#each Object.entries(ep.rawJson.data.calendar) as [day, dayEpisodes]}
+                                                                {#if Array.isArray(dayEpisodes) && dayEpisodes.length > 0}
+                                                                    <div class="dayColumn">
+                                                                        <div class="dayHeader">
+                                                                            <span class="dayTitle">{day}</span>
+                                                                            <span class="dayCount">{dayEpisodes.length}</span>
+                                                                        </div>
+                                                                        <div class="dayCardsList">
+                                                                            {#each dayEpisodes.slice(0, 3) as epItem}
+                                                                                <div class="airingCardMini">
+                                                                                    <img src={epItem.anime?.coverImage || 'https://placehold.co/80x110/1e293b/white?text=Anime'} alt={epItem.anime?.title?.primary} class="airingImg" />
+                                                                                    <div class="airingDetails">
+                                                                                        <span class="airingCountdown">⏳ {epItem.countdown}</span>
+                                                                                        <strong class="airingName">{epItem.anime?.title?.primary}</strong>
+                                                                                        <span class="airingMeta">Ep {epItem.episodeNumber}{epItem.totalEpisodes ? ` of ${epItem.totalEpisodes}` : ''} • {epItem.studio || epItem.anime?.format || 'TV'}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            {/each}
+                                                                        </div>
+                                                                    </div>
+                                                                {/if}
+                                                            {/each}
+                                                        </div>
                                                     </div>
 
                                                 {:else if ep.rawJson?.data?.categories && Array.isArray(ep.rawJson.data.categories)}
@@ -2287,6 +2337,19 @@
                             object-fit: cover;
                         }
 
+                        .countdownTag {
+                            position: absolute;
+                            top: 8px;
+                            left: 8px;
+                            background: rgba(16, 185, 129, 0.9);
+                            color: #FFFFFF;
+                            font-size: 0.68rem;
+                            font-weight: 700;
+                            padding: 2px 6px;
+                            border-radius: 4px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+                        }
+
                         .scoreTag {
                             position: absolute;
                             top: 8px;
@@ -2334,6 +2397,18 @@
                                 border-radius: 4px;
                                 font-weight: 600;
                             }
+
+                            .studioPill {
+                                background: rgba(59, 130, 246, 0.15);
+                                color: #93C5FD;
+                                padding: 1px 5px;
+                                border-radius: 4px;
+                                font-weight: 600;
+                                max-width: 90px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
                         }
 
                         .animeDubsRow {
@@ -2358,6 +2433,137 @@
                                 &.jap {
                                     background: rgba(148, 163, 184, 0.15);
                                     color: #CBD5E1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* Visual Weekly Airing Schedule (AniChart Parity) */
+            .visualScheduleCalendar {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+
+                .calendarBanner {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding-bottom: 8px;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+                    .calendarEmoji {
+                        font-size: 1.8rem;
+                    }
+
+                    h5 {
+                        margin: 0;
+                        color: #FFFFFF;
+                        font-size: 1rem;
+                        font-weight: 700;
+                    }
+
+                    p {
+                        margin: 2px 0 0;
+                        font-size: 0.78rem;
+                        color: #94A3B8;
+                    }
+                }
+
+                .calendarDaysGrid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    gap: 12px;
+                    overflow-x: auto;
+
+                    .dayColumn {
+                        background: rgba(15, 23, 42, 0.6);
+                        border: 1px solid rgba(255, 255, 255, 0.06);
+                        border-radius: 10px;
+                        padding: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+
+                        .dayHeader {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding-bottom: 6px;
+                            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+
+                            .dayTitle {
+                                font-size: 0.82rem;
+                                font-weight: 700;
+                                color: #A78BFA;
+                            }
+
+                            .dayCount {
+                                background: rgba(139, 92, 246, 0.25);
+                                color: #C4B5FD;
+                                font-size: 0.68rem;
+                                font-weight: 700;
+                                padding: 1px 6px;
+                                border-radius: 10px;
+                            }
+                        }
+
+                        .dayCardsList {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 8px;
+
+                            .airingCardMini {
+                                display: flex;
+                                gap: 8px;
+                                background: rgba(30, 41, 59, 0.5);
+                                border: 1px solid rgba(255, 255, 255, 0.04);
+                                border-radius: 6px;
+                                padding: 6px;
+                                transition: background 0.15s ease;
+
+                                &:hover {
+                                    background: rgba(30, 41, 59, 0.85);
+                                    border-color: rgba(139, 92, 246, 0.3);
+                                }
+
+                                .airingImg {
+                                    width: 44px;
+                                    height: 58px;
+                                    object-fit: cover;
+                                    border-radius: 4px;
+                                    flex-shrink: 0;
+                                }
+
+                                .airingDetails {
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    gap: 2px;
+                                    min-width: 0;
+
+                                    .airingCountdown {
+                                        font-size: 0.65rem;
+                                        color: #10B981;
+                                        font-weight: 700;
+                                    }
+
+                                    .airingName {
+                                        font-size: 0.74rem;
+                                        color: #F1F5F9;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                    }
+
+                                    .airingMeta {
+                                        font-size: 0.65rem;
+                                        color: #94A3B8;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                    }
                                 }
                             }
                         }
