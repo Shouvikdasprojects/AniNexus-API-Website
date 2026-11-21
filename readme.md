@@ -60,6 +60,7 @@ Instead of treating every season, movie, OVA, and special as disconnected indivi
 | **Anime Awards Vault** | ❌ None | ✅ **5-Year Rolling Window** (Industry Anime Awards 2021–2026 with 410 auto-purge) |
 | **Weekly Airing Calendar** | ⚠️ Raw broadcasts without dub info | ✅ **7-Day Live Airing Schedule** with localized dub availability |
 | **Industry News Engine** | ❌ Rare or unstructured text | ✅ **Image-Categorized Feeds** (`/news` with cover images, `/articles` text-only, 60-day TTL) |
+| **Database Scale** | ⚠️ Single database bottleneck | ✅ **1.5GB Triple-Vault Sharded Engine** (Vault 1 Primary, Vault 2 Overflow, Vault 3 Dedicated Real-Time Hub) |
 | **Authentication Barrier** | ⚠️ Complex OAuth / strict rate-limits | ✅ **Zero-Token Auth & CORS `*` Enabled** |
 
 ---
