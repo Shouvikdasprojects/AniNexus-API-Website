@@ -96,37 +96,151 @@
     }
 
     .showcaseCover {
-      background-repeat: no-repeat;
+      background: #080B14;
       height: 600px;
       display: flex;
       border-radius: var(--border-radius-large);
       overflow: hidden;
       position: relative;
-      -webkit-background-clip: padding-box;
-      border: 1px solid var(--border-blue-gradient, #A1C4F7);
-      transition: all 5s ease;
-      background-size: 100% 100%;
-      background-position: 50%;
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 92, 246, 0.15);
 
-      &:hover {
-        background-size: 110% 110%;
+      .animeGridBackdrop {
+        position: absolute;
+        top: -15%;
+        left: -15%;
+        width: 130%;
+        height: 130%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 22px;
+        transform: rotate(-6deg);
+        pointer-events: none;
+        user-select: none;
+        opacity: 0.55;
+        transition: opacity 0.5s ease;
+
+        .glowOrb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+          pointer-events: none;
+          z-index: 1;
+
+          &--purple {
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(139, 92, 246, 0) 70%);
+            top: 20%;
+            left: 20%;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+          }
+
+          &--cyan {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0) 70%);
+            bottom: 20%;
+            right: 25%;
+            animation: orbFloat 10s ease-in-out infinite alternate-reverse;
+          }
+        }
+
+        .driftRow {
+          display: flex;
+          overflow: hidden;
+          width: 100%;
+          position: relative;
+          z-index: 2;
+
+          .driftTrack {
+            display: flex;
+            gap: 16px;
+            flex-shrink: 0;
+            width: max-content;
+          }
+
+          &--left .driftTrack {
+            animation: driftLeft 35s linear infinite;
+          }
+
+          &--right .driftTrack {
+            animation: driftRight 40s linear infinite;
+          }
+        }
+
+        .driftItem {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: rgba(15, 23, 42, 0.75);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          padding: 10px 18px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+          white-space: nowrap;
+
+          .driftEmoji {
+            font-size: 1.1rem;
+          }
+
+          strong {
+            color: #F8FAFC;
+            font-size: 0.9rem;
+            font-weight: 600;
+          }
+
+          .driftBadge {
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: #A78BFA;
+            background: rgba(139, 92, 246, 0.18);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 2px 8px;
+            border-radius: 6px;
+          }
+        }
+      }
+
+      &:hover .animeGridBackdrop {
+        opacity: 0.8;
       }
 
       .overlay {
         position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.70) 56.35%, #13151A 90.44%, #13151A 100%);
-        backdrop-filter: blur(2px);
+        inset: 0;
+        background: linear-gradient(180deg, rgba(8, 11, 20, 0.25) 0%, rgba(8, 11, 20, 0.78) 50%, #080B14 88%, #080B14 100%);
+        backdrop-filter: blur(1px);
         height: 100%;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        padding: 32px;
+        padding: 36px;
         box-sizing: border-box;
         border-radius: var(--border-radius-large);
         overflow: hidden;
+        z-index: 10;
+        gap: 24px;
       }
     }
+
+@keyframes driftLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes driftRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -20px) scale(1.15); }
+}
   }
 
   .right {

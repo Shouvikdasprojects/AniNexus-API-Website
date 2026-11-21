@@ -38,7 +38,6 @@
 	import RequestExamples from "../lib/components/RequestExamples.svelte";
 	import features from "../data/features.js";
 	import integrations from "../data/integrations.js";
-	import ShowcaseBackground from "../lib/images/showcase-background.png";
 	import Divider from "../lib/components/Divider.svelte";
 	import InputReadOnly from "../lib/components/InputReadOnly.svelte";
 	import IntegrationCard from "../lib/components/IntegrationCard.svelte";
@@ -175,10 +174,54 @@
 				</Button>
 			</div>
 
-			<div
-				class="showcaseCover margin--top-64"
-				style="background-image: url({ShowcaseBackground})"
-			>
+			<div class="showcaseCover margin--top-64">
+				<!-- Dynamic Animated Anime Ecosystem Stream (100% Unique to AniNexus) -->
+				<div class="animeGridBackdrop" aria-hidden="true">
+					<div class="glowOrb glowOrb--purple"></div>
+					<div class="glowOrb glowOrb--cyan"></div>
+					
+					<!-- Row 1 (Drift Left) -->
+					<div class="driftRow driftRow--left">
+						<div class="driftTrack">
+							<div class="driftItem"><span class="driftEmoji">⚔️</span><strong>Attack on Titan</strong> <span class="driftBadge">11 Parts • Score 85.4</span></div>
+							<div class="driftItem"><span class="driftEmoji">⏳</span><strong>Frieren</strong> <span class="driftBadge">Score 91.2 • Top Rated</span></div>
+							<div class="driftItem"><span class="driftEmoji">⚡</span><strong>Solo Leveling</strong> <span class="driftBadge">Hindi & English Dub</span></div>
+							<div class="driftItem"><span class="driftEmoji">🌊</span><strong>Demon Slayer</strong> <span class="driftBadge">Kimetsu no Yaiba</span></div>
+							<div class="driftItem"><span class="driftEmoji">👁️</span><strong>Jujutsu Kaisen</strong> <span class="driftBadge">Score 86.8</span></div>
+							<div class="driftItem"><span class="driftEmoji">⚔️</span><strong>Attack on Titan</strong> <span class="driftBadge">11 Parts • Score 85.4</span></div>
+							<div class="driftItem"><span class="driftEmoji">⏳</span><strong>Frieren</strong> <span class="driftBadge">Score 91.2 • Top Rated</span></div>
+							<div class="driftItem"><span class="driftEmoji">⚡</span><strong>Solo Leveling</strong> <span class="driftBadge">Hindi & English Dub</span></div>
+						</div>
+					</div>
+
+					<!-- Row 2 (Drift Right) -->
+					<div class="driftRow driftRow--right">
+						<div class="driftTrack">
+							<div class="driftItem"><span class="driftEmoji">🪚</span><strong>Chainsaw Man</strong> <span class="driftBadge">Score 84.6</span></div>
+							<div class="driftItem"><span class="driftEmoji">⏱️</span><strong>Steins;Gate</strong> <span class="driftBadge">Score 90.8 • Sci-Fi</span></div>
+							<div class="driftItem"><span class="driftEmoji">🥊</span><strong>One Punch Man</strong> <span class="driftBadge">Hero Association</span></div>
+							<div class="driftItem"><span class="driftEmoji">🩸</span><strong>Bleach: TYBW</strong> <span class="driftBadge">Score 89.6</span></div>
+							<div class="driftItem"><span class="driftEmoji">🎯</span><strong>Hunter x Hunter</strong> <span class="driftBadge">148 Episodes</span></div>
+							<div class="driftItem"><span class="driftEmoji">🪚</span><strong>Chainsaw Man</strong> <span class="driftBadge">Score 84.6</span></div>
+							<div class="driftItem"><span class="driftEmoji">⏱️</span><strong>Steins;Gate</strong> <span class="driftBadge">Score 90.8 • Sci-Fi</span></div>
+							<div class="driftItem"><span class="driftEmoji">🥊</span><strong>One Punch Man</strong> <span class="driftBadge">Hero Association</span></div>
+						</div>
+					</div>
+
+					<!-- Row 3 (Drift Left) -->
+					<div class="driftRow driftRow--left">
+						<div class="driftTrack">
+							<div class="driftItem"><span class="driftEmoji">🏆</span><strong>Industry Anime Awards</strong> <span class="driftBadge">2021–2026 Editions</span></div>
+							<div class="driftItem"><span class="driftEmoji">🎙️</span><strong>Verified Dub Matrix</strong> <span class="driftBadge">Hindi, English, Japanese</span></div>
+							<div class="driftItem"><span class="driftEmoji">📅</span><strong>Weekly Airing Calendar</strong> <span class="driftBadge">7-Day Live Tracker</span></div>
+							<div class="driftItem"><span class="driftEmoji">📰</span><strong>Real-Time News Engine</strong> <span class="driftBadge">Cover Photos • 60-Day TTL</span></div>
+							<div class="driftItem"><span class="driftEmoji">⚡</span><strong>371+ Master Franchises</strong> <span class="driftBadge">Unified Watch Order</span></div>
+							<div class="driftItem"><span class="driftEmoji">🏆</span><strong>Industry Anime Awards</strong> <span class="driftBadge">2021–2026 Editions</span></div>
+							<div class="driftItem"><span class="driftEmoji">🎙️</span><strong>Verified Dub Matrix</strong> <span class="driftBadge">Hindi, English, Japanese</span></div>
+						</div>
+					</div>
+				</div>
+
 				<div class="overlay">
 					<div class="type--group-heading-and-content">
 						<h2>⚡ Engineered for Modern Anime Apps</h2>
