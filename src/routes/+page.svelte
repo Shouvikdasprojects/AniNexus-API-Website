@@ -70,7 +70,7 @@
 <svelte:head>
 	<title>AniNexus API — The Legal Anime Intelligence & Master Franchise Platform</title>
 	<meta name="google-site-verification" content="eV-a5nS42eCtPVcFxOdU3Ko6DNbOLSbCPH-pEQvrtYI" />
-	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API. 353+ Master Franchises (2010–{currentYear}), verified dubs, dual scores, and rolling anime awards.">
+	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API. {totalFranchises}+ Master Franchises (1960s–{currentYear}+), verified dubs, dual scores, and rolling anime awards.">
 	<meta name="keywords" content="aninexus, anime api, anime master franchise, verified hindi dub, dual scores, anime awards, franchise api">
 </svelte:head>
 
@@ -86,14 +86,14 @@
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (2010–{currentYear})</strong>, 100% verified Indian & international dub tracks, dual community scores, and Industry Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (1960s–{currentYear}+)</strong>, 100% verified Indian & international dub tracks, dual community scores, and Industry Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#series-slug"
-					description="{totalFranchises} curated franchises from 2010 to {currentYear} with multi-season timelines."
+					description="{totalFranchises}+ curated franchises from classic to modern eras (1960s–{currentYear}+) with multi-season timelines."
 				>
 					<IconBuildingArch size={20} stroke={1.5} />
 					{totalFranchises}+ Master Franchises
@@ -225,7 +225,7 @@
 				<div class="overlay">
 					<div class="type--group-heading-and-content">
 						<h2>⚡ Engineered for Modern Anime Apps</h2>
-						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for modern anime platforms. Ingesting over {totalFranchises} Master Franchises across {currentYear - 2010 + 1} years (2010–{currentYear}), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
+						<p>AniNexus was engineered from the ground up to serve as the unified anime intelligence layer for modern anime platforms. Ingesting over {totalFranchises} Master Franchises spanning from golden-age classics to future modern releases (1960s–{currentYear}+), it eliminates fragmented season entries and delivers 100% verified dub information.<br><br> Explore our interactive documentation or integrate it directly into your apps today!</p>
 					</div>
 
 					<ButtonGroup>

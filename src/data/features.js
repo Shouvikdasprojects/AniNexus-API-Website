@@ -27,7 +27,7 @@ export default {
             highlight: true,
             onVersion: 1,
             label: "Master Franchise Vault",
-            description: `634+ curated franchises (2010–${currentYear}) with consolidated multi-season timelines, movies, and specials.`
+            description: `634+ curated franchises (1960s–${currentYear}+) with consolidated multi-season timelines, movies, and specials.`
         },
         {
             icon: IconLanguage,

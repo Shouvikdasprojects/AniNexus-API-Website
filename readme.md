@@ -32,7 +32,7 @@
 
 **AniNexus** is a next-generation, high-performance **Anime Metadata & Media REST API (v1)** engineered to solve the fragmentation problem in existing anime databases. 
 
-Instead of treating every season, movie, OVA, and special as disconnected individual records (as traditional single-source anime databases do), **AniNexus links all parts into unified Master Franchise Watch-Order Timelines** across 634+ curated franchises (2010–2026). It also features a dual-score consensus engine, verified multi-language dubbing tracks (including Hindi and English), universal characters & voice actors encyclopedia, a 5-year rolling Anime Awards vault, and real-time auto-purging news feeds.
+Instead of treating every season, movie, OVA, and special as disconnected individual records (as traditional single-source anime databases do), **AniNexus links all parts into unified Master Franchise Watch-Order Timelines** across 634+ curated franchises spanning from classic to modern eras (1960s–Present+). It also features a dual-score consensus engine, verified multi-language dubbing tracks (including Hindi and English), universal characters & voice actors encyclopedia, a 5-year rolling Anime Awards vault, and real-time auto-purging news feeds.
 
 > **100% Free & Legal:** AniNexus hosts zero pirated video files and requires no API keys or subscription tokens. Safe for deployment in Google Play Store apps, Apple App Store apps, educational projects, Discord bots, and production websites.
 

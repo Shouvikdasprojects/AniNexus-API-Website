@@ -234,7 +234,7 @@
                     type: "path",
                     default: "attack-on-titan",
                     options: ["attack-on-titan", "solo-leveling", "jujutsu-kaisen", "frieren-beyond-journeys-end", "demon-slayer-kimetsu-no-yaiba", "one-punch-man", "my-hero-academia", "hunter-x-hunter-2011", "steins-gate", "chainsaw-man"],
-                    description: "Curated franchise slug identifier (2010–2026)"
+                    description: "Curated franchise slug identifier (1960s–Present+)"
                 }
             ],
             loading: false,
@@ -809,7 +809,7 @@
             </div>
             <h1>AniNexus <span>REST API Reference</span></h1>
             <p>
-                A high-performance <strong>REST API (v1)</strong> serving <strong>{totalFranchises}+ curated Master Franchises (2010–{currentYear})</strong>, 
+                A high-performance <strong>REST API (v1)</strong> serving <strong>{totalFranchises}+ curated Master Franchises (1960s–{currentYear}+)</strong>, 
                 5-year rolling anime awards, 100% verified audio dub tracks (Hindi & English), and dual community consensus scores with zero token authorization required.
             </p>
 
