@@ -4,11 +4,14 @@
 ### The Open Anime Metadata, Master Franchise & Intelligence Platform
 
 [![Architecture: REST API v1](https://img.shields.io/badge/Architecture-REST%20API%20v1-8B5CF6?style=for-the-badge&logo=fastapi&logoColor=white)](https://aninexus-api-website.pages.dev/docs)
-[![Gateway Status](https://img.shields.io/badge/Gateway-99.9%25%20Healthy-10B981?style=for-the-badge&logo=render&logoColor=white)](https://ani-nexus.onrender.com/health)
+[![Gateway Status](https://img.shields.io/badge/Gateway-Operational%20(99.9%25)-10B981?style=for-the-badge&logo=render&logoColor=white)](https://ani-nexus.onrender.com/health/detailed)
+[![Rate Limit](https://img.shields.io/badge/Rate%20Limit-90%20req%2Fmin-blue?style=for-the-badge&logo=speedtest)](https://ani-nexus.onrender.com/health/detailed)
 [![Master Franchises](https://img.shields.io/badge/Franchises-634%2B%20Curated-EC4899?style=for-the-badge&logo=statuspage&logoColor=white)](https://aninexus-api-website.pages.dev/docs#series-slug)
+[![HTTP Cache](https://img.shields.io/badge/HTTP%20Cache-3600s%20Edge%20CDN-7C3AED?style=for-the-badge)](https://ani-nexus.onrender.com/api/v1/series/attack-on-titan)
+[![OpenAPI Spec](https://img.shields.io/badge/OpenAPI-3.1.0%20Standard-0284C7?style=for-the-badge&logo=openapiinitiative&logoColor=white)](https://aninexus-api-website.pages.dev/openapi.json)
+[![SDKs: TS / Py / Dart](https://img.shields.io/badge/SDKs-TS%20%7C%20Python%20%7C%20Dart-10B981?style=for-the-badge)](https://aninexus-api-website.pages.dev/docs)
 [![Auth: Zero-Token](https://img.shields.io/badge/Auth-100%25%20Free%20%2F%20Open-3B82F6?style=for-the-badge&logo=open-source-initiative&logoColor=white)](https://aninexus-api-website.pages.dev/docs)
 [![CORS: Enabled](https://img.shields.io/badge/CORS-Enabled%20(*)-F59E0B?style=for-the-badge)](https://aninexus-api-website.pages.dev/docs)
-[![OpenAPI Spec](https://img.shields.io/badge/OpenAPI-3.1.0%20Standard-0284C7?style=for-the-badge&logo=openapiinitiative&logoColor=white)](https://aninexus-api-website.pages.dev/openapi.json)
 [![AI Ready](https://img.shields.io/badge/AI%20Agent-llms.txt%20Ready-6366F1?style=for-the-badge&logo=openai&logoColor=white)](https://aninexus-api-website.pages.dev/llms.txt)
 [![License: MIT](https://img.shields.io/badge/License-MIT-gray?style=for-the-badge)](LICENSE)
 

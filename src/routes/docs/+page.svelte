@@ -40,6 +40,355 @@
     let copiedEndpoint = null;
     let copiedCode = null;
     let responseViewModes = {};
+    let docsViewMode = "playground"; // 'playground' | 'recipes'
+    let activeRecipeIndex = 0;
+    let recipeCodeLangs = { 0: "ts", 1: "ts", 2: "ts" };
+
+    const recipes = [
+        {
+            id: "recipe-watch-order",
+            title: "Master Franchise Watch-Order Timeline App",
+            subtitle: "Build a chronological watch-order guide with canon vs. filler continuity and multi-season timelines",
+            badge: "Franchise Architecture",
+            color: "#8B5CF6",
+            endpoint: "/api/v1/series/:slug",
+            endpointHash: "series-slug",
+            description: "Franchises like Fate, Monogatari, Dragon Ball, or Attack on Titan have complex multi-season timelines, movies, OVAs, and spin-offs. AniNexus indexes each franchise into a structured hierarchy of chronological parts, release dates, episode counts, and canon continuity.",
+            steps: [
+                "Fetch master franchise metadata by slug (e.g. `attack-on-titan` or `naruto`) via `GET /api/v1/series/:slug`",
+                "Extract `parts` array containing all TV seasons, movies, and specials in release sequence",
+                "Sort or group parts by chronological storyline order (`order` or `releaseYear`)",
+                "Display visual badges for total episodes, broadcast status, and dual consensus ratings"
+            ],
+            code: {
+                ts: `// 1. Fetch Franchise Watch Order with AniNexus TypeScript SDK (or native fetch)
+import { AniNexusClient } from './aniNexusClient';
+
+const client = new AniNexusClient();
+
+async function getFranchiseWatchOrder(seriesSlug: string) {
+  // Fetch complete franchise timeline with all parts & dub metadata
+  const franchise = await client.getSeries(seriesSlug);
+  
+  console.log(\`🎬 Franchise: \${franchise.name}\`);
+  console.log(\`⭐ Rating: \${franchise.rating} | Dubs: \${franchise.dubs.totalCount}\`);
+
+  // Build chronological viewing timeline
+  const timeline = franchise.parts.map((part, index) => ({
+    step: index + 1,
+    title: part.title,
+    type: part.type, // 'TV', 'Movie', 'OVA', 'Special'
+    episodes: part.episodes,
+    year: part.releaseYear,
+    status: part.status,
+    scores: part.scores // Dual community consensus scores
+  }));
+
+  return timeline;
+}
+
+// Example usage:
+getFranchiseWatchOrder('attack-on-titan').then(console.log);`,
+                py: `# 1. Use the lightweight Python SDK or standard requests
+from aninexus import AniNexusClient
+
+client = AniNexusClient()
+
+def get_franchise_watch_order(series_slug: str):
+    """Fetch complete franchise with parts and dub metadata."""
+    franchise = client.get_series(series_slug)
+    
+    print(f"🎬 Franchise: {franchise['name']}")
+    print(f"📊 Total Parts: {len(franchise.get('parts', []))}")
+    
+    # Build ordered viewing timeline
+    timeline = []
+    for idx, part in enumerate(franchise.get('parts', []), 1):
+        timeline.append({
+            "order": idx,
+            "title": part.get("title"),
+            "format": part.get("type"),
+            "episodes": part.get("episodes"),
+            "year": part.get("releaseYear"),
+            "score": part.get("scores", {}).get("average")
+        })
+    return timeline
+
+# Example: Inspect timeline
+if __name__ == "__main__":
+    order = get_franchise_watch_order("attack-on-titan")
+    for item in order:
+        print(f"[{item['order']}] {item['title']} ({item['year']}) - {item['episodes']} eps")`,
+                dart: `// Flutter / Dart Implementation with http
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class WatchOrderStep {
+  final int step;
+  final String title;
+  final String format;
+  final int episodes;
+  final int year;
+
+  WatchOrderStep({required this.step, required this.title, required this.format, required this.episodes, required this.year});
+}
+
+Future<List<WatchOrderStep>> fetchWatchOrder(String slug) async {
+  final url = Uri.parse('https://ani-nexus.onrender.com/api/v1/series/\$slug');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body)['data'];
+    final List parts = data['parts'] ?? [];
+
+    return parts.asMap().entries.map((entry) {
+      final idx = entry.key + 1;
+      final p = entry.value;
+      return WatchOrderStep(
+        step: idx,
+        title: p['title'] ?? '',
+        format: p['type'] ?? 'TV',
+        episodes: p['episodes'] ?? 0,
+        year: p['releaseYear'] ?? 0,
+      );
+    }).toList();
+  } else {
+    throw Exception('Failed to load franchise timeline');
+  }
+}`
+            }
+        },
+        {
+            id: "recipe-dub-tracker",
+            title: "Indian & Global Dub Tracker",
+            subtitle: "Filter streaming-ready anime by verified Hindi, Tamil, Telugu, and English audio dubs",
+            badge: "Dub Intelligence",
+            color: "#10B981",
+            endpoint: "/api/v1/search?q=:query",
+            endpointHash: "global-search",
+            description: "Anime accessibility in regional Indian languages (Hindi, Tamil, Telugu) and global English dubs is growing exponentially. AniNexus is the first platform to index 100% verified voice casts, dub languages, and studio credits at the individual part level.",
+            steps: [
+                "Query the AniNexus catalog or search endpoint with language filters via `GET /api/v1/top`",
+                "Inspect `dubs.availableLanguages` array (e.g. `['Hindi', 'English', 'Tamil']`)",
+                "Extract verified dub studio, voice actors, and audio provider tags",
+                "Render audio badge chips on your streaming UI or directory listing"
+            ],
+            code: {
+                ts: `// Track Indian & Global Audio Dubs in TypeScript
+import { AniNexusClient } from './aniNexusClient';
+
+const client = new AniNexusClient();
+
+async function findDubsByLanguage(targetLang: 'Hindi' | 'English' | 'Tamil' | 'Telugu') {
+  // Query top or search results
+  const results = await client.getTop('popular', 50);
+
+  // Filter franchises that include verified regional dubs
+  const availableWithDub = results.filter(franchise => 
+    franchise.dubs?.availableLanguages?.includes(targetLang)
+  );
+
+  return availableWithDub.map(anime => ({
+    title: anime.name,
+    slug: anime.slug,
+    totalDubs: anime.dubs.totalCount,
+    allLanguages: anime.dubs.availableLanguages,
+    rating: anime.rating
+  }));
+}
+
+// Find all anime with verified Hindi dubbing
+findDubsByLanguage('Hindi').then(dubs => {
+  console.log(\`Found \${dubs.length} anime with verified Hindi audio:\`);
+  console.table(dubs);
+});`,
+                py: `# Python Dub Tracker for OTT Platforms & Catalogs
+import requests
+
+API_BASE = "https://ani-nexus.onrender.com/api/v1"
+
+def find_anime_by_dub_language(language: str = "Hindi"):
+    """Find franchises that offer verified audio dubs in target language."""
+    url = f"{API_BASE}/top?type=popular&limit=50"
+    resp = requests.get(url).json()
+    
+    franchises = resp.get("data", [])
+    matched = []
+    
+    for item in franchises:
+        dubs = item.get("dubs", {})
+        available_langs = dubs.get("availableLanguages", [])
+        
+        # Case-insensitive language check
+        if any(language.lower() == l.lower() for l in available_langs):
+            matched.append({
+                "title": item.get("name"),
+                "slug": item.get("slug"),
+                "languages": available_langs,
+                "parts_count": len(item.get("parts", []))
+            })
+            
+    return matched
+
+# Execute: Check for Hindi or Tamil dubs
+hindi_titles = find_anime_by_dub_language("Hindi")
+print(f"Verified Hindi Dub Titles: {len(hindi_titles)}")`,
+                dart: `// Dart / Flutter Dub Tracker Component
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class AnimeDubEntry {
+  final String title;
+  final String slug;
+  final List<String> dubLanguages;
+
+  AnimeDubEntry({required this.title, required this.slug, required this.dubLanguages});
+}
+
+Future<List<AnimeDubEntry>> getTitlesWithDub(String targetLanguage) async {
+  final url = Uri.parse('https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=50');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final List data = jsonDecode(response.body)['data'] ?? [];
+    
+    return data.where((item) {
+      final List langs = item['dubs']?['availableLanguages'] ?? [];
+      return langs.any((l) => l.toString().toLowerCase() == targetLanguage.toLowerCase());
+    }).map((item) {
+      final List langs = item['dubs']?['availableLanguages'] ?? [];
+      return AnimeDubEntry(
+        title: item['name'] ?? '',
+        slug: item['slug'] ?? '',
+        dubLanguages: langs.map((e) => e.toString()).toList(),
+      );
+    }).toList();
+  }
+  return [];
+}`
+            }
+        },
+        {
+            id: "recipe-live-calendar",
+            title: "7-Day Live Broadcast & Airing Countdown Widget",
+            subtitle: "Build a weekly release schedule with real-time countdowns and simulcast timers",
+            badge: "Broadcast Telemetry",
+            color: "#3B82F6",
+            endpoint: "/api/v1/schedule",
+            endpointHash: "schedule",
+            description: "Keep fans informed of exactly when new episodes air every day of the week. The 7-Day Live Broadcast endpoint organizes the current season's simulcasts from Monday through Sunday with ISO timestamps and relative countdowns.",
+            steps: [
+                "Fetch the 7-day schedule via `GET /api/v1/schedule`",
+                "Group airing episodes by day (`monday`, `tuesday`, ..., `sunday`)",
+                "Read `airingAt` (Unix timestamp) and `countdown` (e.g. `in 4 hours 12 mins`)",
+                "Display an interactive day switcher with episode cards and airing badges"
+            ],
+            code: {
+                ts: `// 7-Day Airing Calendar in TypeScript
+import { AniNexusClient } from './aniNexusClient';
+
+const client = new AniNexusClient();
+
+async function getWeeklyAiringCalendar() {
+  const schedule = await client.getSchedule();
+
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  
+  const weeklyGuide = days.map(day => {
+    const episodes = schedule[day] || [];
+    return {
+      day: day.toUpperCase(),
+      totalReleases: episodes.length,
+      shows: episodes.map(item => ({
+        title: item.anime?.title?.primary,
+        episodeNumber: item.episodeNumber,
+        airingCountdown: item.countdown,
+        airingTimeUtc: new Date(item.airingAt * 1000).toUTCString(),
+        cover: item.anime?.coverImage
+      }))
+    };
+  });
+
+  return weeklyGuide;
+}
+
+// Run guide
+getWeeklyAiringCalendar().then(calendar => {
+  console.log("Weekly Simulcast Schedule Loaded:");
+  calendar.forEach(d => console.log(\`\${d.day}: \${d.totalReleases} episodes airing\`));
+});`,
+                py: `# Python Weekly Airing Calendar & Countdown Generator
+import requests
+from datetime import datetime
+
+API_BASE = "https://ani-nexus.onrender.com/api/v1"
+
+def fetch_weekly_schedule():
+    """Retrieve 7-day anime broadcast schedule with countdowns."""
+    res = requests.get(f"{API_BASE}/schedule")
+    schedule = res.json().get("data", {})
+    
+    calendar = {}
+    for day, episodes in schedule.items():
+        calendar[day] = []
+        for ep in episodes:
+            anime = ep.get("anime", {})
+            air_timestamp = ep.get("airingAt", 0)
+            air_dt = datetime.utcfromtimestamp(air_timestamp) if air_timestamp else None
+            
+            calendar[day].append({
+                "anime": anime.get("title", {}).get("primary"),
+                "episode": ep.get("episodeNumber"),
+                "countdown": ep.get("countdown"),
+                "air_time_utc": air_dt.strftime("%Y-%m-%d %H:%M UTC") if air_dt else "N/A"
+            })
+    return calendar
+
+if __name__ == "__main__":
+    weekly = fetch_weekly_schedule()
+    for day, shows in weekly.items():
+        print(f"📅 {day.capitalize()} ({len(shows)} releases)")
+        for s in shows[:3]:
+            print(f"  • {s['anime']} Ep {s['episode']} ({s['countdown']})")`,
+                dart: `// Dart / Flutter Weekly Broadcast Schedule
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class AiringEpisode {
+  final String title;
+  final int episode;
+  final String countdown;
+
+  AiringEpisode({required this.title, required this.episode, required this.countdown});
+}
+
+Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
+  final url = Uri.parse('https://ani-nexus.onrender.com/api/v1/schedule');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> data = jsonDecode(response.body)['data'] ?? {};
+    final Map<String, List<AiringEpisode>> schedule = {};
+
+    data.forEach((day, episodes) {
+      if (episodes is List) {
+        schedule[day] = episodes.map((ep) => AiringEpisode(
+          title: ep['anime']?['title']?['primary'] ?? 'Unknown',
+          episode: ep['episodeNumber'] ?? 1,
+          countdown: ep['countdown'] ?? '',
+        )).toList();
+      }
+    });
+
+    return schedule;
+  }
+  return {};
+}`
+            }
+        }
+    ];
+
+    $: activeRecipe = recipes[activeRecipeIndex] || recipes[0];
 
     // Endpoints data definition (All 28 verified live endpoints)
     let endpoints = [
@@ -794,8 +1143,17 @@
     function selectAndScrollToHash() {
         if (typeof window !== "undefined" && window.location.hash) {
             const targetId = window.location.hash.replace("#", "");
+            if (targetId === "recipes" || targetId.startsWith("recipe-")) {
+                docsViewMode = "recipes";
+                const matchIndex = recipes.findIndex(r => r.id === targetId);
+                if (matchIndex !== -1) {
+                    activeRecipeIndex = matchIndex;
+                }
+                return;
+            }
             const found = endpoints.find(e => e.id === targetId);
             if (found) {
+                docsViewMode = "playground";
                 activeCategory = found.category;
                 setTimeout(() => {
                     const el = document.getElementById(targetId);
@@ -891,10 +1249,39 @@
                 <a href="/llms.txt" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
                     <span>🤖 AI llms.txt</span>
                 </a>
+                <button type="button" class="heroPill heroLink heroLink--recipes" on:click={() => { docsViewMode = 'recipes'; }}>
+                    <span>🚀 Quickstart Recipes (3)</span>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- Documentation View Mode Switcher -->
+    <nav class="docsModeBar" aria-label="Documentation Mode Switcher">
+        <div class="docsModeBar__container">
+            <button 
+                type="button"
+                class="modeBtn" 
+                class:active={docsViewMode === 'playground'} 
+                on:click={() => { docsViewMode = 'playground'; }}
+            >
+                <IconTerminal2 size={18} />
+                <span>Interactive Endpoint Playground ({endpoints.length})</span>
+            </button>
+            <button 
+                type="button"
+                class="modeBtn" 
+                class:active={docsViewMode === 'recipes'} 
+                on:click={() => { docsViewMode = 'recipes'; }}
+            >
+                <IconSparkles size={18} />
+                <span>Quickstart Guides & Real-World Recipes (3)</span>
+                <span class="badgeNew">PRO</span>
+            </button>
+        </div>
+    </nav>
+
+    {#if docsViewMode === 'playground'}
     <!-- Main Content Area: Sidebar + Playground -->
     <div class="docsContainer">
         <!-- Sidebar Navigation -->
@@ -1467,6 +1854,140 @@
             </div>
         </main>
     </div>
+    {:else}
+    <!-- Quickstart Guides & Real-World Recipes -->
+    <div class="recipesContainer">
+        <!-- Recipes Header -->
+        <header class="recipesHeader">
+            <div class="recipesBadge">
+                <IconSparkles size={16} />
+                <span>Developer Blueprints & Production Patterns</span>
+            </div>
+            <h2>Quickstart Guides & Real-World Recipes</h2>
+            <p>
+                Production-tested architecture patterns, data processing workflows, and multi-language SDK code to jumpstart your next anime streaming app, franchise watch-order tracker, or weekly calendar widget in minutes.
+            </p>
+        </header>
+
+        <!-- Recipes Navigation Selector Cards -->
+        <div class="recipeNavGrid">
+            {#each recipes as r, idx}
+                <button
+                    type="button"
+                    class="recipeNavCard"
+                    class:active={activeRecipeIndex === idx}
+                    on:click={() => activeRecipeIndex = idx}
+                >
+                    <div class="navCardTop">
+                        <span class="navNumber">0{idx + 1}</span>
+                        <span class="navBadge" style="background: {r.color}20; color: {r.color}; border: 1px solid {r.color}40;">
+                            {r.badge}
+                        </span>
+                    </div>
+                    <h4>{r.title}</h4>
+                    <p>{r.subtitle}</p>
+                </button>
+            {/each}
+        </div>
+
+        <!-- Active Recipe Detail Card -->
+        <article class="recipeMainCard">
+            <div class="recipeCardHeader">
+                <div class="recipeHeaderLeft">
+                    <span class="recipeSubBadge" style="color: {activeRecipe.color}">
+                        Recipe #0{activeRecipeIndex + 1} • {activeRecipe.badge}
+                    </span>
+                    <h3>{activeRecipe.title}</h3>
+                    <p class="recipeDesc">{activeRecipe.description}</p>
+                </div>
+                <div class="recipeHeaderRight">
+                    <div class="targetEndpointPill">
+                        <span class="method">GET</span>
+                        <code>{activeRecipe.endpoint}</code>
+                    </div>
+                    <button
+                        type="button"
+                        class="jumpToPlaygroundBtn"
+                        on:click={() => {
+                            docsViewMode = 'playground';
+                            window.location.hash = activeRecipe.endpointHash;
+                            selectAndScrollToHash();
+                        }}
+                    >
+                        <IconPlayerPlay size={14} />
+                        <span>Test Endpoint in Playground</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="recipeSteps">
+                <h5>Key Architectural Steps</h5>
+                <div class="stepsList">
+                    {#each activeRecipe.steps as step, sIdx}
+                        <div class="stepItem">
+                            <span class="stepNum">{sIdx + 1}</span>
+                            <span>{@html step.replace(/`([^`]+)`/g, '<code>$1</code>')}</span>
+                        </div>
+                    {/each}
+                </div>
+            </div>
+
+            <!-- Code Snippet Switcher -->
+            <div class="recipeCodeSection">
+                <div class="recipeCodeHeader">
+                    <div class="langTabs">
+                        <button
+                            type="button"
+                            class="langBtn"
+                            class:active={recipeCodeLangs[activeRecipeIndex] === 'ts'}
+                            on:click={() => recipeCodeLangs[activeRecipeIndex] = 'ts'}
+                        >
+                            <span>TypeScript / JS</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="langBtn"
+                            class:active={recipeCodeLangs[activeRecipeIndex] === 'py'}
+                            on:click={() => recipeCodeLangs[activeRecipeIndex] = 'py'}
+                        >
+                            <span>Python (SDK)</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="langBtn"
+                            class:active={recipeCodeLangs[activeRecipeIndex] === 'dart'}
+                            on:click={() => recipeCodeLangs[activeRecipeIndex] = 'dart'}
+                        >
+                            <span>Dart / Flutter</span>
+                        </button>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="copyBtn"
+                        on:click={() => {
+                            const lang = recipeCodeLangs[activeRecipeIndex] || 'ts';
+                            const code = activeRecipe.code[lang];
+                            copyToClipboard(code, `recipe-${activeRecipeIndex}-${lang}`);
+                        }}
+                    >
+                        {#if copiedEndpoint === `recipe-${activeRecipeIndex}-${recipeCodeLangs[activeRecipeIndex] || 'ts'}`}
+                            <IconCheck size={14} color="#10B981" />
+                            <span>Copied Snippet!</span>
+                        {:else}
+                            <IconCopy size={14} />
+                            <span>Copy Code</span>
+                        {/if}
+                    </button>
+                </div>
+
+                <div class="recipeCodeBody">
+                    <pre><code>{activeRecipe.code[recipeCodeLangs[activeRecipeIndex] || 'ts']}</code></pre>
+                </div>
+            </div>
+        </article>
+    </div>
+    {/if}
 
     <Footer />
 </div>
@@ -1611,6 +2132,21 @@
                         box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
                     }
                 }
+
+                &--recipes {
+                    background: rgba(16, 185, 129, 0.15);
+                    border-color: rgba(16, 185, 129, 0.4);
+                    color: #6EE7B7;
+                    cursor: pointer;
+
+                    &:hover {
+                        background: #10B981;
+                        border-color: #10B981;
+                        color: #0F172A;
+                        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+                        transform: translateY(-2px);
+                    }
+                }
             }
 
             code {
@@ -1624,6 +2160,439 @@
                 border-radius: 50%;
                 background: #10B981;
                 box-shadow: 0 0 8px #10B981;
+            }
+        }
+    }
+
+    /* Documentation Mode Switcher Bar */
+    .docsModeBar {
+        background: rgba(15, 23, 42, 0.75);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 16px 24px;
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 80px;
+        z-index: 40;
+
+        &__container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .modeBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #94A3B8;
+            padding: 10px 20px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                color: #FFFFFF;
+                border-color: rgba(139, 92, 246, 0.3);
+                background: rgba(30, 41, 59, 0.8);
+            }
+
+            &.active {
+                background: linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(59, 130, 246, 0.25) 100%);
+                border-color: #8B5CF6;
+                color: #FFFFFF;
+                box-shadow: 0 0 20px rgba(139, 92, 246, 0.25);
+            }
+
+            .badgeNew {
+                background: #10B981;
+                color: #0F172A;
+                font-size: 0.68rem;
+                font-weight: 800;
+                padding: 2px 7px;
+                border-radius: 9999px;
+                letter-spacing: 0.05em;
+            }
+        }
+    }
+
+    /* Recipes Container */
+    .recipesContainer {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+    }
+
+    .recipesHeader {
+        margin-bottom: 32px;
+
+        .recipesBadge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 9999px;
+            padding: 5px 14px;
+            color: #C4B5FD;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            margin: 0 0 10px;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: #94A3B8;
+            max-width: 800px;
+            margin: 0;
+            line-height: 1.6;
+        }
+    }
+
+    .recipeNavGrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 32px;
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .recipeNavCard {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        &.active {
+            border-color: #8B5CF6;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(139, 92, 246, 0.12) 100%);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #8B5CF6, #3B82F6);
+            }
+        }
+
+        .navCardTop {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+
+            .navNumber {
+                font-family: monospace;
+                font-size: 0.85rem;
+                font-weight: 700;
+                color: #64748B;
+            }
+
+            .navBadge {
+                font-size: 0.72rem;
+                font-weight: 700;
+                padding: 3px 8px;
+                border-radius: 6px;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin: 0 0 6px;
+            line-height: 1.35;
+        }
+
+        p {
+            font-size: 0.82rem;
+            color: #94A3B8;
+            margin: 0;
+            line-height: 1.5;
+        }
+    }
+
+    .recipeMainCard {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 32px;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+        @media (max-width: 768px) {
+            padding: 20px;
+        }
+    }
+
+    .recipeCardHeader {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 28px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 24px;
+
+        @media (max-width: 900px) {
+            flex-direction: column;
+        }
+
+        .recipeHeaderLeft {
+            flex: 1;
+
+            .recipeSubBadge {
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                display: block;
+                margin-bottom: 8px;
+            }
+
+            h3 {
+                font-size: 1.6rem;
+                font-weight: 800;
+                color: #FFFFFF;
+                margin: 0 0 10px;
+                letter-spacing: -0.02em;
+            }
+
+            .recipeDesc {
+                font-size: 0.95rem;
+                color: #94A3B8;
+                line-height: 1.6;
+                margin: 0;
+            }
+        }
+
+        .recipeHeaderRight {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-end;
+
+            @media (max-width: 900px) {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .targetEndpointPill {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(30, 41, 59, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 8px;
+                padding: 6px 12px;
+
+                .method {
+                    background: #10B981;
+                    color: #0F172A;
+                    font-size: 0.7rem;
+                    font-weight: 800;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                }
+
+                code {
+                    font-family: monospace;
+                    font-size: 0.85rem;
+                    color: #A78BFA;
+                }
+            }
+
+            .jumpToPlaygroundBtn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
+                color: #FFFFFF;
+                border: none;
+                border-radius: 8px;
+                padding: 8px 16px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+                }
+            }
+        }
+    }
+
+    .recipeSteps {
+        margin-bottom: 28px;
+
+        h5 {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #CBD5E1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0 0 16px;
+        }
+
+        .stepsList {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stepItem {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.88rem;
+            color: #E2E8F0;
+            line-height: 1.5;
+
+            .stepNum {
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: rgba(139, 92, 246, 0.2);
+                border: 1px solid rgba(139, 92, 246, 0.4);
+                color: #C4B5FD;
+                font-size: 0.75rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 2px;
+            }
+
+            :global(code) {
+                background: rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                color: #A78BFA;
+                padding: 1px 5px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                font-family: monospace;
+            }
+        }
+    }
+
+    .recipeCodeSection {
+        background: #0F172A;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+
+        .recipeCodeHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+
+            .langTabs {
+                display: flex;
+                gap: 6px;
+
+                .langBtn {
+                    background: transparent;
+                    border: none;
+                    color: #94A3B8;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    padding: 6px 14px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        color: #FFFFFF;
+                        background: rgba(255, 255, 255, 0.05);
+                    }
+
+                    &.active {
+                        color: #FFFFFF;
+                        background: rgba(139, 92, 246, 0.2);
+                        box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.5);
+                    }
+                }
+            }
+
+            .copyBtn {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(30, 41, 59, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 6px;
+                color: #CBD5E1;
+                font-size: 0.78rem;
+                font-weight: 600;
+                padding: 5px 12px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background: rgba(30, 41, 59, 0.9);
+                    color: #FFFFFF;
+                }
+            }
+        }
+
+        .recipeCodeBody {
+            padding: 20px;
+            overflow-x: auto;
+
+            pre {
+                margin: 0;
+                font-family: 'Fira Code', 'JetBrains Mono', monospace;
+                font-size: 0.85rem;
+                line-height: 1.6;
+                color: #E2E8F0;
             }
         }
     }
