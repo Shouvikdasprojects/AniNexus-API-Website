@@ -53,7 +53,7 @@ function closeMobileNav() {
                     >
                         <IconArrowDownLeft class="external-link" size={20} stroke={1.5} />
                         Documentation
-                        <Chip type="outline" size="small">v1</Chip>
+                        <Chip type="outline" size="small">v1.0.0</Chip>
                     </Button>
                     <Button type="nav-link" url="/#features" callback={closeMobileNav}>Features</Button>
                     <Button type="nav-link" url="/#how-it-works" callback={closeMobileNav}>How it works</Button>

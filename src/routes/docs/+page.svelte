@@ -1204,7 +1204,9 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
                 <a href="/">Home</a>
                 <span>/</span>
                 <span class="active">REST API Documentation</span>
-                <Chip size="small" type="outline">REST v1.0.0</Chip>
+                <a href="https://github.com/Shouvikdasprojects/ani-nexus/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+                    <Chip size="small" type="outline">REST v1.0.0 Stable ↗</Chip>
+                </a>
             </div>
             <h1>AniNexus <span>REST API Reference</span></h1>
             <p>
@@ -1234,6 +1236,9 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
                 <div class="heroPill">
                     <span>⚡ Rate Limit: 90 req / min</span>
                 </div>
+                <a href="https://github.com/Shouvikdasprojects/ani-nexus/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" class="heroPill heroLink heroLink--gold">
+                    <span>🏷️ v1.0.0 Release Notes</span>
+                </a>
                 <a href="/openapi.json" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
                     <span>📜 OpenAPI 3.1</span>
                 </a>
@@ -2130,6 +2135,20 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
                         border-color: #F97316;
                         color: #FFFFFF;
                         box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+                    }
+                }
+
+                &--gold {
+                    background: rgba(234, 179, 8, 0.15);
+                    border-color: rgba(234, 179, 8, 0.4);
+                    color: #FDE047;
+
+                    &:hover {
+                        background: #EAB308;
+                        border-color: #EAB308;
+                        color: #0F172A;
+                        box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4);
+                        transform: translateY(-2px);
                     }
                 }
 
