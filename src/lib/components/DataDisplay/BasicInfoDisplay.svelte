@@ -7,16 +7,31 @@
 </script>
 
 {#if description !== null}
-    <a href={url} target={urlTarget} class="infoDisplay" class:disabled={disabled} use:tooltip={{
-        content: description,
-        animation: 'slide'
-    }}>
-        <slot/>
-    </a>
+    {#if url && !disabled}
+        <a href={url} target={urlTarget} rel={urlTarget === '_blank' ? 'noopener noreferrer' : undefined} class="infoDisplay" class:disabled={disabled} use:tooltip={{
+            content: description,
+            animation: 'slide'
+        }}>
+            <slot/>
+        </a>
+    {:else}
+        <div class="infoDisplay" class:disabled={disabled} use:tooltip={{
+            content: description,
+            animation: 'slide'
+        }}>
+            <slot/>
+        </div>
+    {/if}
 {:else}
-    <a href={url} class="infoDisplay">
-        <slot/>
-    </a>
+    {#if url && !disabled}
+        <a href={url} target={urlTarget} rel={urlTarget === '_blank' ? 'noopener noreferrer' : undefined} class="infoDisplay">
+            <slot/>
+        </a>
+    {:else}
+        <div class="infoDisplay">
+            <slot/>
+        </div>
+    {/if}
 {/if}
 
 <style lang="scss">

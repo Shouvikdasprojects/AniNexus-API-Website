@@ -6,13 +6,18 @@ function getSettings(settings = {}) {
 const TRANSITION_MS = 300;
 
 export default function tilt(node, settingsObj) {
-    const { width, height, left, top } = node.getBoundingClientRect();
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+        return { destroy() {}, update() {} };
+    }
+
+    let rect = node.getBoundingClientRect();
     let settings = getSettings(settingsObj);
     let reverse = settings.reverse ? -1 : 1;
 
     function onMouseMove(e) {
-        const percX = (e.clientX - left) / width;
-        const percY = (e.clientY - top) / height;
+        if (!rect.width || !rect.height) return;
+        const percX = (e.clientX - rect.left) / rect.width;
+        const percY = (e.clientY - rect.top) / rect.height;
 
         const { max, scale } = settings;
         const twiceMax = max * 2;
@@ -42,6 +47,7 @@ export default function tilt(node, settingsObj) {
     }
 
     function onMouseEnter() {
+        rect = node.getBoundingClientRect();
         smoothTransition();
         node.style.willChange = "transform";
     }

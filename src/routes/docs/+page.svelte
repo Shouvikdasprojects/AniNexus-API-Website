@@ -781,8 +781,10 @@
             .then(res => res.ok ? res.json() : null)
             .then(resJson => {
                 const liveCount = resJson?.data?.total || resJson?.meta?.total || resJson?.total;
-                if (liveCount && liveCount > 0) {
+                if (liveCount && liveCount >= 634) {
                     totalFranchises = liveCount;
+                } else {
+                    totalFranchises = 634;
                 }
             })
             .catch(() => {});
@@ -1457,15 +1459,8 @@
                 color: #A78BFA;
                 text-decoration: none;
                 &:hover {
-            border-color: rgba(139, 92, 246, 0.35);
-            box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
-        }
-
-        &.highlighted {
-            border-color: #8B5CF6;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
-            transition: all 0.5s ease;
-        }
+                    color: #C4B5FD;
+                }
             }
 
             .active {
@@ -1773,6 +1768,12 @@
         &:hover {
             border-color: rgba(139, 92, 246, 0.35);
             box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        &.highlighted {
+            border-color: #8B5CF6;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            transition: all 0.5s ease;
         }
 
         .epHeader {

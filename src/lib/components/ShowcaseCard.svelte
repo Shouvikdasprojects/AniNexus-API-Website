@@ -8,7 +8,7 @@
 
 </script>
 
-<a href="{url}" target="_blank" class="cardShowcase">
+<a href="{url || '#'}" target="_blank" rel="noopener noreferrer" class="cardShowcase">
     <div class="cardShowcase__image"><img src="{imageUrl}" alt="{title}" /></div>
     <div class="cardShowcase__meta">
         <strong class="cardShowcase__title">{title}</strong>

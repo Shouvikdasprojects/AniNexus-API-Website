@@ -34,7 +34,6 @@
 	import Banner from "../lib/components/Banner.svelte";
 	import Nav from "../lib/components/Nav.svelte";
 	import Footer from "../lib/components/Footer.svelte";
-	import Marquee from "../lib/components/Marquee.svelte";
 	import RequestExamples from "../lib/components/RequestExamples.svelte";
 	import features from "../data/features.js";
 	import integrations from "../data/integrations.js";
@@ -60,10 +59,14 @@
 		try {
 			const topRes = await fetch("https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=1");
 			const topJson = await topRes.json();
-			if (topJson?.data?.total && topJson.data.total > totalFranchises) {
+			if (topJson?.data?.total && topJson.data.total >= 634) {
 				totalFranchises = topJson.data.total;
+			} else {
+				totalFranchises = 634;
 			}
-		} catch (e) {}
+		} catch (e) {
+			totalFranchises = 634;
+		}
 	});
 </script>
 
@@ -155,8 +158,6 @@
 			<RequestExamples />
 		</div>
 	</main>
-
-	<Marquee />
 </section>
 
 <!-- Features Section -->

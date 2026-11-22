@@ -124,7 +124,7 @@
 <style lang="scss">
     .cardAnime {
       position: relative;
-      display: inline-flex;
+      display: flex;
       padding: 10px;
       align-items: flex-start;
       gap: 14px;
@@ -136,9 +136,12 @@
       -webkit-user-drag: none;
       transition: all 0.25s ease;
       overflow: hidden;
-      height: 210px;
-      min-width: 310px;
-      max-width: 360px;
+      height: 210px !important;
+      min-height: 210px !important;
+      max-height: 210px !important;
+      width: 100%;
+      flex-shrink: 0 !important;
+      box-sizing: border-box;
       text-decoration: none;
 
       &:hover {
@@ -151,8 +154,12 @@
         border-radius: 14px;
         background: linear-gradient(108deg, #1E293B 2%, rgba(30, 41, 59, 0.2) 100%);
         border: 1px solid rgba(255, 255, 255, 0.08);
-        height: 210px;
-        width: 320px;
+        height: 210px !important;
+        min-height: 210px !important;
+        max-height: 210px !important;
+        width: 100%;
+        flex-shrink: 0 !important;
+        box-sizing: border-box;
         animation: pulseSkeleton 1.6s infinite ease-in-out;
       }
 
@@ -163,9 +170,11 @@
       }
 
       &__cover {
-        height: 190px;
-        width: 125px;
-        flex-shrink: 0;
+        height: 190px !important;
+        width: 125px !important;
+        min-width: 125px !important;
+        max-width: 125px !important;
+        flex-shrink: 0 !important;
         overflow: hidden;
         position: relative;
         border-radius: 10px;

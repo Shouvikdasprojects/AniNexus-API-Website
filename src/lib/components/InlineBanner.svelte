@@ -6,10 +6,10 @@
     import {IconArrowDownLeft, IconArrowNarrowRight} from '@tabler/icons-svelte';
 </script>
 
-<a href="{url}" target="_blank" class="bannerInline bannerInline--type-{type}">
+<a href="{url}" target="_blank" rel="noopener noreferrer" class="bannerInline bannerInline--type-{type}">
     <slot />
     {#if showIcon}
-        <IconArrowDownLeft class="external-link" bind:showIcon size={20} stroke={1.5} />
+        <IconArrowDownLeft class="external-link" size={20} stroke={1.5} />
     {/if}
 </a>
 

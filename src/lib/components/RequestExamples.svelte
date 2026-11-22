@@ -27,6 +27,13 @@ $: requestDuration = 0;
 $: showDuration = false;
 
 let entries = [];
+let cardsContainer;
+
+function scrollCardsDown() {
+    if (cardsContainer) {
+        cardsContainer.scrollBy({ top: 226, behavior: 'smooth' });
+    }
+}
 
 onMount(() => {
     // Initial fetch on mount
@@ -173,9 +180,9 @@ function updateRequestUrl() {
 </div>
 
 <div class="cardsWrapper">
-    <div class="cards">
+    <div class="cards" bind:this={cardsContainer}>
         {#if !showCards}
-            {#each {length: 6} as _}
+            {#each {length: 4} as _}
                 <AnimeCard skeleton cardExit={isCardTransitioning} />
             {/each}
         {:else}
@@ -202,12 +209,12 @@ function updateRequestUrl() {
         {/if}
     </div>
     {#if entries && entries.length > 2}
-        <div class="cardsScrollHint">
-            <span>Scroll to explore all {entries.length} items</span>
+        <button class="cardsScrollHint" on:click={scrollCardsDown} aria-label="Scroll down to see more anime items">
+            <span>Scroll inside to explore all {entries.length} items</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 5v14M19 12l-7 7-7-7"/>
             </svg>
-        </div>
+        </button>
     {/if}
 </div>
 
@@ -215,23 +222,29 @@ function updateRequestUrl() {
     .request {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         background: rgba(15, 23, 42, 0.85);
         border: 1px solid rgba(139, 92, 246, 0.3);
-        padding: 10px 16px;
+        padding: 8px 14px;
         border-radius: 12px;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         backdrop-filter: blur(16px);
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        max-width: 100%;
+        overflow: hidden;
 
         code {
             font-family: 'Fira Code', 'Courier New', monospace;
-            font-size: 0.88rem;
+            font-size: clamp(0.72rem, 1.1vw, 0.86rem);
             color: #E2E8F0;
+            white-space: nowrap;
         }
 
         a {
             text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             &:hover code {
                 color: #A78BFA;
             }
@@ -251,6 +264,7 @@ function updateRequestUrl() {
         border: 1px solid rgba(16, 185, 129, 0.3);
         padding: 3px 8px;
         border-radius: 6px;
+        flex-shrink: 0;
     }
 
     .liveDot {
@@ -271,16 +285,22 @@ function updateRequestUrl() {
     .cards {
         display: flex;
         flex-direction: column;
-        gap: 14px;
-        max-height: 500px;
-        overflow-y: auto;
+        gap: 16px;
+        height: 480px;
+        max-height: 480px;
+        overflow-y: scroll;
         overflow-x: hidden;
-        padding-right: 8px;
-        padding-bottom: 8px;
+        padding-right: 6px;
+        padding-bottom: 6px;
         scroll-behavior: smooth;
+        overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
+        scrollbar-gutter: stable;
 
         /* Custom sleek scrollbar */
+        scrollbar-width: thin;
+        scrollbar-color: rgba(139, 92, 246, 0.5) rgba(15, 23, 42, 0.4);
+
         &::-webkit-scrollbar {
             width: 6px;
         }
@@ -289,12 +309,12 @@ function updateRequestUrl() {
             border-radius: 999px;
         }
         &::-webkit-scrollbar-thumb {
-            background: rgba(139, 92, 246, 0.4);
+            background: rgba(139, 92, 246, 0.5);
             border-radius: 999px;
             transition: background 0.2s ease;
         }
         &::-webkit-scrollbar-thumb:hover {
-            background: rgba(139, 92, 246, 0.8);
+            background: rgba(139, 92, 246, 0.9);
         }
     }
 
@@ -310,6 +330,15 @@ function updateRequestUrl() {
         opacity: 0.85;
         animation: hintBounce 2s infinite ease-in-out;
         user-select: none;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: opacity 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            opacity: 1;
+            color: #C4B5FD;
+        }
 
         svg {
             color: #A78BFA;
