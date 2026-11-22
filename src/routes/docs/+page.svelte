@@ -1204,7 +1204,7 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
                 <a href="/">Home</a>
                 <span>/</span>
                 <span class="active">REST API Documentation</span>
-                <a href="https://github.com/Shouvikdasprojects/ani-nexus/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+                <a href="https://github.com/Shouvikdasprojects/AniNexus-API-Website/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                     <Chip size="small" type="outline">REST v1.0.0 Stable ↗</Chip>
                 </a>
             </div>
@@ -1236,7 +1236,7 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
                 <div class="heroPill">
                     <span>⚡ Rate Limit: 90 req / min</span>
                 </div>
-                <a href="https://github.com/Shouvikdasprojects/ani-nexus/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" class="heroPill heroLink heroLink--gold">
+                <a href="https://github.com/Shouvikdasprojects/AniNexus-API-Website/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" class="heroPill heroLink heroLink--gold">
                     <span>🏷️ v1.0.0 Release Notes</span>
                 </a>
                 <a href="/openapi.json" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">

@@ -86,7 +86,7 @@
 		<div class="left">
 			<InlineBanner
 				type="patreon"
-				url="https://github.com/Shouvikdasprojects/ani-nexus/releases/tag/v1.0.0"
+				url="https://github.com/Shouvikdasprojects/AniNexus-API-Website/releases/tag/v1.0.0"
 			>🚀 Official v1.0.0 Stable Release is Live • 31 Endpoints, 634+ Franchises, OpenAPI 3.1 & SDKs</InlineBanner>
 
 			<div class="type--group-heading-and-content">
