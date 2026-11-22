@@ -165,7 +165,7 @@
 				<div class="type--group-heading-and-content">
 					<h2>Free & Open Source</h2>
 					<h3 style="display: flex">— all under <Button type="link-heading" urlTarget="_blank" url="https://choosealicense.com/licenses/mit/"><IconArrowDownLeft class="external-link" size={32} stroke={1.5} />MIT Licensing</Button></h3>
-					<p>Focus on building great anime applications while AniNexus handles data ingestion, franchise relationships, multi-language dub verification, and synchronized scoring. Zero rate-limit walls, zero scraping fragility, and instant JSON responses.</p>
+					<p>Focus on building great anime applications while AniNexus handles data ingestion, franchise relationships, multi-language dub verification, and synchronized scoring. Generous 90 req/min rate limit, zero scraping fragility, and instant JSON responses.</p>
 				</div>
 
 				<Button type="primary" url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" urlTarget="_blank">
@@ -494,7 +494,7 @@
 					</div>
 					<div>
 						<h6>Zero-Token Auth & CORS</h6>
-						<p>Zero rate-limit walls or API keys required. Works out of the box with standard <code>fetch()</code>, Axios, Python Requests, or cURL.</p>
+						<p>Generous 90 requests/minute fair-use limit with zero API keys required. Works out of the box with standard <code>fetch()</code>, Axios, Python Requests, or cURL.</p>
 					</div>
 				</div>
 

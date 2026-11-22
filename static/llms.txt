@@ -10,7 +10,7 @@
 - **Authentication:** None required! 100% Free, Public & Open.
 - **CORS:** Enabled (`Access-Control-Allow-Origin: *`) for all browser and web applications.
 - **Format:** JSON (`application/json; charset=utf-8`)
-- **Default Rate Limit:** 60 requests / minute per IP with standard HTTP 429 backoff headers.
+- **Default Rate Limit:** 90 requests / minute per IP with standard HTTP 429 backoff headers.
 - **Future Roadmap:** GraphQL interface and WebSocket real-time broadcast streams are planned for future major releases.
 
 ---

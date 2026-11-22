@@ -836,7 +836,7 @@
                     <span>🌐 CORS Enabled</span>
                 </div>
                 <div class="heroPill">
-                    <span>⚡ Rate Limit: Unlimited (Fair-Use)</span>
+                    <span>⚡ Rate Limit: 90 req / min</span>
                 </div>
                 <a href="/openapi.json" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
                     <span>📜 OpenAPI 3.1 Spec (JSON)</span>
