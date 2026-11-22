@@ -15,7 +15,6 @@ import {
     IconChartBar,
     IconShieldCheck,
     IconLayersLinked,
-    IconDatabase,
     IconBook,
     IconUserCheck,
     IconMessages
@@ -60,13 +59,6 @@ export default {
             onVersion: 1,
             label: "5-Year Rolling Awards",
             description: `Annual Industry Anime Awards (${awardsStartYear}–${currentYear}) with automated 6th-year auto-purge and HTTP 410 protection.`
-        },
-        {
-            icon: IconDatabase,
-            highlight: true,
-            onVersion: 1,
-            label: "1.5GB Triple-Vault Engine",
-            description: "Distributed 3-cluster MongoDB Atlas engine with Primary Media Archive, 480MB auto-spillover storage, and isolated Real-Time News/Schedule hub."
         },
         {
             icon: IconCalendarEvent,
