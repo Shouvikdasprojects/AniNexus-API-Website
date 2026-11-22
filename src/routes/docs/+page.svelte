@@ -34,14 +34,14 @@
 
     const API_BASE = "https://ani-nexus.onrender.com";
 
-    let totalFranchises = 371;
+    let totalFranchises = 634;
     let activeCategory = "all";
     let searchQuery = "";
     let copiedEndpoint = null;
     let copiedCode = null;
     let responseViewModes = {};
 
-    // Endpoints data definition (All 19 verified live endpoints)
+    // Endpoints data definition (All 28 verified live endpoints)
     let endpoints = [
         // 1. System Health
         {
@@ -779,8 +779,11 @@
 
         fetch(`${API_BASE}/api/v1/top?type=popular&limit=1`)
             .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                if (data?.total) totalFranchises = data.total;
+            .then(resJson => {
+                const liveCount = resJson?.data?.total || resJson?.meta?.total || resJson?.total;
+                if (liveCount && liveCount > 0) {
+                    totalFranchises = liveCount;
+                }
             })
             .catch(() => {});
 
@@ -792,7 +795,7 @@
 
 <svelte:head>
     <title>AniNexus REST API Documentation — v1 Reference & Interactive Playground</title>
-    <meta name="description" content="Explore and test all 19 AniNexus REST endpoints live: Top Anime, Seasonal Hub, Industry Anime Awards (2021-2026), Master Franchises, Verified Dubs, and Multi-Score Engine.">
+    <meta name="description" content="Explore and test all 28 AniNexus REST endpoints live: Top Anime, Seasonal Hub, Industry Anime Awards, Master Franchises, Universal Characters & Staff Encyclopedia, Verified Dubs, and Multi-Score Engine.">
 </svelte:head>
 
 <Nav />
@@ -833,7 +836,7 @@
                     <span>🌐 CORS Enabled</span>
                 </div>
                 <div class="heroPill">
-                    <span>⏱️ Rate Limit: 60 req/min</span>
+                    <span>⚡ Rate Limit: Unlimited (Fair-Use)</span>
                 </div>
                 <a href="/openapi.json" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
                     <span>📜 OpenAPI 3.1 Spec (JSON)</span>

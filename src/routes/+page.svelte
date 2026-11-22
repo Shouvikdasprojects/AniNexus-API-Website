@@ -215,7 +215,7 @@
 							<div class="driftItem"><span class="driftEmoji">🎙️</span><strong>Verified Dub Matrix</strong> <span class="driftBadge">Hindi, English, Japanese</span></div>
 							<div class="driftItem"><span class="driftEmoji">📅</span><strong>Weekly Airing Calendar</strong> <span class="driftBadge">7-Day Live Tracker</span></div>
 							<div class="driftItem"><span class="driftEmoji">📰</span><strong>Real-Time News Engine</strong> <span class="driftBadge">Cover Photos • 60-Day TTL</span></div>
-							<div class="driftItem"><span class="driftEmoji">⚡</span><strong>371+ Master Franchises</strong> <span class="driftBadge">Unified Watch Order</span></div>
+							<div class="driftItem"><span class="driftEmoji">⚡</span><strong>{totalFranchises}+ Master Franchises</strong> <span class="driftBadge">Unified Watch Order</span></div>
 							<div class="driftItem"><span class="driftEmoji">🏆</span><strong>Industry Anime Awards</strong> <span class="driftBadge">2021–2026 Editions</span></div>
 							<div class="driftItem"><span class="driftEmoji">🎙️</span><strong>Verified Dub Matrix</strong> <span class="driftBadge">Hindi, English, Japanese</span></div>
 						</div>
