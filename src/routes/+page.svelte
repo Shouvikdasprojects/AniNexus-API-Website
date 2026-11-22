@@ -72,6 +72,8 @@
 	<meta name="google-site-verification" content="eV-a5nS42eCtPVcFxOdU3Ko6DNbOLSbCPH-pEQvrtYI" />
 	<meta name="description" content="AniNexus is the official, high-speed Anime Intelligence & Master Franchise API. {totalFranchises}+ Master Franchises (1960s–{currentYear}+), verified dubs, dual scores, and rolling anime awards.">
 	<meta name="keywords" content="aninexus, anime api, anime master franchise, verified hindi dub, dual scores, anime awards, franchise api">
+	<meta property="og:image" content="https://aninexus-api-website.pages.dev/og-banner.png" />
+	<meta name="twitter:image" content="https://aninexus-api-website.pages.dev/og-banner.png" />
 </svelte:head>
 
 <Nav />

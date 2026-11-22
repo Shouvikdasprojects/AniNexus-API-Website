@@ -1,39 +1,40 @@
 .hero {
-  height: calc(100vh);
+  min-height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: var(--background-100);
-  overflow: hidden;
-
+  position: relative;
 
   main {
     display: grid;
-    grid-template-columns: 450px 1fr;
-    flex-direction: column;
+    grid-template-columns: minmax(360px, 480px) minmax(320px, 460px);
     padding-top: 100px;
+    padding-bottom: 40px;
     justify-content: space-between;
-    align-content: center;
+    align-items: center;
     height: 100%;
     width: var(--content-width);
-    gap: 100px;
+    gap: 48px;
     z-index: 1;
-
 
     .left {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
       gap: 32px;
-      max-width: 450px;
+      max-width: 480px;
     }
 
     .right {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      height: 500px;
-      transform: translateX(100px);
+      height: auto;
+      width: 100%;
+      max-width: 460px;
+      transform: none;
 
       .duration {
         font-size: var(--type-size-body-assistive);
@@ -52,18 +53,6 @@
           @include typeBodyMono(false);
           font-size: var(--type-size-body-assistive);
           letter-spacing: 1px;
-        }
-      }
-      .cards {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        max-width: 1200px;
-        width: 100%;
-        height: 450px;
-
-        .cardAnime:nth-child(4) {
-          margin-left: 32px;
         }
       }
     }

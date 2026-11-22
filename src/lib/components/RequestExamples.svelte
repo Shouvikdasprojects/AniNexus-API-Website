@@ -172,32 +172,42 @@ function updateRequestUrl() {
     {/if}
 </div>
 
-<div class="cards">
-    {#if !showCards}
-        {#each {length: 6} as _}
-            <AnimeCard skeleton cardExit={isCardTransitioning} />
-        {/each}
-    {:else}
-        {#each entries as entry}
-            <AnimeCard
-                cardExit={isCardTransitioning}
-                slug={entry.slug}
-                title={entry.title}
-                romaji={entry.romaji}
-                imageUrl={entry.imageUrl}
-                score={entry.score}
-                sourceScoreA={entry.sourceScoreA}
-                sourceScoreB={entry.sourceScoreB}
-                season={entry.season}
-                year={entry.year}
-                format={entry.format}
-                status={entry.status}
-                episodes={entry.episodes}
-                parts={entry.parts}
-                dubs={entry.dubs}
-                genres={entry.genres}
-            />
-        {/each}
+<div class="cardsWrapper">
+    <div class="cards">
+        {#if !showCards}
+            {#each {length: 6} as _}
+                <AnimeCard skeleton cardExit={isCardTransitioning} />
+            {/each}
+        {:else}
+            {#each entries as entry}
+                <AnimeCard
+                    cardExit={isCardTransitioning}
+                    slug={entry.slug}
+                    title={entry.title}
+                    romaji={entry.romaji}
+                    imageUrl={entry.imageUrl}
+                    score={entry.score}
+                    sourceScoreA={entry.sourceScoreA}
+                    sourceScoreB={entry.sourceScoreB}
+                    season={entry.season}
+                    year={entry.year}
+                    format={entry.format}
+                    status={entry.status}
+                    episodes={entry.episodes}
+                    parts={entry.parts}
+                    dubs={entry.dubs}
+                    genres={entry.genres}
+                />
+            {/each}
+        {/if}
+    </div>
+    {#if entries && entries.length > 2}
+        <div class="cardsScrollHint">
+            <span>Scroll to explore all {entries.length} items</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
     {/if}
 </div>
 
@@ -251,16 +261,63 @@ function updateRequestUrl() {
         box-shadow: 0 0 6px #10B981;
     }
 
-    .cards {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-        perspective: 1000px;
+    .cardsWrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        position: relative;
     }
 
-    @media (max-width: 768px) {
-        .cards {
-            grid-template-columns: 1fr;
+    .cards {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 8px;
+        padding-bottom: 8px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+
+        /* Custom sleek scrollbar */
+        &::-webkit-scrollbar {
+            width: 6px;
         }
+        &::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 999px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.4);
+            border-radius: 999px;
+            transition: background 0.2s ease;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.8);
+        }
+    }
+
+    .cardsScrollHint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: #94A3B8;
+        padding: 8px 0 2px;
+        opacity: 0.85;
+        animation: hintBounce 2s infinite ease-in-out;
+        user-select: none;
+
+        svg {
+            color: #A78BFA;
+        }
+    }
+
+    @keyframes hintBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(3px); }
     }
 </style>

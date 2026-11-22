@@ -1,0 +1,722 @@
+{
+  "info": {
+    "name": "AniNexus REST API (v1)",
+    "_postman_id": "aninexus-api-v1-collection",
+    "description": "Official Postman Collection for AniNexus — The High-Performance Anime Metadata & Master Franchise Intelligence Platform. Auth-less, CORS-enabled, 90 req/min fair-use rate limit.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://ani-nexus.onrender.com/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "healthUrl",
+      "value": "https://ani-nexus.onrender.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "System & Health",
+      "item": [
+        {
+          "name": "Health Check (Uptime & Metrics)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{healthUrl}}/health",
+              "host": [
+                "{{healthUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Returns real-time gateway health, process uptime, and ISO timestamp."
+          }
+        },
+        {
+          "name": "API Root Specification Index",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{healthUrl}}/",
+              "host": [
+                "{{healthUrl}}"
+              ],
+              "path": [
+                ""
+              ]
+            },
+            "description": "Returns API metadata, feature flags, rate limits, and endpoint directory."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Master Franchise & Timelines",
+      "item": [
+        {
+          "name": "Get Master Franchise Dossier",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/series/attack-on-titan",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "series",
+                "attack-on-titan"
+              ]
+            },
+            "description": "Consolidated franchise dossier with multi-season parts and studio credits."
+          }
+        },
+        {
+          "name": "Get Chronological Watch-Order Timeline",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/series/attack-on-titan/timeline",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "series",
+                "attack-on-titan",
+                "timeline"
+              ]
+            },
+            "description": "Chronological watch order across all TV seasons, movies, OVAs, and specials."
+          }
+        },
+        {
+          "name": "Get Franchise Episode Directory",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/series/attack-on-titan/episodes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "series",
+                "attack-on-titan",
+                "episodes"
+              ]
+            },
+            "description": "Complete directory of all franchise episodes with canon/filler tags."
+          }
+        },
+        {
+          "name": "Get Franchise Characters Dossier",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/series/attack-on-titan/characters",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "series",
+                "attack-on-titan",
+                "characters"
+              ]
+            },
+            "description": "Complete character cast and voice actor mappings for a franchise."
+          }
+        },
+        {
+          "name": "Get Franchise Production Staff",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/series/attack-on-titan/staff",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "series",
+                "attack-on-titan",
+                "staff"
+              ]
+            },
+            "description": "Directors, animation studios, composers, and character designers."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Granular Anime & Dub Matrix",
+      "item": [
+        {
+          "name": "Get Single Anime Part by ID/Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/anime/52991",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "anime",
+                "52991"
+              ]
+            },
+            "description": "Query single season or film (e.g. 52991 for Sousou no Frieren)."
+          }
+        },
+        {
+          "name": "Get Audio Dub & Subtitle Matrix",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/anime/52991/languages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "anime",
+                "52991",
+                "languages"
+              ]
+            },
+            "description": "100% verified dubbing availability (Hindi, English, Japanese, etc.)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Top Curated Collections",
+      "item": [
+        {
+          "name": "Trending Anime Franchises",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/top?type=trending&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "top"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "trending"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Most Popular Franchises of All-Time",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/top?type=popular&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "top"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "popular"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Highest Rated Anime by Combined Score",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/top?type=rated&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "top"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "rated"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Top Box-Office Anime Movies",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/top?type=movies&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "top"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "movies"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Currently Broadcasting Shows",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/top?type=airing&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "top"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "airing"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Seasonal Broadcast Hub",
+      "item": [
+        {
+          "name": "Currently Airing Season",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/seasons/now?limit=15",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "seasons",
+                "now"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upcoming Releases",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/seasons/upcoming?limit=15",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "seasons",
+                "upcoming"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Historical Archive (e.g. 2024 Fall)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/seasons/2024/fall?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "seasons",
+                "2024",
+                "fall"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Industry Anime Awards (5-Year Rolling)",
+      "item": [
+        {
+          "name": "Awards Metadata & Active Window",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/awards",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "awards"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Latest Anime Awards Winners (2026)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/awards/latest",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "awards",
+                "latest"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Awards by Edition Year (e.g. 2024)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/awards/2024",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "awards",
+                "2024"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Award Category History (Anime of the Year)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/awards/category/anime-of-the-year",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "awards",
+                "category",
+                "anime-of-the-year"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Broadcast Schedules & Media",
+      "item": [
+        {
+          "name": "7-Day Weekly Broadcast Calendar",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/schedule",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schedule"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Anime Industry News (with Covers)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/news?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "news"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Editorial Articles & Analyses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/articles?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "articles"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Official 4K YouTube Trailers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/trailers?limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trailers"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Characters & Staff Encyclopedia",
+      "item": [
+        {
+          "name": "Search Characters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/characters/search?q=frieren",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "characters",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "frieren"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Character Dossier by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/characters/176754",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "characters",
+                "176754"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Staff / Creators",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/staff/search?q=sawano",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "staff",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "sawano"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Staff Profile by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/staff/103509",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "staff",
+                "103509"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search, Filter & Taxonomy",
+      "item": [
+        {
+          "name": "Omni Full-Text Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/search?q=solo%20leveling",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "solo leveling"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Typeahead Autocomplete Suggestions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/search/suggest?q=sol",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search",
+                "suggest"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "sol"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Master Genres Taxonomy",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/genres",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "genres"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Multi-Criteria Filter",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/filter?genre=Action&year=2024&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "filter"
+              ],
+              "query": [
+                {
+                  "key": "genre",
+                  "value": "Action"
+                },
+                {
+                  "key": "year",
+                  "value": "2024"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -839,10 +839,19 @@
                     <span>⚡ Rate Limit: 90 req / min</span>
                 </div>
                 <a href="/openapi.json" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
-                    <span>📜 OpenAPI 3.1 Spec (JSON)</span>
+                    <span>📜 OpenAPI 3.1</span>
+                </a>
+                <a href="/aninexus-postman-collection.json" download="aninexus-postman-collection.json" class="heroPill heroLink heroLink--highlight">
+                    <span>🚀 Postman Collection</span>
+                </a>
+                <a href="/aniNexusClient.ts" download="aniNexusClient.ts" class="heroPill heroLink">
+                    <span>⚡ TS / JS SDK</span>
+                </a>
+                <a href="/aninexus.py" download="aninexus.py" class="heroPill heroLink">
+                    <span>🐍 Python SDK</span>
                 </a>
                 <a href="/llms.txt" target="_blank" rel="noopener noreferrer" class="heroPill heroLink">
-                    <span>🤖 AI Agent Guide (llms.txt)</span>
+                    <span>🤖 AI llms.txt</span>
                 </a>
             </div>
         </div>
@@ -1549,6 +1558,19 @@
                     color: #FFFFFF;
                     transform: translateY(-2px);
                     box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+                }
+
+                &--highlight {
+                    background: rgba(249, 115, 22, 0.15);
+                    border-color: rgba(249, 115, 22, 0.4);
+                    color: #FDBA74;
+
+                    &:hover {
+                        background: #F97316;
+                        border-color: #F97316;
+                        color: #FFFFFF;
+                        box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+                    }
                 }
             }
 
