@@ -14,7 +14,11 @@ import {
     IconCheckupList,
     IconChartBar,
     IconShieldCheck,
-    IconLayersLinked
+    IconLayersLinked,
+    IconDatabase,
+    IconBook,
+    IconUserCheck,
+    IconMessages
 } from "@tabler/icons-svelte";
 
 const currentYear = new Date().getFullYear();
@@ -58,11 +62,25 @@ export default {
             description: `Annual Industry Anime Awards (${awardsStartYear}–${currentYear}) with automated 6th-year auto-purge and HTTP 410 protection.`
         },
         {
+            icon: IconDatabase,
+            highlight: true,
+            onVersion: 1,
+            label: "1.5GB Triple-Vault Engine",
+            description: "Distributed 3-cluster MongoDB Atlas engine with Primary Media Archive, 480MB auto-spillover storage, and isolated Real-Time News/Schedule hub."
+        },
+        {
             icon: IconCalendarEvent,
             highlight: false,
             onVersion: 1,
             label: "Seasonal Airing Hub",
             description: "Live tracker for current airing seasons (/seasons/now), upcoming previews, and historical archives."
+        },
+        {
+            icon: IconCheckupList,
+            highlight: false,
+            onVersion: 1,
+            label: "7-Day Broadcast Schedule",
+            description: "Live weekly calendar with 138+ broadcasting episodes, exact UTC countdowns, and animation studio credits."
         },
         {
             icon: IconChartBar,
@@ -83,7 +101,7 @@ export default {
             highlight: false,
             onVersion: 1,
             label: "Legal OTT Licensing",
-            description: "Verified streaming availability for Netflix, Muse Asia, Ani-One, and JioCinema."
+            description: "Verified streaming availability for Crunchyroll, Netflix, Muse Asia, Ani-One, and JioCinema."
         },
         {
             icon: IconNews,
@@ -100,13 +118,6 @@ export default {
             description: "Direct YouTube trailer embeds and PV promotional teasers mapped to each franchise."
         },
         {
-            icon: IconCheckupList,
-            highlight: false,
-            onVersion: 1,
-            label: "Daily Schedules",
-            description: "Day-by-day release broadcast schedules with Indian Standard Time (IST) localization."
-        },
-        {
             icon: IconLayersLinked,
             highlight: false,
             onVersion: 1,
@@ -116,25 +127,39 @@ export default {
     ],
     upcoming: [
         {
-            icon: IconSparkles,
-            highlight: false,
+            icon: IconBook,
+            highlight: true,
             onVersion: 2,
-            label: "AI Semantic Search",
-            description: "Natural language anime discovery powered by vector embeddings."
+            label: "Manga & Light Novel Engine",
+            description: "Complete manga & light novel catalog, volume/chapter tracking, and anime adaptation chapter-range mapping."
         },
         {
-            icon: IconMovie,
-            highlight: false,
+            icon: IconUserCheck,
+            highlight: true,
             onVersion: 2,
-            label: "Box Office Tracker",
-            description: "Global & Indian theatrical anime box office collections tracking."
+            label: "Personal Watchlists & User Sync",
+            description: "OAuth2 authentication, custom user watchlists (Watching, Completed, Plan to Watch), and cross-device sync."
+        },
+        {
+            icon: IconMessages,
+            highlight: true,
+            onVersion: 2,
+            label: "Community Discussions & Social Layer",
+            description: "Episode reaction threads, community reviews, rating submissions, and character popularity fan polls."
         },
         {
             icon: IconDeviceTv,
             highlight: false,
             onVersion: 2,
-            label: "Webhook Event Streaming",
-            description: "Real-time webhook notifications for newly broadcast episodes and award announcements."
+            label: "GraphQL & WebSocket Streams",
+            description: "Single-query flexible GraphQL endpoint and real-time WebSocket push notifications for episode broadcasts."
+        },
+        {
+            icon: IconSparkles,
+            highlight: false,
+            onVersion: 2,
+            label: "AI Semantic Vector Search",
+            description: "Natural language anime discovery powered by high-dimensional vector embeddings and mood analysis."
         }
     ]
 };
