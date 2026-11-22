@@ -52,7 +52,39 @@
             method: "GET",
             path: "/health",
             title: "Health & Uptime Monitor",
-            description: "Returns the real-time server health, ISO timestamp, and continuous process uptime in seconds.",
+            description: "Returns the real-time server health, ISO timestamp, continuous process uptime, and request tracking ID.",
+            params: [],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "health-detailed",
+            category: "system",
+            categoryLabel: "System",
+            categoryIcon: IconHeartbeat,
+            method: "GET",
+            path: "/health/detailed",
+            title: "Detailed Telemetry & Vault Diagnostics",
+            description: "Returns real-time connectivity across database vaults, system memory consumption, and rate limiter configuration.",
+            params: [],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "openapi-spec",
+            category: "system",
+            categoryLabel: "System",
+            categoryIcon: IconHeartbeat,
+            method: "GET",
+            path: "/openapi.json",
+            title: "OpenAPI 3.1.0 Specification",
+            description: "Machine-readable OpenAPI 3.1 specification for generating Flutter/Dart, Swift, Go, Python, and TypeScript SDKs.",
             params: [],
             loading: false,
             response: null,
@@ -704,6 +736,10 @@
 
     function getPythonSnippet(ep, _trigger) {
         return `import requests\n\nres = requests.get("${buildUrl(ep)}")\nprint(res.json())`;
+    }
+
+    function getDartSnippet(ep, _trigger) {
+        return `import 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nvoid main() async {\n  final res = await http.get(Uri.parse("${buildUrl(ep)}"));\n  if (res.statusCode == 200) {\n    final data = jsonDecode(res.body);\n    print(data);\n  }\n}`;
     }
 
     async function executeRequest(ep) {
@@ -1389,12 +1425,18 @@
                                             class="tabBtn {activeSnippetTabs[ep.id] === 'python' ? 'active' : ''}"
                                             on:click={() => activeSnippetTabs[ep.id] = 'python'}
                                         >Python</button>
+                                        <button
+                                            class="tabBtn {activeSnippetTabs[ep.id] === 'dart' ? 'active' : ''}"
+                                            on:click={() => activeSnippetTabs[ep.id] = 'dart'}
+                                        >Dart</button>
                                     </div>
                                     <button
                                         class="copySnippetBtn"
                                         on:click={() => {
                                             const code = activeSnippetTabs[ep.id] === 'curl' ? getCurlSnippet(ep, paramValues[ep.id]) :
-                                                        activeSnippetTabs[ep.id] === 'js' ? getJsSnippet(ep, paramValues[ep.id]) : getPythonSnippet(ep, paramValues[ep.id]);
+                                                        activeSnippetTabs[ep.id] === 'js' ? getJsSnippet(ep, paramValues[ep.id]) :
+                                                        activeSnippetTabs[ep.id] === 'dart' ? getDartSnippet(ep, paramValues[ep.id]) :
+                                                        getPythonSnippet(ep, paramValues[ep.id]);
                                             copyCodeSnippet(code, ep.id);
                                         }}
                                     >
@@ -1412,6 +1454,8 @@
                                         <pre><code>{getCurlSnippet(ep, paramValues[ep.id])}</code></pre>
                                     {:else if activeSnippetTabs[ep.id] === 'js'}
                                         <pre><code>{getJsSnippet(ep, paramValues[ep.id])}</code></pre>
+                                    {:else if activeSnippetTabs[ep.id] === 'dart'}
+                                        <pre><code>{getDartSnippet(ep, paramValues[ep.id])}</code></pre>
                                     {:else}
                                         <pre><code>{getPythonSnippet(ep, paramValues[ep.id])}</code></pre>
                                     {/if}

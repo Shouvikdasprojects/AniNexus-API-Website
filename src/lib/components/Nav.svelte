@@ -62,9 +62,9 @@ function closeMobileNav() {
                 </div>
 
                 <div class="links">
-                    <a href="https://ani-nexus.onrender.com/health" target="_blank" class="statusPill" title="Live Health Endpoint">
+                    <a href="https://ani-nexus.onrender.com/health/detailed" target="_blank" rel="noopener noreferrer" class="statusPill" title="Live Telemetry: Operational (99.9% Uptime)">
                         <span class="pulseDot"></span>
-                        API Online
+                        Operational
                     </a>
                     <Button type="nav-icon-link" size="small" urlTarget="_blank" url="https://github.com/Shouvikdasprojects/AniNexus-API-Website" title="View Source on GitHub">
                         <IconBrandGithub size={20} stroke={1.5} />
