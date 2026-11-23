@@ -24,7 +24,8 @@
         IconMicrophone,
         IconSparkles,
         IconArrowRight,
-        IconExternalLink
+        IconExternalLink,
+        IconBook
     } from "@tabler/icons-svelte";
     import { fade, fly, slide } from "svelte/transition";
     import { onMount } from "svelte";
@@ -1010,6 +1011,198 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
             status: null,
             duration: null,
             error: null
+        },
+
+        // 13. Franchise Cross-Media Adaptations
+        {
+            id: "series-adaptations",
+            category: "franchises",
+            categoryLabel: "Master Franchises",
+            categoryIcon: IconBuildingArch,
+            method: "GET",
+            path: "/api/v1/series/:slug/adaptations",
+            title: "Franchise Source Manga & Novel Link",
+            description: "Discovers the original source Manga, Manhwa, or Light Novel for an anime franchise in Vault 2 with chapters, reading direction, and creators.",
+            params: [
+                {
+                    name: "slug",
+                    type: "path",
+                    default: "attack-on-titan",
+                    options: ["attack-on-titan", "solo-leveling", "demon-slayer-kimetsu-no-yaiba", "jujutsu-kaisen", "bleach", "chainsaw-man"],
+                    description: "Franchise URL slug"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+
+        // 14. Manga & Reading Media Hub (Vault 2)
+        {
+            id: "manga-omni",
+            category: "manga",
+            categoryLabel: "Manga & Novels",
+            categoryIcon: IconBook,
+            method: "GET",
+            path: "/api/v1/manga",
+            title: "Manga, Manhwa & Novels Omni Directory",
+            description: "Omni-search and multi-filter across 21,600+ Manga, Korean Manhwa, Chinese Manhua, and Light Novels with dual consensus scores and reading directions.",
+            params: [
+                {
+                    name: "q",
+                    type: "query",
+                    default: "Solo Leveling",
+                    options: ["Solo Leveling", "Berserk", "One Piece", "Omniscient Reader", "Frieren", "Tower of God", "Chainsaw Man"],
+                    description: "Search keyword"
+                },
+                {
+                    name: "type",
+                    type: "query",
+                    default: "ALL",
+                    options: ["ALL", "MANGA", "MANHWA", "LIGHT_NOVEL", "MANHUA", "ONE_SHOT"],
+                    description: "Media type filter"
+                },
+                {
+                    name: "limit",
+                    type: "query",
+                    default: "10",
+                    options: ["10", "25", "50"],
+                    description: "Results per page"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "manga-top",
+            category: "manga",
+            categoryLabel: "Manga & Novels",
+            categoryIcon: IconBook,
+            method: "GET",
+            path: "/api/v1/manga/top",
+            title: "Top Reading Media Leaderboards",
+            description: "Retrieve curated leaderboards for popular manga, highest rated masterpieces, top Korean manhwa webtoons, and light novels.",
+            params: [
+                {
+                    name: "type",
+                    type: "query",
+                    default: "popular",
+                    options: ["popular", "rated", "manhwa", "novels"],
+                    description: "Leaderboard filter"
+                },
+                {
+                    name: "limit",
+                    type: "query",
+                    default: "10",
+                    options: ["10", "25", "50"],
+                    description: "Count of items"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "manga-types",
+            category: "manga",
+            categoryLabel: "Manga & Novels",
+            categoryIcon: IconBook,
+            method: "GET",
+            path: "/api/v1/manga/types",
+            title: "Media Categories & Archive Breakdown",
+            description: "Returns live counts and breakdown of reading media across Manga, Manhwa, Manhua, Light Novels, and One-Shots in Vault 2.",
+            params: [],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "manga-manhwa",
+            category: "manga",
+            categoryLabel: "Manga & Novels",
+            categoryIcon: IconBook,
+            method: "GET",
+            path: "/api/v1/manga/manhwa",
+            title: "Dedicated Korean Webtoons Hub",
+            description: "Direct access to 5,000+ top-to-bottom scrolling Korean manhwa webtoons with chapter progression and translation metadata.",
+            params: [
+                {
+                    name: "status",
+                    type: "query",
+                    default: "ALL",
+                    options: ["ALL", "RELEASING", "FINISHED"],
+                    description: "Publication status"
+                },
+                {
+                    name: "limit",
+                    type: "query",
+                    default: "10",
+                    options: ["10", "25", "50"],
+                    description: "Results limit"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "manga-details",
+            category: "manga",
+            categoryLabel: "Manga & Novels",
+            categoryIcon: IconBook,
+            method: "GET",
+            path: "/api/v1/manga/:idOrSlug",
+            title: "Complete Manga / Novel Entry",
+            description: "Fetches full metadata for a reading title: creators (Story/Art), chapters, volumes, reading direction, characters, and anime links.",
+            params: [
+                {
+                    name: "idOrSlug",
+                    type: "path",
+                    default: "solo-leveling",
+                    options: ["solo-leveling", "berserk", "one-piece", "omniscient-reader", "frieren-beyond-journeys-end", "tower-of-god", "chainsaw-man"],
+                    description: "Manga Slug or ID"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
+        },
+        {
+            id: "manga-adaptations",
+            category: "manga",
+            categoryLabel: "Manga & Novels",
+            categoryIcon: IconBook,
+            method: "GET",
+            path: "/api/v1/manga/:idOrSlug/adaptations",
+            title: "Manga to Anime Adaptations Timeline",
+            description: "Lists all anime TV series, movies, OVAs, and spin-offs adapted from this source manga, manhwa, or light novel.",
+            params: [
+                {
+                    name: "idOrSlug",
+                    type: "path",
+                    default: "solo-leveling",
+                    options: ["solo-leveling", "berserk", "one-piece", "attack-on-titan", "demon-slayer-kimetsu-no-yaiba", "chainsaw-man"],
+                    description: "Manga Slug or ID"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
         }
     ];
 
@@ -1031,6 +1224,7 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
         { id: "seasons", label: "Seasonal Hub", icon: IconCalendarEvent },
         { id: "awards", label: "Anime Awards", icon: IconTrophy },
         { id: "franchises", label: "Master Franchises", icon: IconBuildingArch },
+        { id: "manga", label: "Manga & Novels", icon: IconBook },
         { id: "characters-staff", label: "Characters & Staff", icon: IconMicrophone },
         { id: "search", label: "Search & Filter", icon: IconSearch },
         { id: "genres", label: "Genres", icon: IconTag },
@@ -1211,12 +1405,12 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
             <h1>AniNexus <span>REST API Reference</span></h1>
             <p>
                 A high-performance <strong>REST API (v1)</strong> serving <strong>{totalFranchises}+ curated Master Franchises (1960s–{currentYear}+)</strong>, 
-                5-year rolling anime awards, 100% verified audio dub tracks (Hindi & English), and dual community consensus scores with zero token authorization required.
+                <strong>21,600+ Manga, Manhwa & Light Novels</strong>, 5-year rolling anime awards, 100% verified audio dub tracks (Hindi & English), and dual community consensus scores with zero token authorization required.
             </p>
 
             <div class="roadmapNotice">
                 <span class="noticeBadge">Architecture Notice</span>
-                <span>Active protocol: <strong>REST API v1 (JSON over HTTPS)</strong>. GraphQL queries and WebSocket real-time broadcast streams are scheduled on the future roadmap.</span>
+                <span>Active protocol: <strong>REST API v1 (JSON over HTTPS)</strong>. Cross-media relations link every Anime franchise to its source Manga, Manhwa, and Light Novel.</span>
             </div>
 
             <div class="heroPills">
@@ -1226,6 +1420,9 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
                 </div>
                 <div class="heroPill">
                     <span>⚡ RESTful JSON</span>
+                </div>
+                <div class="heroPill">
+                    <span>📚 21,600+ Manga & Manhwa</span>
                 </div>
                 <div class="heroPill">
                     <span>🔓 No API Key Required</span>

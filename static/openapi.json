@@ -58,6 +58,10 @@
       "description": "Comprehensive character profiles, seiyuu cast, and voice actor portfolios"
     },
     {
+      "name": "Manga & Novels",
+      "description": "21,600+ Manga, Korean Manhwa, Chinese Manhua, and Light Novels with cross-adaptation links and dual scores"
+    },
+    {
       "name": "Discovery & Search",
       "description": "Multi-factor faceted filtering, genre directory, and global search"
     }
@@ -809,6 +813,196 @@
         "responses": {
           "200": {
             "description": "Search results"
+          }
+        }
+      }
+    },
+    "/api/v1/series/{slug}/adaptations": {
+      "get": {
+        "tags": [
+          "Master Franchises",
+          "Manga & Novels"
+        ],
+        "summary": "Original Source Manga & Novels for Master Franchise",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "attack-on-titan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Source manga and novel adaptations"
+          }
+        }
+      }
+    },
+    "/api/v1/manga": {
+      "get": {
+        "tags": [
+          "Manga & Novels"
+        ],
+        "summary": "Query 21,600+ Manga, Manhwa, Manhua & Novels",
+        "parameters": [
+          {
+            "name": "format",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["MANGA", "MANHWA", "MANHUA", "LIGHT_NOVEL", "NOVEL", "ONE_SHOT"],
+              "example": "MANHWA"
+            }
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "Action"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["popular", "score", "trending", "chapters", "title"],
+              "example": "popular"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of manga/manhwa/novel records"
+          }
+        }
+      }
+    },
+    "/api/v1/manga/top": {
+      "get": {
+        "tags": [
+          "Manga & Novels"
+        ],
+        "summary": "Curated Top Manga & Manhwa Leaderboards",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["trending", "popular", "rated", "reading"],
+              "example": "popular"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Top-ranked reading entries"
+          }
+        }
+      }
+    },
+    "/api/v1/manga/types": {
+      "get": {
+        "tags": [
+          "Manga & Novels"
+        ],
+        "summary": "Manga Category Breakdown & Statistics",
+        "responses": {
+          "200": {
+            "description": "Format and origin category statistics"
+          }
+        }
+      }
+    },
+    "/api/v1/manga/manhwa": {
+      "get": {
+        "tags": [
+          "Manga & Novels"
+        ],
+        "summary": "Dedicated Korean Webtoons Collection",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Top Korean manhwa / webtoons"
+          }
+        }
+      }
+    },
+    "/api/v1/manga/{idOrSlug}": {
+      "get": {
+        "tags": [
+          "Manga & Novels"
+        ],
+        "summary": "Full Manga Dossier by ID or Slug",
+        "parameters": [
+          {
+            "name": "idOrSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "solo-leveling"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Complete manga dossier with dual scores and adaptations"
+          }
+        }
+      }
+    },
+    "/api/v1/manga/{idOrSlug}/adaptations": {
+      "get": {
+        "tags": [
+          "Manga & Novels"
+        ],
+        "summary": "Anime Adaptations Mapped to Manga",
+        "parameters": [
+          {
+            "name": "idOrSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "solo-leveling"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chronological anime adaptations and timeline links"
           }
         }
       }

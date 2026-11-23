@@ -33,6 +33,13 @@ export default {
             description: `634+ curated franchises (1960s–${currentYear}+) with consolidated multi-season timelines, movies, and specials.`
         },
         {
+            icon: IconBook,
+            highlight: true,
+            onVersion: 1,
+            label: "21,600+ Reading Vault",
+            description: "21,600+ Manga, Korean Manhwa, Chinese Manhua, and Light Novels with cross-adaptation anime timelines and dual scores."
+        },
+        {
             icon: IconLanguage,
             highlight: true,
             onVersion: 1,
@@ -118,13 +125,6 @@ export default {
         }
     ],
     upcoming: [
-        {
-            icon: IconBook,
-            highlight: true,
-            onVersion: 2,
-            label: "Manga & Light Novel Engine",
-            description: "Complete manga & light novel catalog, volume/chapter tracking, and anime adaptation chapter-range mapping."
-        },
         {
             icon: IconUserCheck,
             highlight: true,

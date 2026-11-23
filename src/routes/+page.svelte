@@ -25,7 +25,8 @@
 		IconServer,
 		IconFlame,
 		IconBrandGithub,
-		IconDeviceDesktop
+		IconDeviceDesktop,
+		IconBook
 	} from "@tabler/icons-svelte";
 	import BasicInfoDisplay from "../lib/components/DataDisplay/BasicInfoDisplay.svelte";
 	import Chip from "../lib/components/Chip.svelte";
@@ -87,11 +88,11 @@
 			<InlineBanner
 				type="patreon"
 				url="https://github.com/Shouvikdasprojects/AniNexus-API-Website/releases/tag/v1.0.0"
-			>🚀 Official v1.0.0 Stable Release is Live • 31 Endpoints, 634+ Franchises, OpenAPI 3.1 & SDKs</InlineBanner>
+			>🚀 Official v1.1.0 Stable Release • 38 Endpoints, 21.6k+ Manga & Novels, 634+ Franchises, OpenAPI 3.1 & SDKs</InlineBanner>
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (1960s–{currentYear}+)</strong>, 100% verified Indian & international dub tracks, dual community scores, and Industry Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (1960s–{currentYear}+)</strong>, <strong>21,600+ Manga, Manhwa & Light Novels</strong>, 100% verified Indian & international dub tracks, dual community scores, and Industry Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
@@ -102,6 +103,14 @@
 				>
 					<IconBuildingArch size={20} stroke={1.5} />
 					{totalFranchises}+ Master Franchises
+				</BasicInfoDisplay>
+				<BasicInfoDisplay
+					urlTarget="_self"
+					url="/docs#manga-omni"
+					description="21,600+ Manga, Korean Webtoons, Manhua & Light Novels with cross-adaptation anime links."
+				>
+					<IconBook size={20} stroke={1.5} />
+					21,600+ Reading Vault
 				</BasicInfoDisplay>
 				<BasicInfoDisplay
 					urlTarget="_self"
@@ -201,12 +210,16 @@
 					<div class="driftRow driftRow--right">
 						<div class="driftTrack">
 							<div class="driftItem"><span class="driftEmoji">🪚</span><strong>Chainsaw Man</strong> <span class="driftBadge">Score 84.6</span></div>
+							<div class="driftItem"><span class="driftEmoji">📜</span><strong>Omniscient Reader</strong> <span class="driftBadge">Manhwa • Top-to-Bottom</span></div>
 							<div class="driftItem"><span class="driftEmoji">⏱️</span><strong>Steins;Gate</strong> <span class="driftBadge">Score 90.8 • Sci-Fi</span></div>
+							<div class="driftItem"><span class="driftEmoji">🗼</span><strong>Tower of God</strong> <span class="driftBadge">Webtoon • 3 Seasons</span></div>
 							<div class="driftItem"><span class="driftEmoji">🥊</span><strong>One Punch Man</strong> <span class="driftBadge">Hero Association</span></div>
 							<div class="driftItem"><span class="driftEmoji">🩸</span><strong>Bleach: TYBW</strong> <span class="driftBadge">Score 89.6</span></div>
 							<div class="driftItem"><span class="driftEmoji">🎯</span><strong>Hunter x Hunter</strong> <span class="driftBadge">148 Episodes</span></div>
 							<div class="driftItem"><span class="driftEmoji">🪚</span><strong>Chainsaw Man</strong> <span class="driftBadge">Score 84.6</span></div>
+							<div class="driftItem"><span class="driftEmoji">📜</span><strong>Omniscient Reader</strong> <span class="driftBadge">Manhwa • Top-to-Bottom</span></div>
 							<div class="driftItem"><span class="driftEmoji">⏱️</span><strong>Steins;Gate</strong> <span class="driftBadge">Score 90.8 • Sci-Fi</span></div>
+							<div class="driftItem"><span class="driftEmoji">🗼</span><strong>Tower of God</strong> <span class="driftBadge">Webtoon • 3 Seasons</span></div>
 							<div class="driftItem"><span class="driftEmoji">🥊</span><strong>One Punch Man</strong> <span class="driftBadge">Hero Association</span></div>
 						</div>
 					</div>

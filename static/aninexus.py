@@ -131,3 +131,32 @@ class AniNexus:
     def search(self, query: str) -> Dict[str, Any]:
         """Full-text typo-tolerant search across Romaji, English, and Kanji."""
         return self._request("/search", {"q": query})
+
+    # --- Manga, Manhwa & Light Novels (Vault 2) ---
+    def get_manga_list(self, format: Optional[str] = None, genre: Optional[str] = None, sort: str = "popular", page: int = 1, limit: int = 20) -> Dict[str, Any]:
+        """Query 21,600+ manga, Korean manhwa, Chinese manhua, and light novels."""
+        return self._request("/manga", {"format": format, "genre": genre, "sort": sort, "page": page, "limit": limit})
+
+    def get_manga_top(self, type: str = "popular", limit: int = 20) -> Dict[str, Any]:
+        """Fetch curated top reading leaderboards (trending, popular, rated, reading)."""
+        return self._request("/manga/top", {"type": type, "limit": limit})
+
+    def get_manga_types(self) -> Dict[str, Any]:
+        """Fetch category and format distribution breakdown."""
+        return self._request("/manga/types")
+
+    def get_manhwa(self, limit: int = 20) -> Dict[str, Any]:
+        """Fetch dedicated Korean Webtoons collection with top-to-bottom layout."""
+        return self._request("/manga/manhwa", {"limit": limit})
+
+    def get_manga(self, id_or_slug: Union[str, int]) -> Dict[str, Any]:
+        """Fetch complete manga dossier with chapter counts and dual scores."""
+        return self._request(f"/manga/{id_or_slug}")
+
+    def get_manga_adaptations(self, id_or_slug: Union[str, int]) -> Dict[str, Any]:
+        """Fetch anime adaptations mapped to a manga/light novel."""
+        return self._request(f"/manga/{id_or_slug}/adaptations")
+
+    def get_series_adaptations(self, slug: str) -> Dict[str, Any]:
+        """Fetch original source manga/light novel adaptations for a master franchise."""
+        return self._request(f"/series/{slug}/adaptations")

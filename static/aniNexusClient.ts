@@ -196,6 +196,35 @@ export class AniNexus {
   async filter(params: { genre?: string; year?: number; format?: string; limit?: number }) {
     return this.request('/filter', params);
   }
+
+  // --- Manga, Manhwa & Light Novels (Vault 2) ---
+  async getMangaList(params: { format?: string; genre?: string; sort?: string; page?: number; limit?: number } = {}) {
+    return this.request('/manga', params);
+  }
+
+  async getMangaTop(type: 'trending' | 'popular' | 'rated' | 'reading' = 'popular', limit = 20) {
+    return this.request('/manga/top', { type, limit });
+  }
+
+  async getMangaTypes() {
+    return this.request('/manga/types');
+  }
+
+  async getManhwa(limit = 20) {
+    return this.request('/manga/manhwa', { limit });
+  }
+
+  async getManga(idOrSlug: string | number) {
+    return this.request(`/manga/${idOrSlug}`);
+  }
+
+  async getMangaAdaptations(idOrSlug: string | number) {
+    return this.request(`/manga/${idOrSlug}/adaptations`);
+  }
+
+  async getSeriesAdaptations(slug: string) {
+    return this.request(`/series/${slug}/adaptations`);
+  }
 }
 
 export default AniNexus;
