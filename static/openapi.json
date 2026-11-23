@@ -1006,6 +1006,54 @@
           }
         }
       }
+    },
+    "/api/v1/manga/{idOrSlug}/chapters": {
+      "get": {
+        "tags": [
+          "Manga & Novels"
+        ],
+        "summary": "Live Chapter Directory & Legal Reading Sources (MangaDex API)",
+        "parameters": [
+          {
+            "name": "idOrSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "chainsaw-man"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "en"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Live chapters with timestamps, groups, and legal external reader URLs"
+          }
+        }
+      }
     }
   }
 }

@@ -88,7 +88,7 @@
 			<InlineBanner
 				type="patreon"
 				url="https://github.com/Shouvikdasprojects/AniNexus-API-Website/releases/tag/v1.0.0"
-			>🚀 Official v1.1.0 Stable Release • 38 Endpoints, 21.6k+ Manga & Novels, 634+ Franchises, OpenAPI 3.1 & SDKs</InlineBanner>
+			>🚀 Official v1.1.0 Stable Release • 39 Endpoints, 21.6k+ Manga & Novels, 634+ Franchises, OpenAPI 3.1 & SDKs</InlineBanner>
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>

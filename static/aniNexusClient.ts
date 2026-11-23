@@ -222,6 +222,10 @@ export class AniNexus {
     return this.request(`/manga/${idOrSlug}/adaptations`);
   }
 
+  async getMangaChapters(idOrSlug: string | number, params: { limit?: number; page?: number; language?: string } = {}) {
+    return this.request(`/manga/${idOrSlug}/chapters`, params);
+  }
+
   async getSeriesAdaptations(slug: string) {
     return this.request(`/series/${slug}/adaptations`);
   }

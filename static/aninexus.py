@@ -157,6 +157,10 @@ class AniNexus:
         """Fetch anime adaptations mapped to a manga/light novel."""
         return self._request(f"/manga/{id_or_slug}/adaptations")
 
+    def get_manga_chapters(self, id_or_slug: Union[str, int], limit: int = 20, page: int = 1, language: str = "en") -> Dict[str, Any]:
+        """Fetch live chapter directory with release dates and official reader links (MangaDex API)."""
+        return self._request(f"/manga/{id_or_slug}/chapters", {"limit": limit, "page": page, "language": language})
+
     def get_series_adaptations(self, slug: str) -> Dict[str, Any]:
         """Fetch original source manga/light novel adaptations for a master franchise."""
         return self._request(f"/series/{slug}/adaptations")

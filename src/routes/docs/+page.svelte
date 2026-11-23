@@ -1203,6 +1203,44 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
             status: null,
             duration: null,
             error: null
+        },
+        {
+            id: "manga-chapters",
+            category: "manga",
+            categoryLabel: "Manga & Novels",
+            categoryIcon: IconBook,
+            method: "GET",
+            path: "/api/v1/manga/:idOrSlug/chapters",
+            title: "Live Chapter Directory & Legal Reading Sources",
+            description: "Fetches live chapter catalog, release timestamps, scanlation credits, and 100% legal official reading source redirects (MangaPlus, Viz, Webtoons) via MangaDex API.",
+            params: [
+                {
+                    name: "idOrSlug",
+                    type: "path",
+                    default: "chainsaw-man",
+                    options: ["chainsaw-man", "solo-leveling", "attack-on-titan", "berserk", "one-piece"],
+                    description: "Manga Slug or ID"
+                },
+                {
+                    name: "limit",
+                    type: "query",
+                    default: "20",
+                    options: ["10", "20", "50", "100"],
+                    description: "Number of chapters to return"
+                },
+                {
+                    name: "language",
+                    type: "query",
+                    default: "en",
+                    options: ["en", "ja", "ko"],
+                    description: "Translated language code"
+                }
+            ],
+            loading: false,
+            response: null,
+            status: null,
+            duration: null,
+            error: null
         }
     ];
 
