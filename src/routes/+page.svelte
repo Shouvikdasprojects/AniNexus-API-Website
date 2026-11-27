@@ -47,7 +47,8 @@
 	const awardsStartYear = currentYear - 5;
 
 	let serverHealth = { status: "checking", uptime: 0 };
-	let totalFranchises = 634;
+	let totalFranchises = 14451;
+	let totalManga = 106073;
 
 	onMount(async () => {
 		try {
@@ -58,15 +59,20 @@
 		}
 
 		try {
-			const topRes = await fetch("https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=1");
+			const [topRes, mangaRes] = await Promise.all([
+				fetch("https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=1"),
+				fetch("https://ani-nexus.onrender.com/api/v1/manga?limit=1"),
+			]);
 			const topJson = await topRes.json();
-			if (topJson?.data?.total && topJson.data.total >= 634) {
+			if (topJson?.data?.total && topJson.data.total > 0) {
 				totalFranchises = topJson.data.total;
-			} else {
-				totalFranchises = 634;
+			}
+			const mangaJson = await mangaRes.json();
+			if (mangaJson?.meta?.total && mangaJson.meta.total > 0) {
+				totalManga = mangaJson.meta.total;
 			}
 		} catch (e) {
-			totalFranchises = 634;
+			// keep initial fallback counts
 		}
 	});
 </script>
@@ -88,29 +94,29 @@
 			<InlineBanner
 				type="patreon"
 				url="https://github.com/Shouvikdasprojects/AniNexus-API-Website/releases/tag/v1.0.0"
-			>🚀 Official v1.1.0 Stable Release • 39 Endpoints, 21.6k+ Manga & Novels, 634+ Franchises, OpenAPI 3.1 & SDKs</InlineBanner>
+			>🚀 Official v1.1.0 Stable Release • 45+ Endpoints, {totalManga.toLocaleString()}+ Manga & Novels, {totalFranchises.toLocaleString()}+ Franchises, OpenAPI 3.1 & SDKs</InlineBanner>
 
 			<div class="type--group-heading-and-content">
 				<h1>AniNexus API</h1>
-				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises}+ curated franchises (1960s–{currentYear}+)</strong>, <strong>21,600+ Manga, Manhwa & Light Novels</strong>, 100% verified Indian & international dub tracks, dual community scores, and Industry Anime Awards.</p>
+				<p>The open-access, high-speed Master Franchise Engine — Powered by <strong>Shouvik Das</strong>. Unified timelines for <strong>{totalFranchises.toLocaleString()}+ curated franchises (1917–{currentYear}+)</strong>, <strong>{totalManga.toLocaleString()}+ Manga, Manhwa & Light Novels</strong>, 181,387+ Characters, 100% verified Indian & international dub tracks, dual community scores, and Industry Anime Awards.</p>
 			</div>
 
 			<BasicInfoDisplayGrouped>
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#series-slug"
-					description="{totalFranchises}+ curated franchises from classic to modern eras (1960s–{currentYear}+) with multi-season timelines."
+					description="{totalFranchises.toLocaleString()}+ curated franchises from classic to modern eras (1917–{currentYear}+) with multi-season timelines."
 				>
 					<IconBuildingArch size={20} stroke={1.5} />
-					{totalFranchises}+ Master Franchises
+					{totalFranchises.toLocaleString()}+ Master Franchises
 				</BasicInfoDisplay>
 				<BasicInfoDisplay
 					urlTarget="_self"
 					url="/docs#manga-omni"
-					description="21,600+ Manga, Korean Webtoons, Manhua & Light Novels with cross-adaptation anime links."
+					description="{totalManga.toLocaleString()}+ Manga, Korean Webtoons, Manhua & Light Novels with cross-adaptation anime links."
 				>
 					<IconBook size={20} stroke={1.5} />
-					21,600+ Reading Vault
+					{totalManga.toLocaleString()}+ Reading Vault
 				</BasicInfoDisplay>
 				<BasicInfoDisplay
 					urlTarget="_self"
