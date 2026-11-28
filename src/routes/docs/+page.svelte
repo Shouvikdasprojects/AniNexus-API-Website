@@ -1442,7 +1442,7 @@ Future<Map<String, List<AiringEpisode>>> getWeeklySchedule() async {
             </div>
             <h1>AniNexus <span>REST API Reference</span></h1>
             <p>
-                A high-performance <strong>REST API (v1)</strong> serving <strong>{totalFranchises}+ curated Master Franchises (1960s–{currentYear}+)</strong>, 
+                A high-performance <strong>REST API (v1)</strong> serving <strong>{totalFranchises}+ curated Master Franchises (1917–{currentYear}+)</strong>, 
                 <strong>21,600+ Manga, Manhwa & Light Novels</strong>, 5-year rolling anime awards, 100% verified audio dub tracks (Hindi & English), and dual community consensus scores with zero token authorization required.
             </p>
 

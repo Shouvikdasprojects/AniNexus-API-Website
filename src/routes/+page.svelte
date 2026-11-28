@@ -47,8 +47,8 @@
 	const awardsStartYear = currentYear - 5;
 
 	let serverHealth = { status: "checking", uptime: 0 };
-	let totalFranchises = 14451;
-	let totalManga = 106073;
+	let totalFranchises = 1145;
+	let totalManga = 106072;
 
 	onMount(async () => {
 		try {
@@ -59,17 +59,17 @@
 		}
 
 		try {
-			const [topRes, mangaRes] = await Promise.all([
-				fetch("https://ani-nexus.onrender.com/api/v1/top?type=popular&limit=1"),
-				fetch("https://ani-nexus.onrender.com/api/v1/manga?limit=1"),
+			const [filterRes, typesRes] = await Promise.all([
+				fetch("https://ani-nexus.onrender.com/api/v1/filter?limit=1"),
+				fetch("https://ani-nexus.onrender.com/api/v1/manga/types"),
 			]);
-			const topJson = await topRes.json();
-			if (topJson?.data?.total && topJson.data.total > 0) {
-				totalFranchises = topJson.data.total;
+			const filterJson = await filterRes.json();
+			if (filterJson?.meta?.total && filterJson.meta.total > 0) {
+				totalFranchises = filterJson.meta.total;
 			}
-			const mangaJson = await mangaRes.json();
-			if (mangaJson?.meta?.total && mangaJson.meta.total > 0) {
-				totalManga = mangaJson.meta.total;
+			const typesJson = await typesRes.json();
+			if (typesJson?.data?.total && typesJson.data.total > 0) {
+				totalManga = typesJson.data.total;
 			}
 		} catch (e) {
 			// keep initial fallback counts
